@@ -1,0 +1,31 @@
+name: Unzip Project
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: List files
+        run: ls -la
+
+      - name: Unzip project
+        run: |
+          unzip -o WorldCupFan2026.zip -d .
+          rm -f WorldCupFan2026.zip
+
+      - name: Commit extracted project
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Extract project from ZIP" || echo "No changes to commit"
+          git push
