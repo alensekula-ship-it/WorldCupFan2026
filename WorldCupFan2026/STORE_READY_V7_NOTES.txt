@@ -1,0 +1,18 @@
+WorldCupFan2026 v7.0 STORE READY
+
+Big changes:
+- Premium dashboard
+- Smart match center with search and group filter
+- Smaller score controls with +/- buttons
+- Full P/W/D/L/GF/GA/GD/Pts tables
+- Pro bracket screen
+- Share poster screen
+- Dream final builder
+- Host cities screen
+- Free vs Pro premium positioning
+- Advanced statistics
+- Dark/light mode
+- VersionCode 11 / VersionName 7.0
+
+Notes:
+This remains an independent fan-made app. Do not use official FIFA logos, official crests, player photos or copyrighted tournament assets without rights.
