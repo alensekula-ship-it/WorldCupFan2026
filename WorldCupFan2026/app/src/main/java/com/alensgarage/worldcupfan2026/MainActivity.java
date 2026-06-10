@@ -216,8 +216,8 @@ public class MainActivity extends Activity {
         launchCard.addView(label("🏁 "+tr("Tournament starts today"),24,Color.WHITE,true));
         launchCard.addView(label(tr("Open the app, pick your team, enter predictions and share your bracket."),15,Color.WHITE,false));
 LinearLayout plus=card();
-        plus.addView(label("🚀 v12 Play Store Ready+",22,text,true));
-        plus.addView(label("Added host city details, Team Hub Pro, onboarding preview, poster export plan, tournament rules and monetization plan.",14,subText,false));
+        plus.addView(label("🚀 ",22,text,true));
+        plus.addView(label("",14,subText,false));
 LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
         hero.addView(label("🌍 GLOBAL EDITION v13.4",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
@@ -538,11 +538,11 @@ void showPredictor(){
         LinearLayout c = card();
         c.addView(label("🏅 " + tr("Achievements"), 25, text, true));
         int played = data.playedCount();
-        c.addView(label((played>=1?"✅":"⬜") + " First Prediction", 17, played>=1?GREEN:subText, true));
-        c.addView(label((played>=10?"✅":"⬜") + " Group Stage Analyst", 17, played>=10?GREEN:subText, true));
-        c.addView(label((played>=24?"✅":"⬜") + " Tournament Expert", 17, played>=24?GREEN:subText, true));
-        c.addView(label((data.progressPercent()>=100?"✅":"⬜") + " Prediction Master", 17, data.progressPercent()>=100?GOLD:subText, true));
-        c.addView(label("My Team badge: " + flag(myTeam) + " " + myTeam + " Fan", 17, RED, true));
+        c.addView(label((played>=1?"✅":"⬜") + " Prva prognoza", 17, played>=1?GREEN:subText, true));
+        c.addView(label((played>=10?"✅":"⬜") + " Analitičar skupina", 17, played>=10?GREEN:subText, true));
+        c.addView(label((played>=24?"✅":"⬜") + " Stručnjak prvenstva", 17, played>=24?GREEN:subText, true));
+        c.addView(label((data.progressPercent()>=100?"✅":"⬜") + " Majstor prognoza", 17, data.progressPercent()>=100?GOLD:subText, true));
+        c.addView(label("Moja reprezentacija: " + flag(myTeam) + " " + myTeam + " Fan", 17, RED, true));
     }
 
 
