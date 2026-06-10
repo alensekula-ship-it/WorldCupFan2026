@@ -118,6 +118,14 @@ public class MainActivity extends Activity {
         else if(key.equals("Privacy")){hr="Privatnost";de="Datenschutz";es="Privacidad";fr="Confidentialité";}
         else if(key.equals("Legal safety")){hr="Pravna sigurnost";de="Rechtliche Sicherheit";es="Seguridad legal";fr="Sécurité juridique";}
 
+        
+        else if(key.equals("Host Cities Pro")){hr="Gradovi domaćini Pro";de="Gastgeberstädte Pro";es="Ciudades sede Pro";fr="Villes hôtes Pro";}
+        else if(key.equals("Team Hub Pro")){hr="Centar reprezentacije Pro";de="Team-Zentrale Pro";es="Centro equipo Pro";fr="Hub équipe Pro";}
+        else if(key.equals("Onboarding Preview")){hr="Uvodni ekran";de="Einführung";es="Introducción";fr="Introduction";}
+        else if(key.equals("Poster Export Plan")){hr="Plan izvoza postera";de="Poster-Export Plan";es="Plan exportar póster";fr="Plan export poster";}
+        else if(key.equals("Tournament Rules")){hr="Pravila turnira";de="Turnierregeln";es="Reglas torneo";fr="Règles tournoi";}
+        else if(key.equals("Monetization Plan")){hr="Plan zarade";de="Monetarisierung";es="Monetización";fr="Monétisation";}
+
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -134,7 +142,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v11.1 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v12.0 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -173,13 +181,17 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v11.1 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v12.0 • "+lang+" • Global fan app","Home");
         
-        LinearLayout upgrade = card();
+        
+        LinearLayout plus=card();
+        plus.addView(label("🚀 v12 Play Store Ready+",22,text,true));
+        plus.addView(label("Added host city details, Team Hub Pro, onboarding preview, poster export plan, tournament rules and monetization plan.",14,subText,false));
+LinearLayout upgrade = card();
         upgrade.addView(label("🚀 v11 Pro Upgrades", 22, text, true));
         upgrade.addView(label("New: visual bracket, Golden Boot, MVP, team compare, backup export, quiz, stadium guide, city guide and achievements.", 14, subText, false));
 LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v11.1",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v12.0",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -498,10 +510,108 @@ void showPredictor(){
         c.addView(label("My Team badge: " + flag(myTeam) + " " + myTeam + " Fan", 17, RED, true));
     }
 
+
+    void showHostCityDetails() {
+        clear("Host Cities Pro", "16 host cities and fan notes", "More");
+        String[][] cities = {
+            {"🇺🇸 Atlanta","Atlanta Stadium","A modern indoor-style host city with a strong sports culture, big airport connections and a major fan-festival feel."},
+            {"🇺🇸 Boston","Boston Stadium","Historic U.S. sports market. Good for tradition, old-city tourism and passionate match-day crowds."},
+            {"🇨🇦 Toronto","Toronto Stadium","Canada's biggest city and a multicultural football hub. Strong for international fans and city sightseeing."},
+            {"🇺🇸 Dallas","Dallas Stadium","One of the tournament's biggest venues. Texas scale, indoor comfort and major knockout potential."},
+            {"🇲🇽 Guadalajara","Guadalajara Stadium","Classic Mexican football city with deep local culture, food and a strong stadium atmosphere."},
+            {"🇺🇸 Houston","Houston Stadium","Diverse global city, strong Latin football community and a hot fan-festival destination."},
+            {"🇺🇸 Kansas City","Kansas City Stadium","Known for loud crowds and a strong soccer supporter culture. Great fan-energy city."},
+            {"🇺🇸 Los Angeles","Los Angeles Stadium","Entertainment capital, huge global audience, premium stadium and major commercial appeal."},
+            {"🇺🇸 Miami","Miami Stadium","Latin football energy, beach-city travel and a major hub for South American fans."},
+            {"🇲🇽 Mexico City","Mexico City Stadium","Opening-match city and one of world football's most iconic atmospheres."},
+            {"🇲🇽 Monterrey","Monterrey Stadium","Northern Mexico powerhouse city with a modern stadium and intense club-football culture."},
+            {"🇺🇸 New York/New Jersey","New York New Jersey Stadium","Global media capital and final-stage atmosphere. A must-have city for fan travel content."},
+            {"🇺🇸 Philadelphia","Philadelphia Stadium","Historic American city with passionate sports fans and strong East Coast travel access."},
+            {"🇺🇸 San Francisco Bay Area","Bay Area Stadium","Tech-region host with strong tourism appeal, good weather and major international visibility."},
+            {"🇺🇸 Seattle","Seattle Stadium","One of the strongest U.S. soccer cultures. Loud support, downtown stadium feel and Pacific Northwest identity."},
+            {"🇨🇦 Vancouver","Vancouver Stadium","Beautiful Canadian west-coast host with strong tourism, nature and international fan appeal."}
+        };
+        for(String[] x:cities){
+            LinearLayout c=card();
+            c.addView(label(x[0],23,text,true));
+            c.addView(label("🏟️ "+x[1],16,RED,true));
+            c.addView(label(x[2],15,subText,false));
+        }
+    }
+
+    void showTeamHubPro() {
+        clear("Team Hub Pro", "Detailed national team view", "More");
+        LinearLayout top=card();
+        top.addView(label(flag(myTeam)+" "+myTeam,30,RED,true));
+        top.addView(label("Group "+groupOfTeam(myTeam)+" • saved My Team • Road to Final ready",16,subText,false));
+        top.addView(label("Power rating: "+teamPower(myTeam)+"/100",18,GREEN,true));
+        LinearLayout games=card();
+        games.addView(label("⚽ Matches",23,text,true));
+        for(Match m:data.matches){
+            if(m.home.equals(myTeam)||m.away.equals(myTeam)){
+                games.addView(label(m.date+" • "+flag(m.home)+" "+m.home+" vs "+flag(m.away)+" "+m.away+" • "+m.venue,14,subText,false));
+            }
+        }
+        LinearLayout notes=card();
+        notes.addView(label("🔎 Fan notes",22,text,true));
+        notes.addView(label("Use this screen later for squad, coach, form, star player and qualification story. It is now ready as the Team Hub base.",15,subText,false));
+    }
+
+    void showOnboardingPreview() {
+        clear("Onboarding", "First launch preview", "More");
+        LinearLayout a=card(); a.setBackground(gradient(RED_DARK, RED, dp(24)));
+        a.addView(label("1/3  Pick your team",24,Color.WHITE,true));
+        a.addView(label("Choose your national team and follow the road to the final.",16,Color.WHITE,false));
+        LinearLayout b=card(); b.addView(label("2/3  Predict results",24,text,true));
+        b.addView(label("Enter scores, calculate standings and build the knockout path.",16,subText,false));
+        LinearLayout c=card(); c.addView(label("3/3  Share your poster",24,text,true));
+        c.addView(label("Create a fan prediction and share it with friends before every matchday.",16,subText,false));
+    }
+
+    void showShareImagePlan() {
+        clear("Poster Export", "Image/PDF export plan", "More");
+        LinearLayout c=card();
+        c.addView(label("🖼️ Share Poster Pro",24,text,true));
+        c.addView(label("Current version shares prediction text/card. Next native step is PNG generation from the poster view, then PDF export for printable brackets.",15,subText,false));
+        Button open=btn("Open Share Poster"); open.setOnClickListener(v->showPoster()); c.addView(open);
+        LinearLayout roadmap=card();
+        roadmap.addView(label("Export roadmap",22,RED,true));
+        roadmap.addView(label("1. Poster preview\n2. Render as bitmap\n3. Save PNG\n4. Android share sheet\n5. PDF bracket export",15,subText,false));
+    }
+
+    void showKnockoutRules() {
+        clear("Tournament Rules", "48-team format explained", "More");
+        LinearLayout c=card();
+        c.addView(label("📘 2026 format",24,text,true));
+        c.addView(label("48 teams play in 12 groups of four. The top two teams from each group advance, plus the eight best third-placed teams. The knockout stage starts with a Round of 32.",16,subText,false));
+        LinearLayout r=card();
+        r.addView(label("App logic",22,RED,true));
+        r.addView(label("The app calculates group tables from your scores, ranks third-placed teams and builds a predicted knockout path.",15,subText,false));
+    }
+
+    void showMonetizationPlan() {
+        clear("Monetization", "Free vs Pro plan", "More");
+        LinearLayout c=card(); c.setBackground(gradient(RED_DARK, RED, dp(24)));
+        c.addView(label("💎 Pro plan",28,Color.WHITE,true));
+        c.addView(label("Suggested: Free app + Pro unlock (€1.99–€4.99).",17,GOLD,true));
+        c.addView(label("Free: scores, tables, basic prediction.\nPro: multiple predictions, poster export, PDF bracket, custom tournaments, achievements, no ads.",16,Color.WHITE,false));
+        LinearLayout n=card();
+        n.addView(label("Commercial focus",22,text,true));
+        n.addView(label("The strongest paid feature is shareable prediction content: fans want to show their champion, final, bracket and team path.",15,subText,false));
+    }
+
 void showMore(){
         clear(tr("More"),tr("Language")+" • Premium • Settings","More");
         LinearLayout langCard=card();langCard.addView(label("🌍 "+tr("Language"),22,text,true));LinearLayout langs=hrow();for(String l:new String[]{"EN","HR","DE","ES","FR"}){TextView cc=chip(l);if(l.equals(lang)){cc.setTextColor(Color.WHITE);cc.setBackground(gradient(RED_DARK,RED,dp(18)));}cc.setOnClickListener(v->{lang=((TextView)v).getText().toString();prefs.edit().putString("lang",lang).apply();redraw();});langs.addView(cc,new LinearLayout.LayoutParams(0,dp(44),1));}langCard.addView(langs);
         LinearLayout c=card();
+
+        Button hostPro = btn(tr("Host Cities Pro")); hostPro.setOnClickListener(v -> showHostCityDetails()); c.addView(hostPro);
+        Button teamPro = btn(tr("Team Hub Pro")); teamPro.setOnClickListener(v -> showTeamHubPro()); c.addView(teamPro);
+        Button onboarding = btn(tr("Onboarding Preview")); onboarding.setOnClickListener(v -> showOnboardingPreview()); c.addView(onboarding);
+        Button posterPlan = btn(tr("Poster Export Plan")); posterPlan.setOnClickListener(v -> showShareImagePlan()); c.addView(posterPlan);
+        Button rules = btn(tr("Tournament Rules")); rules.setOnClickListener(v -> showKnockoutRules()); c.addView(rules);
+        Button money = btn(tr("Monetization Plan")); money.setOnClickListener(v -> showMonetizationPlan()); c.addView(money);
+
 
         Button vb = btn(tr("Visual Bracket")); vb.setOnClickListener(v -> showVisualBracket()); c.addView(vb);
         Button scorers = btn(tr("Golden Boot")); scorers.setOnClickListener(v -> showScorers()); c.addView(scorers);
