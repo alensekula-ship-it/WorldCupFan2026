@@ -15,10 +15,10 @@ import java.util.*;
 public class MainActivity extends Activity {
     final int RED = Color.rgb(220, 0, 48);
     final int RED_DARK = Color.rgb(92, 0, 20);
-    final int GOLD = Color.rgb(246, 196, 55);
+    final int GOLD = Color.rgb(248, 197, 55);
     final int GREEN = Color.rgb(0, 158, 96);
-    final int BLUE = Color.rgb(32, 98, 220);
-    int bg, cardBg, text, subText, navBg, chipBg, stroke;
+    final int BLUE = Color.rgb(35, 102, 235);
+    int bg, cardBg, text, subText, navBg, chipBg, stroke, softRed;
     LinearLayout root, content, bottom;
     TextView title, subtitle;
     Data data;
@@ -49,6 +49,7 @@ public class MainActivity extends Activity {
         navBg = darkMode ? Color.rgb(15,18,26) : Color.WHITE;
         chipBg = darkMode ? Color.rgb(34,38,52) : Color.rgb(238,240,245);
         stroke = darkMode ? Color.rgb(58,62,78) : Color.rgb(224,226,232);
+        softRed = darkMode ? Color.rgb(62,18,30) : Color.rgb(255,235,240);
     }
 
     void build() {
@@ -64,7 +65,7 @@ public class MainActivity extends Activity {
         root.addView(header, new LinearLayout.LayoutParams(-1, dp(132)));
 
         title = label("World Cup Fan 2026", 27, Color.WHITE, true);
-        subtitle = label("v7.0 Store Ready • Simulator • Bracket • Share Poster", 14, Color.WHITE, false);
+        subtitle = label("v8.0 Play Store Edition • Pro Bracket • Score Picker • Share Poster", 14, Color.WHITE, false);
         header.addView(title);
         header.addView(subtitle);
 
@@ -88,9 +89,10 @@ public class MainActivity extends Activity {
     }
 
     void nav(String icon, String name) {
-        TextView b = label(icon + "\n" + name, 12, text, true);
+        boolean selected = currentScreen.equals(name) || (currentScreen.equals("Predict") && name.equals("Predict"));
+        TextView b = label(icon + "\n" + name, 12, selected ? Color.WHITE : text, true);
         b.setGravity(Gravity.CENTER);
-        b.setBackground(round(chipBg, dp(18), 0));
+        b.setBackground(selected ? gradient(RED_DARK, RED, dp(18)) : round(chipBg, dp(18), 0));
         b.setOnClickListener(v -> {
             if (name.equals("Home")) showHome();
             else if (name.equals("Matches")) showMatches();
@@ -135,6 +137,17 @@ public class MainActivity extends Activity {
         return b;
     }
 
+    Button outlineBtn(String s) {
+        Button b = new Button(this);
+        b.setText(s);
+        b.setTextSize(13);
+        b.setTextColor(text);
+        b.setAllCaps(false);
+        b.setTypeface(Typeface.DEFAULT_BOLD);
+        b.setBackground(round(chipBg, dp(18), 1));
+        return b;
+    }
+
     TextView chip(String s) {
         TextView t = label(s, 13, text, true);
         t.setGravity(Gravity.CENTER);
@@ -154,6 +167,17 @@ public class MainActivity extends Activity {
         return l;
     }
 
+    LinearLayout innerCard(LinearLayout parent) {
+        LinearLayout l = new LinearLayout(this);
+        l.setOrientation(LinearLayout.VERTICAL);
+        l.setPadding(dp(12), dp(10), dp(12), dp(10));
+        l.setBackground(round(chipBg, dp(18), 0));
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(-1, -2);
+        lp.setMargins(0, dp(8), 0, dp(8));
+        parent.addView(l, lp);
+        return l;
+    }
+
     LinearLayout hrow() {
         LinearLayout r = new LinearLayout(this);
         r.setOrientation(LinearLayout.HORIZONTAL);
@@ -169,15 +193,16 @@ public class MainActivity extends Activity {
     }
 
     void showHome() {
-        clear("World Cup Fan 2026", "v7.0 • Store Ready Fan Simulator", "Home");
+        clear("World Cup Fan 2026", "v8.0 • Play Store Edition", "Home");
 
         LinearLayout hero = card();
-        hero.addView(label("🔥 Store Ready Edition v7.0", 23, RED, true));
-        hero.addView(label("Premium dashboard, live group tables, smart filters, bracket studio, share posters and tournament insights.", 15, subText, false));
-        hero.addView(kpiRow("Progress", data.progressPercent() + "%", "Played", "" + data.playedCount(), "Goals", "" + data.totalGoals()));
+        hero.setBackground(gradient(RED_DARK, RED, dp(24)));
+        hero.addView(label("⚽ Play Store Edition v8.0", 24, Color.WHITE, true));
+        hero.addView(label("Professional tournament predictor, pro bracket, clean score picker and share-ready fan poster.", 15, Color.WHITE, false));
+        hero.addView(kpiRow("Progress", data.progressPercent() + "%", "Played", "" + data.playedCount(), "Goals", "" + data.totalGoals(), true));
 
         LinearLayout c = card();
-        c.addView(label("⚽ Kick-off countdown", 21, text, true));
+        c.addView(label("Kick-off countdown", 17, subText, true));
         TextView count = label("", 35, RED, true);
         c.addView(count);
         Runnable r = new Runnable() {
@@ -190,46 +215,48 @@ public class MainActivity extends Activity {
         r.run();
 
         LinearLayout my = card();
-        my.addView(label(flag(myTeam) + " My Team Hub", 22, text, true));
+        my.addView(label(flag(myTeam) + " My Team", 23, text, true));
         Match next = data.nextFor(myTeam);
-        my.addView(label(next == null ? "Pick your team and build the path to the final." : "Next: " + next.date + " • " + next.home + " vs " + next.away, 15, subText, false));
-        Button open = btn("Open My Team");
+        my.addView(label(next == null ? "Pick your team and build the path to the final." : "Next match: " + next.date + " • " + next.home + " vs " + next.away, 15, subText, false));
+        LinearLayout actions = hrow();
+        Button open = btn("Team Hub");
         open.setOnClickListener(v -> showMyTeam());
-        my.addView(open);
+        Button poster = outlineBtn("Share Poster");
+        poster.setOnClickListener(v -> showPoster());
+        actions.addView(open, new LinearLayout.LayoutParams(0, dp(52), 1));
+        actions.addView(poster, new LinearLayout.LayoutParams(0, dp(52), 1));
+        my.addView(actions);
 
         LinearLayout studio = card();
         studio.addView(label("🔮 Prediction Studio", 22, text, true));
-        studio.addView(label("Enter scores, calculate tables, build knockout, choose a champion and share your poster.", 15, subText, false));
+        studio.addView(label("Enter scores, generate tables, fill knockout, pick champion and share the story.", 15, subText, false));
         Button start = btn("Start Simulator");
         start.setOnClickListener(v -> showPredictor());
         studio.addView(start);
 
-        LinearLayout cities = card();
-        cities.addView(label("🌎 Host Cities", 22, text, true));
-        cities.addView(label("Explore 16 host cities across USA, Mexico and Canada.", 15, subText, false));
-        Button city = btn("View Host Cities");
-        city.setOnClickListener(v -> showCities());
-        cities.addView(city);
+        LinearLayout tips = card();
+        tips.addView(label("🚀 Why fans install it", 21, text, true));
+        tips.addView(label("• Offline predictor\n• My Team mode\n• Group tables\n• Pro bracket\n• Share poster\n• Dream Final builder\n• Host city guide", 15, subText, false));
     }
 
-    LinearLayout kpiRow(String a, String av, String b, String bv, String c, String cv) {
+    LinearLayout kpiRow(String a, String av, String b, String bv, String c, String cv, boolean light) {
         LinearLayout r = hrow();
         r.setPadding(0, dp(10), 0, 0);
-        r.addView(kpi(a, av), new LinearLayout.LayoutParams(0, dp(72), 1));
-        r.addView(kpi(b, bv), new LinearLayout.LayoutParams(0, dp(72), 1));
-        r.addView(kpi(c, cv), new LinearLayout.LayoutParams(0, dp(72), 1));
+        r.addView(kpi(a, av, light), new LinearLayout.LayoutParams(0, dp(72), 1));
+        r.addView(kpi(b, bv, light), new LinearLayout.LayoutParams(0, dp(72), 1));
+        r.addView(kpi(c, cv, light), new LinearLayout.LayoutParams(0, dp(72), 1));
         return r;
     }
 
-    LinearLayout kpi(String name, String val) {
+    LinearLayout kpi(String name, String val, boolean light) {
         LinearLayout k = new LinearLayout(this);
         k.setOrientation(LinearLayout.VERTICAL);
         k.setGravity(Gravity.CENTER);
         k.setPadding(dp(4), dp(4), dp(4), dp(4));
-        k.setBackground(round(chipBg, dp(18), 0));
-        TextView v = label(val, 22, RED, true);
+        k.setBackground(round(light ? Color.argb(45,255,255,255) : chipBg, dp(18), 0));
+        TextView v = label(val, 22, light ? Color.WHITE : RED, true);
         v.setGravity(Gravity.CENTER);
-        TextView n = label(name, 11, subText, false);
+        TextView n = label(name, 11, light ? Color.WHITE : subText, false);
         n.setGravity(Gravity.CENTER);
         k.addView(v);
         k.addView(n);
@@ -245,29 +272,29 @@ public class MainActivity extends Activity {
     }
 
     void showMatches() {
-        clear("Matches", "Search, filter by group and enter scores", "Matches");
+        clear("Matches", "Professional score picker and filters", "Matches");
 
         LinearLayout top = card();
-        top.addView(label("🔎 Smart Match Center", 21, text, true));
+        top.addView(label("🔎 Match Center", 21, text, true));
         EditText search = new EditText(this);
-        search.setHint("Search team, city or group");
+        search.setHint("Search team, group or host city");
         search.setText(matchFilter);
         search.setSingleLine(true);
         search.setTextColor(text);
         search.setHintTextColor(subText);
+        search.setPadding(dp(14),0,dp(14),0);
         search.setBackground(round(chipBg, dp(16), 0));
         top.addView(search, new LinearLayout.LayoutParams(-1, dp(54)));
 
-        LinearLayout filters = hrow();
-        String[] chips = {"All","A","B","C","D","E","F"};
-        for (String g: chips) {
-            TextView ch = chip(g.equals("All") ? "All" : "Group " + g);
-            ch.setTextColor(g.equals(groupFilter) ? Color.WHITE : text);
-            if (g.equals(groupFilter)) ch.setBackground(gradient(RED_DARK, RED, dp(18)));
-            ch.setOnClickListener(v -> { groupFilter = g; matchFilter = search.getText().toString(); showMatches(); });
-            filters.addView(ch, new LinearLayout.LayoutParams(0, dp(44), 1));
-        }
-        top.addView(filters);
+        LinearLayout filters1 = hrow();
+        String[] chips1 = {"All","A","B","C","D","E","F"};
+        for (String g: chips1) addGroupChip(filters1, g, search);
+        top.addView(filters1);
+
+        LinearLayout filters2 = hrow();
+        String[] chips2 = {"G","H","I","J","K","L"};
+        for (String g: chips2) addGroupChip(filters2, g, search);
+        top.addView(filters2);
 
         Button go = btn("Apply Search");
         go.setOnClickListener(v -> { matchFilter = search.getText().toString(); showMatches(); });
@@ -289,83 +316,93 @@ public class MainActivity extends Activity {
         }
     }
 
+    void addGroupChip(LinearLayout row, String g, EditText search) {
+        TextView ch = chip(g.equals("All") ? "All" : g);
+        boolean sel = g.equals(groupFilter);
+        ch.setTextColor(sel ? Color.WHITE : text);
+        if (sel) ch.setBackground(gradient(RED_DARK, RED, dp(18)));
+        ch.setOnClickListener(v -> { groupFilter = g; matchFilter = search.getText().toString(); showMatches(); });
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(42), 1);
+        lp.setMargins(dp(2), dp(5), dp(2), dp(1));
+        row.addView(ch, lp);
+    }
+
     void matchCard(Match m) {
         LinearLayout c = card();
-        c.addView(label(flag(m.home) + " " + m.label() + " " + flag(m.away), 17, text, true));
-        c.addView(label(m.date + " • " + m.venue + " • Group " + m.group, 13, subText, false));
-        LinearLayout r = hrow();
-        EditText h = scoreBox(m.homeGoals);
-        EditText a = scoreBox(m.awayGoals);
-        Button hp = small("+"); hp.setOnClickListener(v -> inc(h, 1));
-        Button hm = small("-"); hm.setOnClickListener(v -> inc(h, -1));
-        Button ap = small("+"); ap.setOnClickListener(v -> inc(a, 1));
-        Button am = small("-"); am.setOnClickListener(v -> inc(a, -1));
-        Button save = small("Save");
-        save.setOnClickListener(v -> {
-            m.homeGoals = getInt(h);
-            m.awayGoals = getInt(a);
-            data.save();
-            toast("Saved");
-        });
-        r.addView(hm, new LinearLayout.LayoutParams(dp(38), dp(48)));
-        r.addView(h, new LinearLayout.LayoutParams(0, dp(48), 1));
-        r.addView(hp, new LinearLayout.LayoutParams(dp(38), dp(48)));
-        r.addView(am, new LinearLayout.LayoutParams(dp(38), dp(48)));
-        r.addView(a, new LinearLayout.LayoutParams(0, dp(48), 1));
-        r.addView(ap, new LinearLayout.LayoutParams(dp(38), dp(48)));
-        r.addView(save, new LinearLayout.LayoutParams(dp(72), dp(48)));
-        c.addView(r);
+        c.addView(label("Group " + m.group + " • " + m.date + " • " + m.venue, 12, subText, true));
+
+        LinearLayout teams = hrow();
+        TextView left = label(flag(m.home) + "\n" + shortName(m.home), 15, text, true);
+        left.setGravity(Gravity.CENTER);
+        TextView score = label((m.homeGoals>=0?m.homeGoals:"-") + " : " + (m.awayGoals>=0?m.awayGoals:"-"), 30, RED, true);
+        score.setGravity(Gravity.CENTER);
+        TextView right = label(flag(m.away) + "\n" + shortName(m.away), 15, text, true);
+        right.setGravity(Gravity.CENTER);
+        teams.addView(left, new LinearLayout.LayoutParams(0, dp(80), 1));
+        teams.addView(score, new LinearLayout.LayoutParams(0, dp(80), 1));
+        teams.addView(right, new LinearLayout.LayoutParams(0, dp(80), 1));
+        c.addView(teams);
+
+        LinearLayout controls = hrow();
+        TextView homeScore = scoreBoxLabel(m.homeGoals);
+        TextView awayScore = scoreBoxLabel(m.awayGoals);
+
+        Button hm = outlineBtn("−"); hm.setOnClickListener(v -> { m.homeGoals = change(m.homeGoals, -1); homeScore.setText(displayScore(m.homeGoals)); });
+        Button hp = outlineBtn("+"); hp.setOnClickListener(v -> { m.homeGoals = change(m.homeGoals, 1); homeScore.setText(displayScore(m.homeGoals)); });
+        Button am = outlineBtn("−"); am.setOnClickListener(v -> { m.awayGoals = change(m.awayGoals, -1); awayScore.setText(displayScore(m.awayGoals)); });
+        Button ap = outlineBtn("+"); ap.setOnClickListener(v -> { m.awayGoals = change(m.awayGoals, 1); awayScore.setText(displayScore(m.awayGoals)); });
+
+        controls.addView(hm, new LinearLayout.LayoutParams(0, dp(48), 1));
+        controls.addView(homeScore, new LinearLayout.LayoutParams(0, dp(48), 1));
+        controls.addView(hp, new LinearLayout.LayoutParams(0, dp(48), 1));
+        controls.addView(am, new LinearLayout.LayoutParams(0, dp(48), 1));
+        controls.addView(awayScore, new LinearLayout.LayoutParams(0, dp(48), 1));
+        controls.addView(ap, new LinearLayout.LayoutParams(0, dp(48), 1));
+        c.addView(controls);
+
+        Button save = btn("Save Result");
+        save.setOnClickListener(v -> { data.save(); toast("Result saved"); showMatches(); });
+        c.addView(save);
     }
 
-    Button small(String s) {
-        Button b = btn(s);
-        b.setTextSize(12);
-        return b;
+    int change(int val, int delta) {
+        if (val < 0) val = 0;
+        val += delta;
+        if (val < 0) val = 0;
+        return val;
     }
 
-    void inc(EditText e, int delta) {
-        int v = getInt(e);
-        if (v < 0) v = 0;
-        v += delta;
-        if (v < 0) v = 0;
-        e.setText("" + v);
-    }
+    String displayScore(int v) { return v >= 0 ? "" + v : "-"; }
 
-    EditText scoreBox(int val) {
-        EditText e = new EditText(this);
-        e.setHint("-");
-        e.setText(val >= 0 ? "" + val : "");
-        e.setTextSize(18);
-        e.setInputType(InputType.TYPE_CLASS_NUMBER);
+    TextView scoreBoxLabel(int val) {
+        TextView e = label(displayScore(val), 21, text, true);
         e.setGravity(Gravity.CENTER);
-        e.setTextColor(text);
-        e.setHintTextColor(subText);
         e.setBackground(round(chipBg, dp(14), 0));
         return e;
     }
 
-    int getInt(EditText e) {
-        try { return Integer.parseInt(e.getText().toString()); }
-        catch(Exception x) { return -1; }
+    String shortName(String s) {
+        if (s.startsWith("TBD")) return s;
+        return s.length() > 12 ? s.substring(0, 12) : s;
     }
 
     void showGroups() {
-        clear("Groups", "Full P/W/D/L/GF/GA/GD/Pts tables", "Groups");
+        clear("Groups", "Clean tournament standings", "Groups");
         Map<String,List<TeamRow>> map = data.standings();
         for (String g: data.groups) {
             LinearLayout c = card();
             c.addView(label("Group " + g, 23, RED, true));
-            c.addView(label("Team          P  W  D  L  GF GA GD Pts", 12, subText, true));
+            LinearLayout head = tableRow("#", "Team", "P", "W", "D", "L", "GD", "Pts", true, subText);
+            c.addView(head);
             List<TeamRow> rows = map.get(g);
             for (int i=0;i<rows.size();i++) {
                 TeamRow r = rows.get(i);
-                String medal = i==0 ? "🥇" : i==1 ? "🥈" : i==2 ? "🥉" : "•";
-                String line = medal+" "+flag(r.team)+" "+r.team+"  "+r.p+"  "+r.w+"  "+r.d+"  "+r.l+"  "+r.gf+"  "+r.ga+"  "+(r.gf-r.ga)+"  "+r.pts;
-                c.addView(label(line, 14, text, false));
+                int color = i < 2 ? GREEN : (i == 2 ? GOLD : subText);
+                c.addView(tableRow((i+1)+"", flag(r.team)+" "+r.team, r.p+"", r.w+"", r.d+"", r.l+"", (r.gf-r.ga)+"", r.pts+"", false, color));
             }
         }
         LinearLayout third = card();
-        third.addView(label("🥉 Best third-placed ranking", 22, text, true));
+        third.addView(label("🥉 Best third-placed teams", 22, text, true));
         List<TeamRow> th = data.bestThirds();
         for (int i=0;i<th.size();i++) {
             TeamRow r = th.get(i);
@@ -373,11 +410,34 @@ public class MainActivity extends Activity {
         }
     }
 
+    LinearLayout tableRow(String pos, String team, String p, String w, String d, String l, String gd, String pts, boolean bold, int color) {
+        LinearLayout r = hrow();
+        r.setPadding(0, dp(4), 0, dp(4));
+        r.addView(cell(pos, 0.45f, bold, color));
+        r.addView(cell(team, 2.4f, bold, color));
+        r.addView(cell(p, 0.55f, bold, color));
+        r.addView(cell(w, 0.55f, bold, color));
+        r.addView(cell(d, 0.55f, bold, color));
+        r.addView(cell(l, 0.55f, bold, color));
+        r.addView(cell(gd, 0.7f, bold, color));
+        r.addView(cell(pts, 0.8f, true, color));
+        return r;
+    }
+
+    TextView cell(String s, float weight, boolean bold, int color) {
+        TextView t = label(s, 12, color, bold);
+        t.setGravity(Gravity.CENTER_VERTICAL);
+        t.setSingleLine(true);
+        t.setTextSize(s.length() > 14 ? 11 : 12);
+        t.setLayoutParams(new LinearLayout.LayoutParams(0, dp(34), weight));
+        return t;
+    }
+
     void showPredictor() {
         clear("Predictor", "Studio, bracket and share poster", "Predict");
         LinearLayout c = card();
         c.addView(label("🔮 Prediction Studio", 25, text, true));
-        c.addView(label("Build your tournament, pick your champion and share a clean poster with friends.", 15, subText, false));
+        c.addView(label("A clean tournament studio built for football fans: enter scores, generate tables, bracket, champion pick and share poster.", 15, subText, false));
         Button scores = btn("Enter Scores");
         scores.setOnClickListener(v -> showMatches());
         c.addView(scores);
@@ -390,12 +450,12 @@ public class MainActivity extends Activity {
         Button dream = btn("Dream Final");
         dream.setOnClickListener(v -> showDreamFinal());
         c.addView(dream);
-        Button reset = btn("Reset Scores");
+        Button reset = outlineBtn("Reset Scores");
         reset.setOnClickListener(v -> { data.reset(); showPredictor(); });
         c.addView(reset);
 
         LinearLayout q = card();
-        q.addView(label("✅ Qualified teams", 22, text, true));
+        q.addView(label("✅ Qualified teams preview", 22, text, true));
         List<TeamRow> qual = data.qualified();
         for (int i=0;i<Math.min(qual.size(), 16);i++) {
             TeamRow r = qual.get(i);
@@ -404,44 +464,72 @@ public class MainActivity extends Activity {
     }
 
     void showKnockout() {
-        clear("Pro Bracket", "Visual tournament path", "Predict");
+        clear("Pro Bracket", "Premium tournament path", "Predict");
         List<TeamRow> q = data.qualified();
-        String[] rounds = {"Round of 32", "Round of 16", "Quarter-finals", "Semi-finals", "Final", "Champion"};
+
+        LinearLayout intro = card();
+        intro.setBackground(gradient(RED_DARK, RED, dp(24)));
+        intro.addView(label("🏆 Knockout Path", 26, Color.WHITE, true));
+        intro.addView(label("Projected bracket based on your group results.", 15, Color.WHITE, false));
+
+        String[] rounds = {"Round of 32", "Round of 16", "Quarter-finals", "Semi-finals", "Final"};
         int games = 16;
         for (String round: rounds) {
             LinearLayout c = card();
-            c.addView(label("🏆 " + round, 23, RED, true));
-            if (round.equals("Champion")) {
-                TeamRow champ = q.size()>0 ? q.get(0) : null;
-                c.addView(label(champ==null ? "TBD" : flag(champ.team)+" "+champ.team, 34, GOLD, true));
-                continue;
-            }
+            c.addView(label(round, 23, RED, true));
             for (int i=0; i<games; i++) {
                 String a = q.size()>0 ? q.get((i*2)%q.size()).team : "TBD";
                 String b = q.size()>1 ? q.get((i*2+1)%q.size()).team : "TBD";
-                TextView line = label("┌ "+flag(a)+" "+a+"\n┤ vs\n└ "+flag(b)+" "+b, 15, text, false);
-                line.setBackground(round(chipBg, dp(14), 0));
-                line.setPadding(dp(12), dp(8), dp(12), dp(8));
-                c.addView(line);
+                String winner = pickWinner(a, b);
+                LinearLayout match = innerCard(c);
+                match.addView(label(flag(a)+" "+a, 15, text, true));
+                match.addView(label("        │", 12, subText, false));
+                match.addView(label(flag(b)+" "+b, 15, text, true));
+                match.addView(label("Projected winner: "+flag(winner)+" "+winner, 13, GREEN, true));
             }
             games = Math.max(1, games/2);
         }
+
+        LinearLayout champ = card();
+        String ch = q.size()>0 ? q.get(0).team : myTeam;
+        champ.setBackground(gradient(RED_DARK, RED, dp(24)));
+        champ.addView(label("🏆 Champion Pick", 23, Color.WHITE, true));
+        champ.addView(label(flag(ch)+" "+ch, 36, GOLD, true));
+    }
+
+    String pickWinner(String a, String b) {
+        if (a.equals(myTeam)) return a;
+        if (b.equals(myTeam)) return b;
+        return a.compareTo(b) <= 0 ? a : b;
     }
 
     void showPoster() {
-        clear("Share Poster", "Ready for Facebook, WhatsApp and Instagram", "Predict");
+        clear("Share Poster", "Designed for social media", "Predict");
         LinearLayout p = card();
         p.setBackground(gradient(RED_DARK, RED, dp(24)));
         p.addView(label("WORLD CUP FAN 2026", 25, Color.WHITE, true));
-        p.addView(label("My Prediction Poster", 18, Color.WHITE, false));
+        p.addView(label("MY TOURNAMENT PREDICTION", 17, Color.WHITE, false));
         p.addView(label(flag(myTeam)+" My team: "+myTeam, 22, Color.WHITE, true));
         List<TeamRow> q = data.qualified();
         String champ = q.size()>0 ? q.get(0).team : myTeam;
-        p.addView(label("🏆 Champion pick: "+flag(champ)+" "+champ, 24, GOLD, true));
-        p.addView(label("Top 4: "+topTeams(4), 15, Color.WHITE, false));
-        Button share = btn("Share as text");
+        p.addView(label("🏆 Champion: "+flag(champ)+" "+champ, 25, GOLD, true));
+        p.addView(label("Top 4\n"+topTeamsLines(4), 16, Color.WHITE, false));
+        p.addView(label("Made with World Cup Fan 2026", 13, Color.WHITE, false));
+
+        Button share = btn("Share Prediction Text");
         share.setOnClickListener(v -> sharePrediction());
         p.addView(share);
+
+        LinearLayout note = card();
+        note.addView(label("Next upgrade", 19, text, true));
+        note.addView(label("The visual poster layout is ready. In a later build we can export this as a real PNG image for Instagram/Facebook.", 15, subText, false));
+    }
+
+    String topTeamsLines(int n) {
+        List<TeamRow> q = data.qualified();
+        String s = "";
+        for (int i=0;i<Math.min(n,q.size());i++) s += (i+1)+". "+flag(q.get(i).team)+" "+q.get(i).team+"\n";
+        return s.length()==0 ? "TBD" : s;
     }
 
     String topTeams(int n) {
@@ -505,7 +593,7 @@ public class MainActivity extends Activity {
             {"🇲🇽 Mexico City","Opening match energy and historic football culture."},
             {"🇨🇦 Toronto","Canada showcase city."},
             {"🇺🇸 Los Angeles","Entertainment capital and massive fan base."},
-            {"🇺🇸 New York/New Jersey","Final candidate atmosphere."},
+            {"🇺🇸 New York/New Jersey","Final atmosphere and huge global audience."},
             {"🇺🇸 Dallas","Huge stadium, huge matches."},
             {"🇺🇸 Miami","Latin football culture and beach city vibe."},
             {"🇨🇦 Vancouver","West coast Canadian host."},
@@ -540,15 +628,17 @@ public class MainActivity extends Activity {
         c.addView(mode);
 
         LinearLayout l = card();
-        l.addView(label("Version 7.0 Store Ready", 22, RED, false));
+        l.addView(label("Version 8.0 Play Store Edition", 22, RED, false));
         l.addView(label("Independent fan-made app. No official FIFA logo, no official crests, no player photos, no live streaming. Works offline and lets fans build predictions.", 15, subText, false));
     }
 
     void showPremium() {
         clear("Premium", "Free vs Pro positioning", "More");
         LinearLayout c = card();
-        c.addView(label("💎 Pro Version", 27, GOLD, true));
-        c.addView(label("Suggested price: €1.99\n\nFREE:\n• Basic scores\n• Group tables\n• One prediction\n\nPRO:\n• Multiple saved predictions\n• Share poster\n• Advanced statistics\n• Dream finals\n• Premium themes\n• Export PDF/PNG\n• Match reminders\n• Custom tournaments", 16, subText, false));
+        c.setBackground(gradient(RED_DARK, RED, dp(24)));
+        c.addView(label("💎 World Cup Fan Pro", 27, Color.WHITE, true));
+        c.addView(label("Suggested price: €1.99", 20, GOLD, true));
+        c.addView(label("FREE\n• Basic scores\n• Group tables\n• One prediction\n\nPRO\n• Multiple saved predictions\n• Share poster\n• Advanced statistics\n• Dream finals\n• Premium themes\n• Export PDF/PNG\n• Match reminders\n• Custom tournaments", 16, Color.WHITE, false));
         Button share = btn("Share App");
         share.setOnClickListener(v -> shareText("World Cup Fan 2026 - offline tournament predictor and fan simulator."));
         c.addView(share);
@@ -558,15 +648,14 @@ public class MainActivity extends Activity {
         clear("Statistics", "Advanced tournament insights", "More");
         LinearLayout c = card();
         c.addView(label("📊 Tournament stats", 25, text, true));
-        c.addView(label("Played matches: "+data.playedCount(), 18, subText, false));
-        c.addView(label("Goals: "+data.totalGoals(), 18, subText, false));
+        c.addView(kpiRow("Played", ""+data.playedCount(), "Goals", ""+data.totalGoals(), "Progress", data.progressPercent()+"%", false));
         c.addView(label("Average goals: "+data.avgGoals(), 18, subText, false));
         c.addView(label("Best attack: "+data.bestAttack(), 18, RED, true));
-        c.addView(label("Prediction progress: "+data.progressPercent()+"%", 18, GREEN, true));
+        c.addView(label("Highest scoring group: "+data.bestGroup(), 18, GREEN, true));
     }
 
     void sharePrediction() {
-        String msg = "⚽ World Cup Fan 2026 Prediction\n\nMy team: "+flag(myTeam)+" "+myTeam+"\nChampion pick: "+topTeams(1)+"\nTop 4: "+topTeams(4)+"\n\nMade with World Cup Fan 2026";
+        String msg = "⚽ World Cup Fan 2026 Prediction\n\nMy team: "+flag(myTeam)+" "+myTeam+"\nChampion pick: "+topTeams(1)+"\nTop 4: "+topTeams(4)+"\nProgress: "+data.progressPercent()+"%\n\nMade with World Cup Fan 2026";
         shareText(msg);
     }
 
@@ -617,7 +706,6 @@ public class MainActivity extends Activity {
         String group, home, away, date, venue;
         int homeGoals=-1, awayGoals=-1;
         Match(String g, String h, String a, String d, String v){group=g;home=h;away=a;date=d;venue=v;}
-        String label(){return home+"  "+(homeGoals>=0?homeGoals:"-")+" : "+(awayGoals>=0?awayGoals:"-")+"  "+away;}
     }
     static class TeamRow {
         String group, team; int pts,gf,ga,w,d,l,p;
@@ -672,6 +760,7 @@ public class MainActivity extends Activity {
         String avgGoals(){return playedCount()==0?"0.00":String.format(Locale.US,"%.2f",totalGoals()*1.0/playedCount());}
         int progressPercent(){return (int)Math.round(playedCount()*100.0/matches.size());}
         String bestAttack(){Map<String,Integer> gf=new HashMap<>();for(Match m:matches)if(m.homeGoals>=0&&m.awayGoals>=0){gf.put(m.home,gf.getOrDefault(m.home,0)+m.homeGoals);gf.put(m.away,gf.getOrDefault(m.away,0)+m.awayGoals);}String best="TBD";int max=-1;for(String t:gf.keySet())if(gf.get(t)>max){max=gf.get(t);best=t;}return best+" ("+Math.max(0,max)+")";}
+        String bestGroup(){Map<String,Integer> goals=new HashMap<>();for(Match m:matches)if(m.homeGoals>=0&&m.awayGoals>=0)goals.put(m.group,goals.getOrDefault(m.group,0)+m.homeGoals+m.awayGoals);String best="TBD";int max=-1;for(String g:goals.keySet())if(goals.get(g)>max){max=goals.get(g);best=g;}return best+" ("+Math.max(0,max)+" goals)";}
         Match nextFor(String team){for(Match m:matches)if((m.home.equals(team)||m.away.equals(team))&&m.homeGoals<0)return m;return null;}
     }
 }
