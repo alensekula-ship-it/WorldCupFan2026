@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v10.3 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v10.4 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -148,9 +148,9 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v10.3 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v10.4 • "+lang+" • Global fan app","Home");
         LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v10.3",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v10.4",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
         TextView count=label("",34,RED,true); countCard.addView(count);
         Runnable r=new Runnable(){public void run(){String d=daysTo("2026-06-11 21:00"); count.setText(d+" "+(d.equals("1")?"day":"days")+" to opening"); handler.postDelayed(this,60000);}}; r.run();
 
-        LinearLayout cro=card(); cro.addView(label("🇭🇷 "+tr(myTeam + " Road to Final"),22,text,true));
+        LinearLayout cro=card(); cro.addView(label(flag(myTeam)+" "+myTeam+" Road to Final",22,text,true));
         cro.addView(label(groupLineFor(myTeam),15,subText,false));
         cro.addView(pathPreview(myTeam));
         Button hub=btn(tr("Team Hub")); hub.setOnClickListener(v->showMyTeam()); cro.addView(hub);
@@ -170,7 +170,7 @@ public class MainActivity extends Activity {
 
     LinearLayout pathPreview(String team){
         LinearLayout p=new LinearLayout(this);p.setOrientation(LinearLayout.VERTICAL);p.setPadding(0,dp(6),0,dp(8));
-        String[] steps={"Group L","Round of 32","Round of 16","Quarter-final","Semi-final","Final"};
+        String[] steps={"Group "+groupOfTeam(myTeam),"Round of 32","Round of 16","Quarter-final","Semi-final","Final"};
         for(String s:steps)p.addView(label("   "+flag(team)+" "+team+"  →  "+s,14,subText,false));
         return p;
     }
@@ -313,21 +313,21 @@ void showPredictor(){
     }
 
     void showCroatiaRoad() {
-        clear(myTeam + " Road", "Group L and path to final", "More");
+        clear(myTeam + " Road", "Group "+groupOfTeam(myTeam)+" and path to final", "More");
         LinearLayout hero = card();
         hero.setBackground(gradient(RED_DARK, RED, dp(24)));
         hero.addView(label(flag(myTeam) + " " + myTeam + " Road to Final", 25, Color.WHITE, true));
         hero.addView(label(groupLineFor(myTeam), 16, Color.WHITE, false));
         LinearLayout g = card();
-        g.addView(label("Group L matches", 22, text, true));
+        g.addView(label("Group "+groupOfTeam(myTeam)+" matches", 22, text, true));
         for (Match m : data.matches) {
-            if (m.group.equals("L") || m.home.equals("Croatia") || m.away.equals("Croatia")) {
+            if (m.group.equals(groupOfTeam(myTeam)) || m.home.equals(myTeam) || m.away.equals(myTeam)) {
                 g.addView(label(m.date + " • " + flag(m.home) + " " + m.home + " vs " + flag(m.away) + " " + m.away, 14, subText, false));
             }
         }
         LinearLayout road = card();
         road.addView(label("Projected path", 22, text, true));
-        road.addView(label("Group L → Round of 32 → Round of 16 → Quarter-final → Semi-final → Final", 16, GREEN, true));
+        road.addView(label("Group "+groupOfTeam(myTeam)+" → Round of 32 → Round of 16 → Quarter-final → Semi-final → Final", 16, GREEN, true));
         road.addView(label("This is the emotional hook for Croatian users, while the app stays global for every fan.", 14, subText, false));
     }
 
