@@ -1,7 +1,0 @@
-WorldCupFan2026 v11.1 - New Features Language Fix
-
-Fixed:
-- New v11 buttons in More screen now use selected language.
-- New v11 screen titles/subtitles now use selected language where translation keys are available.
-- Bottom navigation and old language system are preserved.
-- versionCode bumped / versionName 11.1.

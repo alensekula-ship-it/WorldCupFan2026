@@ -1,0 +1,11 @@
+WorldCupFan2026 v12.3 Build Fix
+
+Fixed GitHub build errors:
+- Added missing method showScorers()
+- Added missing method showMvp()
+
+These were required by buttons:
+- Golden Boot
+- MVP Prediction
+
+No intentional changes to teams, groups, flags, saved results, dark mode, language or My Team.
