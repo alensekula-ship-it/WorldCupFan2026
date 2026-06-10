@@ -1,4 +1,4 @@
-World Cup Fan 2026.
+World Cup Fan 2026
 
 The ultimate offline companion for football fans during the 2026 World Championship.
 
