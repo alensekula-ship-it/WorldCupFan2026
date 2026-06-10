@@ -2,4 +2,7 @@
     <color name="red_primary">#C8102E</color>
     <color name="red_dark">#8B0018</color>
     <color name="white">#FFFFFF</color>
+    <color name="wcf_red">#E00030</color>
+    <color name="wcf_dark_red">#5C0014</color>
+    <color name="wcf_gold">#F7C437</color>
 </resources>

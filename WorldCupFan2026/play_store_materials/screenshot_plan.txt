@@ -1,0 +1,24 @@
+PLAY STORE SCREENSHOT PLAN
+
+1. Home Dashboard
+Text overlay: Predict the World Cup 2026
+
+2. My Team / Road to Final
+Text overlay: Follow your team to the final
+
+3. Groups
+Text overlay: Live group tables from your scores
+
+4. Visual Bracket
+Text overlay: Build your knockout path
+
+5. Host Cities
+Text overlay: Explore host cities
+
+6. Players
+Text overlay: Golden Boot and MVP predictions
+
+7. Share Poster
+Text overlay: Share your fan prediction
+
+Recommended: 1080 x 1920 portrait screenshots.
