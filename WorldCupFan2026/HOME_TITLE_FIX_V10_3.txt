@@ -1,0 +1,8 @@
+WorldCupFan2026 v10.3 - Home Title Fix
+
+Fixed:
+- Home card title now uses selected My Team dynamically.
+- Example: England Road to Final, Croatia Road to Final, Brazil Road to Final.
+- Group line and path labels now use the selected team where hardcoded text existed.
+
+No intentional design, language, data or feature changes were made.

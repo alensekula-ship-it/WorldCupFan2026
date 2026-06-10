@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
         else if(key.equals("Switch to Light Mode")){hr="Prebaci na svijetli način";de="Hellmodus";es="Modo claro";fr="Mode clair";}
         else if(key.equals("Switch to Dark Mode")){hr="Prebaci na tamni način";de="Dunkelmodus";es="Modo oscuro";fr="Mode sombre";}
         else if(key.equals("Language")){hr="Jezik";de="Sprache";es="Idioma";fr="Langue";}
-        else if(key.equals("Croatia Road to Final")){hr="Hrvatska put do finala";de="Kroatien Weg ins Finale";es="Croacia camino a la final";fr="Croatie route finale";}
+        else if(key.equals(myTeam + " Road to Final")){hr="Hrvatska put do finala";de="Kroatien Weg ins Finale";es="Croacia camino a la final";fr="Croatie route finale";}
         else if(key.equals("Free vs Pro")){hr="Besplatno vs Pro";de="Gratis vs Pro";es="Gratis vs Pro";fr="Gratuit vs Pro";}
         else if(key.equals("Open")){hr="Otvori";de="Öffnen";es="Abrir";fr="Ouvrir";}
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v10.0 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v10.3 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -148,9 +148,9 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v10.0 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v10.3 • "+lang+" • Global fan app","Home");
         LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v10.0",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v10.3",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -158,8 +158,8 @@ public class MainActivity extends Activity {
         TextView count=label("",34,RED,true); countCard.addView(count);
         Runnable r=new Runnable(){public void run(){String d=daysTo("2026-06-11 21:00"); count.setText(d+" "+(d.equals("1")?"day":"days")+" to opening"); handler.postDelayed(this,60000);}}; r.run();
 
-        LinearLayout cro=card(); cro.addView(label("🇭🇷 "+tr("Croatia Road to Final"),22,text,true));
-        cro.addView(label("Group L: England, Croatia, Ghana, Panama",15,subText,false));
+        LinearLayout cro=card(); cro.addView(label("🇭🇷 "+tr(myTeam + " Road to Final"),22,text,true));
+        cro.addView(label(groupLineFor(myTeam),15,subText,false));
         cro.addView(pathPreview(myTeam));
         Button hub=btn(tr("Team Hub")); hub.setOnClickListener(v->showMyTeam()); cro.addView(hub);
 
@@ -223,7 +223,38 @@ public class MainActivity extends Activity {
     LinearLayout tableRow(String pos,String team,String p,String w,String d,String l,String gd,String pts,boolean bold,int color){LinearLayout r=hrow();r.setPadding(0,dp(4),0,dp(4));r.addView(cell(pos,.45f,bold,color));r.addView(cell(team,2.4f,bold,color));r.addView(cell(p,.55f,bold,color));r.addView(cell(w,.55f,bold,color));r.addView(cell(d,.55f,bold,color));r.addView(cell(l,.55f,bold,color));r.addView(cell(gd,.7f,bold,color));r.addView(cell(pts,.8f,true,color));return r;}
     TextView cell(String s,float w,boolean bold,int color){TextView t=label(s,12,color,bold);t.setGravity(Gravity.CENTER_VERTICAL);t.setSingleLine(true);t.setTextSize(s.length()>14?10:12);t.setLayoutParams(new LinearLayout.LayoutParams(0,dp(34),w));return t;}
 
-    void showPredictor(){
+    
+    String groupLineFor(String team) {
+        if (team == null) return "";
+        for (String g : data.groups) {
+            ArrayList<String> names = new ArrayList<>();
+            for (Match m : data.matches) {
+                if (m.group.equals(g)) {
+                    if (!names.contains(m.home)) names.add(m.home);
+                    if (!names.contains(m.away)) names.add(m.away);
+                }
+            }
+            if (names.contains(team)) {
+                String line = "Group " + g + ": ";
+                for (int i=0; i<names.size(); i++) {
+                    if (i>0) line += ", ";
+                    line += names.get(i);
+                }
+                return line;
+            }
+        }
+        return "";
+    }
+
+    String groupOfTeam(String team) {
+        if (team == null) return "";
+        for (Match m : data.matches) {
+            if (m.home.equals(team) || m.away.equals(team)) return m.group;
+        }
+        return "";
+    }
+
+void showPredictor(){
         clear(tr("Predict"),tr("Prediction Studio"),"Predict");
         LinearLayout c=card();c.addView(label("🔮 "+tr("Prediction Studio"),25,text,true));c.addView(label("Scores → tables → best thirds → bracket → champion → share poster.",15,subText,false));
         Button s=btn(tr("Enter Scores"));s.setOnClickListener(v->showMatches());c.addView(s);Button br=btn(tr("Pro Bracket"));br.setOnClickListener(v->showKnockout());c.addView(br);Button poster=btn(tr("Share Poster"));poster.setOnClickListener(v->showPoster());c.addView(poster);Button df=btn(tr("Dream Final"));df.setOnClickListener(v->showDreamFinal());c.addView(df);Button reset=outline(tr("Reset Scores"));reset.setOnClickListener(v->{data.reset();showPredictor();});c.addView(reset);
@@ -257,7 +288,7 @@ public class MainActivity extends Activity {
         clear(tr("More"),tr("Language")+" • Premium • Settings","More");
         LinearLayout langCard=card();langCard.addView(label("🌍 "+tr("Language"),22,text,true));LinearLayout langs=hrow();for(String l:new String[]{"EN","HR","DE","ES","FR"}){TextView cc=chip(l);if(l.equals(lang)){cc.setTextColor(Color.WHITE);cc.setBackground(gradient(RED_DARK,RED,dp(18)));}cc.setOnClickListener(v->{lang=((TextView)v).getText().toString();prefs.edit().putString("lang",lang).apply();redraw();});langs.addView(cc,new LinearLayout.LayoutParams(0,dp(44),1));}langCard.addView(langs);
         LinearLayout c=card();String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket"),tr("Premium")};for(String n:names){Button b=btn(n);if(n.equals(tr("My Team")))b.setOnClickListener(v->showMyTeam());else if(n.equals(tr("Statistics")))b.setOnClickListener(v->showStats());else if(n.equals(tr("Host Cities")))b.setOnClickListener(v->showCities());else if(n.equals(tr("Pro Bracket")))b.setOnClickListener(v->showKnockout());else b.setOnClickListener(v->showPremium());c.addView(b);}
-        Button cro = btn("Croatia Road to Final"); cro.setOnClickListener(v -> showCroatiaRoad()); c.addView(cro);
+        Button cro = btn(myTeam + " Road to Final"); cro.setOnClickListener(v -> showCroatiaRoad()); c.addView(cro);
         Button facts = btn("World Cup Facts"); facts.setOnClickListener(v -> showWorldCupFacts()); c.addView(facts);
         Button launch = btn("Play Store Checklist"); launch.setOnClickListener(v -> showPlayStoreChecklist()); c.addView(launch);
         Button privacy = btn("Privacy / Legal"); privacy.setOnClickListener(v -> showPrivacyInfo()); c.addView(privacy);
@@ -282,11 +313,11 @@ public class MainActivity extends Activity {
     }
 
     void showCroatiaRoad() {
-        clear("Croatia Road", "Group L and path to final", "More");
+        clear(myTeam + " Road", "Group L and path to final", "More");
         LinearLayout hero = card();
         hero.setBackground(gradient(RED_DARK, RED, dp(24)));
-        hero.addView(label("🇭🇷 Croatia Road to Final", 25, Color.WHITE, true));
-        hero.addView(label("Group L: England, Croatia, Ghana, Panama", 16, Color.WHITE, false));
+        hero.addView(label(flag(myTeam) + " " + myTeam + " Road to Final", 25, Color.WHITE, true));
+        hero.addView(label(groupLineFor(myTeam), 16, Color.WHITE, false));
         LinearLayout g = card();
         g.addView(label("Group L matches", 22, text, true));
         for (Match m : data.matches) {
