@@ -1,0 +1,9 @@
+WorldCupFan2026 v10.4 - Flag and Group Fix
+
+Fixed:
+- Home Road to Final title flag now follows selected My Team.
+- Road path group row now uses the selected team's real group instead of hardcoded Group L.
+- Example: Iran shows Iranian flag and Iran -> Group G.
+- Example: England shows England flag and England -> Group L.
+
+No intentional design, language, data or feature changes were made.

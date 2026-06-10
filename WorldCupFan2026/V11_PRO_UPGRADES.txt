@@ -1,0 +1,21 @@
+WorldCupFan2026 v11.0 Pro Upgrades
+
+Added 10 upgrade areas:
+1. Visual Bracket
+2. Golden Boot / scorers simulation
+3. MVP prediction
+4. Compare two teams
+5. Export backup code
+6. PDF Poster Info / poster workflow
+7. World Cup Quiz
+8. Stadium Guide
+9. City Guide Pro
+10. Achievements / badges
+
+Kept:
+- Last stable build as base
+- Working languages
+- Working My Team save/refresh
+- Working flag/group Home fix
+- No TBD teams
+- Existing results/dark mode/language persistence
