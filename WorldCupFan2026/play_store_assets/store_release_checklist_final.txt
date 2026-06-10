@@ -1,0 +1,7 @@
+FINAL PLAY STORE CHECKLIST
+- App icon 512x512
+- Screenshots uploaded
+- Privacy policy URL
+- Data safety completed
+- Internal testing passed
+- AAB uploaded
