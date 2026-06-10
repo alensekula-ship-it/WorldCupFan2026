@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v10.4 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v11.0 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -148,9 +148,13 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v10.4 • "+lang+" • Global fan app","Home");
-        LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v10.4",24,Color.WHITE,true));
+        clear("World Cup Fan 2026","v11.0 • "+lang+" • Global fan app","Home");
+        
+        LinearLayout upgrade = card();
+        upgrade.addView(label("🚀 v11 Pro Upgrades", 22, text, true));
+        upgrade.addView(label("New: visual bracket, Golden Boot, MVP, team compare, backup export, quiz, stadium guide, city guide and achievements.", 14, subText, false));
+LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
+        hero.addView(label("🌍 GLOBAL EDITION v11.0",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -284,10 +288,207 @@ void showPredictor(){
     void showMyTeam(){clear(tr("My Team"),"Team hub","More");LinearLayout c=card();c.addView(label(flag(myTeam)+" "+myTeam,28,RED,true));Spinner sp=spinner(data.teams,myTeam);c.addView(sp);Button save=btn("Save");save.setOnClickListener(v->{myTeam = sp.getSelectedItem().toString(); prefs.edit().putString("team", myTeam).apply(); toast("My Team saved"); showHome();});c.addView(save);LinearLayout path=card();path.addView(label("Road to Final",22,text,true));path.addView(pathPreview(myTeam));LinearLayout m=card();m.addView(label("⚽ "+tr("Matches"),22,text,true));for(Match ma:data.matches)if(ma.home.equals(myTeam)||ma.away.equals(myTeam))m.addView(label(ma.date+" • "+flag(ma.home)+" "+ma.home+" vs "+flag(ma.away)+" "+ma.away,14,subText,false));}
     void showCities(){clear(tr("Host Cities"),"USA • Mexico • Canada","More");String[][] cities={{"🇲🇽 Mexico City","Opening match energy and historic football culture."},{"🇨🇦 Toronto","Canada showcase city."},{"🇺🇸 Los Angeles","Entertainment capital and massive fan base."},{"🇺🇸 New York/New Jersey","Final atmosphere and huge global audience."},{"🇺🇸 Dallas","Huge stadium, huge matches."},{"🇺🇸 Miami","Latin football culture."},{"🇨🇦 Vancouver","West coast Canadian host."},{"🇺🇸 Atlanta","Modern stadium and fan festival city."},{"🇺🇸 Houston","International city."},{"🇺🇸 Kansas City","American soccer heartland."},{"🇺🇸 Boston","Historic sports city."},{"🇺🇸 Seattle","Strong supporter culture."}};for(String[] ci:cities){LinearLayout c=card();c.addView(label(ci[0],22,text,true));c.addView(label(ci[1],15,subText,false));}}
 
-    void showMore(){
+    
+    void showVisualBracket() {
+        clear("Visual Bracket", "Tournament tree preview", "Predict");
+        ArrayList<String> q = new ArrayList<>();
+        for (TeamRow r : data.qualified()) q.add(r.team);
+        if (q.size() == 0) q.add(myTeam);
+
+        String[] rounds = {"Round of 32", "Round of 16", "Quarter-finals", "Semi-finals", "Final"};
+        int games = 16;
+        for (String round : rounds) {
+            LinearLayout c = card();
+            c.addView(label("🏆 " + round, 23, RED, true));
+            for (int i=0; i<games; i++) {
+                String a = q.get((i*2) % q.size());
+                String b = q.get((i*2+1) % q.size());
+                String w = projectedWinner(a,b);
+                TextView box = label("┌ " + flag(a) + " " + a + "\n├─ vs\n└ " + flag(b) + " " + b + "\n→ " + flag(w) + " " + w, 14, text, false);
+                box.setPadding(dp(12), dp(10), dp(12), dp(10));
+                box.setBackground(round(chipBg, dp(16), 1));
+                c.addView(box);
+            }
+            games = Math.max(1, games/2);
+        }
+    }
+
+    String projectedWinner(String a, String b) {
+        if (a.equals(myTeam)) return a;
+        if (b.equals(myTeam)) return b;
+        int aa = teamPower(a), bb = teamPower(b);
+        if (aa == bb) return a.compareTo(b) <= 0 ? a : b;
+        return aa > bb ? a : b;
+    }
+
+    int teamPower(String t) {
+        String elite = "Brazil Argentina France England Spain Germany Portugal Netherlands Belgium Croatia";
+        String strong = "Uruguay Colombia Morocco Switzerland Denmark USA Mexico Japan Senegal";
+        if (elite.contains(t)) return 90;
+        if (strong.contains(t)) return 78;
+        return 65;
+    }
+
+    void showScorers() {
+        clear("Scorers", "Golden Boot simulation", "More");
+        LinearLayout c = card();
+        c.addView(label("🥇 Golden Boot Race", 24, text, true));
+        c.addView(label("Simulated from team strength and your entered match scores.", 15, subText, false));
+        String[] names = {"Kylian Mbappé","Lionel Messi","Harry Kane","Cristiano Ronaldo","Vinícius Jr","Jamal Musiala","Lamine Yamal","Luka Modrić","Erling Haaland","Mohamed Salah"};
+        String[] teams = {"France","Argentina","England","Portugal","Brazil","Germany","Spain","Croatia","Norway","Egypt"};
+        for (int i=0; i<names.length; i++) {
+            int goals = Math.max(1, 8-i + (teamPower(teams[i])>80?1:0));
+            c.addView(label((i+1)+". " + names[i] + " • " + flag(teams[i]) + " " + teams[i] + " • " + goals + " goals", 15, i<3?RED:subText, i<3));
+        }
+    }
+
+    void showMvp() {
+        clear("MVP", "Player of the tournament", "More");
+        LinearLayout c = card();
+        c.setBackground(gradient(RED_DARK, RED, dp(24)));
+        String champ = data.qualified().size() > 0 ? data.qualified().get(0).team : myTeam;
+        c.addView(label("⭐ Tournament MVP", 26, Color.WHITE, true));
+        c.addView(label(flag(champ) + " " + champ + " leader", 25, GOLD, true));
+        c.addView(label("MVP prediction is based on your current bracket and champion pick.", 15, Color.WHITE, false));
+        LinearLayout s = card();
+        s.addView(label("Shortlist", 22, text, true));
+        s.addView(label("1. " + flag(champ) + " " + champ + " captain\n2. " + flag(myTeam) + " " + myTeam + " key player\n3. 🇫🇷 France star\n4. 🇧🇷 Brazil star\n5. 🇦🇷 Argentina star", 15, subText, false));
+    }
+
+    void showCompareTeams() {
+        clear("Compare", "Team vs Team", "More");
+        LinearLayout c = card();
+        c.addView(label("⚔️ Team Comparison", 25, text, true));
+        Spinner a = spinner(data.teams, myTeam);
+        Spinner b = spinner(data.teams, "Brazil");
+        c.addView(label("Team A", 13, subText, true)); c.addView(a);
+        c.addView(label("Team B", 13, subText, true)); c.addView(b);
+        Button compare = btn("Compare Teams");
+        compare.setOnClickListener(v -> {
+            String ta = a.getSelectedItem().toString();
+            String tb = b.getSelectedItem().toString();
+            showCompareResult(ta, tb);
+        });
+        c.addView(compare);
+    }
+
+    void showCompareResult(String a, String b) {
+        clear("Compare", a + " vs " + b, "More");
+        LinearLayout c = card();
+        c.addView(label(flag(a) + " " + a + " vs " + flag(b) + " " + b, 22, text, true));
+        int pa = teamPower(a), pb = teamPower(b);
+        c.addView(label(a + " power: " + pa, 17, pa>=pb?GREEN:subText, true));
+        c.addView(label(b + " power: " + pb, 17, pb>=pa?GREEN:subText, true));
+        String pick = projectedWinner(a,b);
+        c.addView(label("Projected winner: " + flag(pick) + " " + pick, 20, RED, true));
+    }
+
+    void showBackupExport() {
+        clear("Backup", "Export / Import prediction", "More");
+        LinearLayout c = card();
+        c.addView(label("💾 Prediction Backup", 24, text, true));
+        c.addView(label("Export code lets fans save or send their prediction. Import can be added later when we move the app from MVP to full account-free backup.", 15, subText, false));
+        Button export = btn("Share Backup Code");
+        export.setOnClickListener(v -> shareText(buildBackupCode()));
+        c.addView(export);
+    }
+
+    String buildBackupCode() {
+        String code = "WCF2026|" + myTeam + "|" + data.playedCount() + "|" + data.totalGoals() + "|" + data.progressPercent();
+        return "My World Cup Fan 2026 backup code:\n\n" + code + "\n\nSave this text for later.";
+    }
+
+    void showPdfPosterInfo() {
+        clear("PDF Poster", "Printable prediction poster", "More");
+        LinearLayout c = card();
+        c.addView(label("🖨️ PDF Prediction Poster", 24, text, true));
+        c.addView(label("The app already has the poster layout. Next technical step is Android PDF export. For now, Share Poster creates a clean shareable prediction text/card.", 15, subText, false));
+        Button open = btn("Open Share Poster");
+        open.setOnClickListener(v -> showPoster());
+        c.addView(open);
+    }
+
+    void showQuiz() {
+        clear("World Cup Quiz", "Fan challenge", "More");
+        LinearLayout c = card();
+        c.addView(label("🧠 World Cup Quiz", 25, text, true));
+        String[][] qa = {
+            {"How many teams play in 2026?","48"},
+            {"How many groups are there?","12"},
+            {"How many teams are in each group?","4"},
+            {"Which group is Croatia in?","L"},
+            {"How many third-placed teams go through?","8"}
+        };
+        for (String[] q : qa) {
+            TextView item = label("❓ " + q[0] + "\n✅ " + q[1], 15, subText, false);
+            item.setPadding(dp(10), dp(8), dp(10), dp(8));
+            item.setBackground(round(chipBg, dp(16), 1));
+            c.addView(item);
+        }
+    }
+
+    void showStadiumGuide() {
+        clear("Stadium Guide", "Host stadium notes", "More");
+        String[][] stadiums = {
+            {"Azteca Stadium","Mexico City • iconic opening venue"},
+            {"MetLife Stadium","New York/New Jersey • final-level stadium"},
+            {"AT&T Stadium","Dallas • huge capacity"},
+            {"SoFi Stadium","Los Angeles • modern showpiece"},
+            {"Hard Rock Stadium","Miami • global fan city"},
+            {"BC Place","Vancouver • Canadian west coast"}
+        };
+        for (String[] s : stadiums) {
+            LinearLayout c = card();
+            c.addView(label("🏟️ " + s[0], 22, text, true));
+            c.addView(label(s[1], 15, subText, false));
+        }
+    }
+
+    void showCityGuidePro() {
+        clear("City Guide", "Fan travel notes", "More");
+        String[][] cities = {
+            {"Mexico City","Opening energy, football history, altitude factor."},
+            {"Los Angeles","Entertainment, big stadium, global fan base."},
+            {"New York/New Jersey","Final atmosphere and media center."},
+            {"Dallas","Massive stadium and high-scoring indoor-style matches."},
+            {"Miami","Latin football culture and beach city vibe."},
+            {"Toronto","Canada showcase and multicultural fan base."}
+        };
+        for (String[] city : cities) {
+            LinearLayout c = card();
+            c.addView(label("🌎 " + city[0], 22, text, true));
+            c.addView(label(city[1], 15, subText, false));
+        }
+    }
+
+    void showAchievements() {
+        clear("Achievements", "Badges and milestones", "More");
+        LinearLayout c = card();
+        c.addView(label("🏅 Fan Achievements", 25, text, true));
+        int played = data.playedCount();
+        c.addView(label((played>=1?"✅":"⬜") + " First Prediction", 17, played>=1?GREEN:subText, true));
+        c.addView(label((played>=10?"✅":"⬜") + " Group Stage Analyst", 17, played>=10?GREEN:subText, true));
+        c.addView(label((played>=24?"✅":"⬜") + " Tournament Expert", 17, played>=24?GREEN:subText, true));
+        c.addView(label((data.progressPercent()>=100?"✅":"⬜") + " Prediction Master", 17, data.progressPercent()>=100?GOLD:subText, true));
+        c.addView(label("My Team badge: " + flag(myTeam) + " " + myTeam + " Fan", 17, RED, true));
+    }
+
+void showMore(){
         clear(tr("More"),tr("Language")+" • Premium • Settings","More");
         LinearLayout langCard=card();langCard.addView(label("🌍 "+tr("Language"),22,text,true));LinearLayout langs=hrow();for(String l:new String[]{"EN","HR","DE","ES","FR"}){TextView cc=chip(l);if(l.equals(lang)){cc.setTextColor(Color.WHITE);cc.setBackground(gradient(RED_DARK,RED,dp(18)));}cc.setOnClickListener(v->{lang=((TextView)v).getText().toString();prefs.edit().putString("lang",lang).apply();redraw();});langs.addView(cc,new LinearLayout.LayoutParams(0,dp(44),1));}langCard.addView(langs);
-        LinearLayout c=card();String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket"),tr("Premium")};for(String n:names){Button b=btn(n);if(n.equals(tr("My Team")))b.setOnClickListener(v->showMyTeam());else if(n.equals(tr("Statistics")))b.setOnClickListener(v->showStats());else if(n.equals(tr("Host Cities")))b.setOnClickListener(v->showCities());else if(n.equals(tr("Pro Bracket")))b.setOnClickListener(v->showKnockout());else b.setOnClickListener(v->showPremium());c.addView(b);}
+        LinearLayout c=card();
+
+        Button vb = btn("Visual Bracket"); vb.setOnClickListener(v -> showVisualBracket()); c.addView(vb);
+        Button scorers = btn("Golden Boot"); scorers.setOnClickListener(v -> showScorers()); c.addView(scorers);
+        Button mvp = btn("MVP Prediction"); mvp.setOnClickListener(v -> showMvp()); c.addView(mvp);
+        Button compare = btn("Compare Teams"); compare.setOnClickListener(v -> showCompareTeams()); c.addView(compare);
+        Button backup = btn("Export Backup"); backup.setOnClickListener(v -> showBackupExport()); c.addView(backup);
+        Button pdf = btn("PDF Poster Info"); pdf.setOnClickListener(v -> showPdfPosterInfo()); c.addView(pdf);
+        Button quiz = btn("World Cup Quiz"); quiz.setOnClickListener(v -> showQuiz()); c.addView(quiz);
+        Button stadium = btn("Stadium Guide"); stadium.setOnClickListener(v -> showStadiumGuide()); c.addView(stadium);
+        Button citypro = btn("City Guide Pro"); citypro.setOnClickListener(v -> showCityGuidePro()); c.addView(citypro);
+        Button badges = btn("Achievements"); badges.setOnClickListener(v -> showAchievements()); c.addView(badges);
+String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket"),tr("Premium")};for(String n:names){Button b=btn(n);if(n.equals(tr("My Team")))b.setOnClickListener(v->showMyTeam());else if(n.equals(tr("Statistics")))b.setOnClickListener(v->showStats());else if(n.equals(tr("Host Cities")))b.setOnClickListener(v->showCities());else if(n.equals(tr("Pro Bracket")))b.setOnClickListener(v->showKnockout());else b.setOnClickListener(v->showPremium());c.addView(b);}
         Button cro = btn(myTeam + " Road to Final"); cro.setOnClickListener(v -> showCroatiaRoad()); c.addView(cro);
         Button facts = btn("World Cup Facts"); facts.setOnClickListener(v -> showWorldCupFacts()); c.addView(facts);
         Button launch = btn("Play Store Checklist"); launch.setOnClickListener(v -> showPlayStoreChecklist()); c.addView(launch);
