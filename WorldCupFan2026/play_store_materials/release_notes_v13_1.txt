@@ -1,0 +1,20 @@
+Release notes v13.1
+
+Initial Play Store test release candidate.
+
+Includes:
+- 48 teams and 12 groups
+- Offline prediction simulator
+- Group standings
+- My Team hub
+- Host cities
+- Players hub
+- Golden Boot and MVP prediction
+- Visual bracket
+- Share prediction
+- Dark and light mode
+- Multiple languages
+- Privacy and About screens
+- Football app icon
+
+Independent fan-made app. Not affiliated with FIFA.

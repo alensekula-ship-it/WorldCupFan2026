@@ -1,0 +1,10 @@
+WorldCupFan2026 v13.1 AAB Play Store Ready
+
+Added:
+- GitHub Actions workflow for APK + AAB build
+- Play Console upload steps
+- Release notes for internal testing
+- Play Store metadata folders for EN/HR/DE/ES/FR
+- Internal test release checklist
+
+No intentional app logic changes.

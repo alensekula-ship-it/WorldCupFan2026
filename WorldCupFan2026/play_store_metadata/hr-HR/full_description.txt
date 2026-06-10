@@ -1,0 +1,1 @@
+World Cup Fan 2026 je nezavisna navijačka aplikacija. Odaberi reprezentaciju, upiši rezultate, izračunaj tablice, prati put do finala, istraži gradove domaćine i podijeli svoju prognozu. Bez službenog FIFA logotipa, grbova, fotografija igrača, prijenosa, klađenja ili igara na sreću.
