@@ -1,0 +1,11 @@
+WorldCupFan2026 v12.6 Build Verified Repair
+
+Fixed:
+- Clean More menu
+- Host Cities translated content
+- Players / Golden Boot / MVP translated content
+- Privacy/Legal translated button
+- Removed duplicate/test buttons
+- Ensured required methods exist
+- Java brace balance OK
+- Local compile check: no_gradlew
