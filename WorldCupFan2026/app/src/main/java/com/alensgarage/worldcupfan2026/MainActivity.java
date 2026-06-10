@@ -93,6 +93,31 @@ public class MainActivity extends Activity {
         else if(key.equals(myTeam + " Road to Final")){hr="Hrvatska put do finala";de="Kroatien Weg ins Finale";es="Croacia camino a la final";fr="Croatie route finale";}
         else if(key.equals("Free vs Pro")){hr="Besplatno vs Pro";de="Gratis vs Pro";es="Gratis vs Pro";fr="Gratuit vs Pro";}
         else if(key.equals("Open")){hr="Otvori";de="Öffnen";es="Abrir";fr="Ouvrir";}
+        
+        else if(key.equals("Visual Bracket")){hr="Vizualni kostur";de="Turnierbaum";es="Cuadro visual";fr="Tableau visuel";}
+        else if(key.equals("Golden Boot")){hr="Zlatna kopačka";de="Goldener Schuh";es="Bota de Oro";fr="Soulier d'Or";}
+        else if(key.equals("MVP Prediction")){hr="MVP prognoza";de="MVP Prognose";es="Predicción MVP";fr="Prédiction MVP";}
+        else if(key.equals("Compare Teams")){hr="Usporedi timove";de="Teams vergleichen";es="Comparar equipos";fr="Comparer équipes";}
+        else if(key.equals("Export Backup")){hr="Izvoz kopije";de="Backup exportieren";es="Exportar copia";fr="Exporter sauvegarde";}
+        else if(key.equals("PDF Poster Info")){hr="PDF poster info";de="PDF Poster Info";es="Info póster PDF";fr="Info poster PDF";}
+        else if(key.equals("World Cup Quiz")){hr="SP kviz";de="WM Quiz";es="Quiz Mundial";fr="Quiz Coupe du Monde";}
+        else if(key.equals("Stadium Guide")){hr="Vodič stadiona";de="Stadionführer";es="Guía de estadios";fr="Guide des stades";}
+        else if(key.equals("City Guide Pro")){hr="Vodič gradova Pro";de="Städteführer Pro";es="Guía de ciudades Pro";fr="Guide des villes Pro";}
+        else if(key.equals("Achievements")){hr="Postignuća";de="Erfolge";es="Logros";fr="Succès";}
+        else if(key.equals("Tournament tree preview")){hr="Pregled turnirskog stabla";de="Vorschau Turnierbaum";es="Vista del cuadro";fr="Aperçu du tableau";}
+        else if(key.equals("Golden Boot simulation")){hr="Simulacija zlatne kopačke";de="Goldener Schuh Simulation";es="Simulación Bota de Oro";fr="Simulation Soulier d'Or";}
+        else if(key.equals("Player of the tournament")){hr="Igrač turnira";de="Spieler des Turniers";es="Jugador del torneo";fr="Joueur du tournoi";}
+        else if(key.equals("Team vs Team")){hr="Tim protiv tima";de="Team gegen Team";es="Equipo contra equipo";fr="Équipe contre équipe";}
+        else if(key.equals("Export / Import prediction")){hr="Izvoz / uvoz prognoze";de="Prognose export/import";es="Exportar / importar predicción";fr="Exporter / importer pronostic";}
+        else if(key.equals("Printable prediction poster")){hr="Poster prognoze za print";de="Druckbares Prognoseposter";es="Póster imprimible";fr="Poster imprimable";}
+        else if(key.equals("Fan challenge")){hr="Navijački izazov";de="Fan Herausforderung";es="Reto de fans";fr="Défi des fans";}
+        else if(key.equals("Host stadium notes")){hr="Bilješke o stadionima";de="Stadion Notizen";es="Notas de estadios";fr="Notes stades";}
+        else if(key.equals("Fan travel notes")){hr="Navijačke putne bilješke";de="Fan Reisehinweise";es="Notas de viaje";fr="Notes voyage fans";}
+        else if(key.equals("Badges and milestones")){hr="Značke i postignuća";de="Abzeichen und Meilensteine";es="Insignias e hitos";fr="Badges et étapes";}
+        else if(key.equals("Launch readiness checklist")){hr="Popis spremnosti za objavu";de="Checkliste Veröffentlichung";es="Lista de lanzamiento";fr="Liste de lancement";}
+        else if(key.equals("Privacy")){hr="Privatnost";de="Datenschutz";es="Privacidad";fr="Confidentialité";}
+        else if(key.equals("Legal safety")){hr="Pravna sigurnost";de="Rechtliche Sicherheit";es="Seguridad legal";fr="Sécurité juridique";}
+
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -109,7 +134,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v11.0 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v11.1 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -148,13 +173,13 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v11.0 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v11.1 • "+lang+" • Global fan app","Home");
         
         LinearLayout upgrade = card();
         upgrade.addView(label("🚀 v11 Pro Upgrades", 22, text, true));
         upgrade.addView(label("New: visual bracket, Golden Boot, MVP, team compare, backup export, quiz, stadium guide, city guide and achievements.", 14, subText, false));
 LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v11.0",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v11.1",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -290,7 +315,7 @@ void showPredictor(){
 
     
     void showVisualBracket() {
-        clear("Visual Bracket", "Tournament tree preview", "Predict");
+        clear(tr("Visual Bracket"), tr("Tournament tree preview"), "Predict");
         ArrayList<String> q = new ArrayList<>();
         for (TeamRow r : data.qualified()) q.add(r.team);
         if (q.size() == 0) q.add(myTeam);
@@ -330,9 +355,9 @@ void showPredictor(){
     }
 
     void showScorers() {
-        clear("Scorers", "Golden Boot simulation", "More");
+        clear(tr("Golden Boot"), tr("Golden Boot simulation"), "More");
         LinearLayout c = card();
-        c.addView(label("🥇 Golden Boot Race", 24, text, true));
+        c.addView(label("🥇 " + tr("Golden Boot"), 24, text, true));
         c.addView(label("Simulated from team strength and your entered match scores.", 15, subText, false));
         String[] names = {"Kylian Mbappé","Lionel Messi","Harry Kane","Cristiano Ronaldo","Vinícius Jr","Jamal Musiala","Lamine Yamal","Luka Modrić","Erling Haaland","Mohamed Salah"};
         String[] teams = {"France","Argentina","England","Portugal","Brazil","Germany","Spain","Croatia","Norway","Egypt"};
@@ -343,11 +368,11 @@ void showPredictor(){
     }
 
     void showMvp() {
-        clear("MVP", "Player of the tournament", "More");
+        clear(tr("MVP Prediction"), tr("Player of the tournament"), "More");
         LinearLayout c = card();
         c.setBackground(gradient(RED_DARK, RED, dp(24)));
         String champ = data.qualified().size() > 0 ? data.qualified().get(0).team : myTeam;
-        c.addView(label("⭐ Tournament MVP", 26, Color.WHITE, true));
+        c.addView(label("⭐ " + tr("MVP Prediction"), 26, Color.WHITE, true));
         c.addView(label(flag(champ) + " " + champ + " leader", 25, GOLD, true));
         c.addView(label("MVP prediction is based on your current bracket and champion pick.", 15, Color.WHITE, false));
         LinearLayout s = card();
@@ -356,14 +381,14 @@ void showPredictor(){
     }
 
     void showCompareTeams() {
-        clear("Compare", "Team vs Team", "More");
+        clear(tr("Compare Teams"), tr("Team vs Team"), "More");
         LinearLayout c = card();
-        c.addView(label("⚔️ Team Comparison", 25, text, true));
+        c.addView(label("⚔️ " + tr("Compare Teams"), 25, text, true));
         Spinner a = spinner(data.teams, myTeam);
         Spinner b = spinner(data.teams, "Brazil");
         c.addView(label("Team A", 13, subText, true)); c.addView(a);
         c.addView(label("Team B", 13, subText, true)); c.addView(b);
-        Button compare = btn("Compare Teams");
+        Button compare = btn(tr("Compare Teams"));
         compare.setOnClickListener(v -> {
             String ta = a.getSelectedItem().toString();
             String tb = b.getSelectedItem().toString();
@@ -384,9 +409,9 @@ void showPredictor(){
     }
 
     void showBackupExport() {
-        clear("Backup", "Export / Import prediction", "More");
+        clear(tr("Export Backup"), tr("Export / Import prediction"), "More");
         LinearLayout c = card();
-        c.addView(label("💾 Prediction Backup", 24, text, true));
+        c.addView(label("💾 " + tr("Export Backup"), 24, text, true));
         c.addView(label("Export code lets fans save or send their prediction. Import can be added later when we move the app from MVP to full account-free backup.", 15, subText, false));
         Button export = btn("Share Backup Code");
         export.setOnClickListener(v -> shareText(buildBackupCode()));
@@ -399,9 +424,9 @@ void showPredictor(){
     }
 
     void showPdfPosterInfo() {
-        clear("PDF Poster", "Printable prediction poster", "More");
+        clear(tr("PDF Poster Info"), tr("Printable prediction poster"), "More");
         LinearLayout c = card();
-        c.addView(label("🖨️ PDF Prediction Poster", 24, text, true));
+        c.addView(label("🖨️ " + tr("PDF Poster Info"), 24, text, true));
         c.addView(label("The app already has the poster layout. Next technical step is Android PDF export. For now, Share Poster creates a clean shareable prediction text/card.", 15, subText, false));
         Button open = btn("Open Share Poster");
         open.setOnClickListener(v -> showPoster());
@@ -409,9 +434,9 @@ void showPredictor(){
     }
 
     void showQuiz() {
-        clear("World Cup Quiz", "Fan challenge", "More");
+        clear(tr("World Cup Quiz"), tr("Fan challenge"), "More");
         LinearLayout c = card();
-        c.addView(label("🧠 World Cup Quiz", 25, text, true));
+        c.addView(label("🧠 " + tr("World Cup Quiz"), 25, text, true));
         String[][] qa = {
             {"How many teams play in 2026?","48"},
             {"How many groups are there?","12"},
@@ -428,7 +453,7 @@ void showPredictor(){
     }
 
     void showStadiumGuide() {
-        clear("Stadium Guide", "Host stadium notes", "More");
+        clear(tr("Stadium Guide"), tr("Host stadium notes"), "More");
         String[][] stadiums = {
             {"Azteca Stadium","Mexico City • iconic opening venue"},
             {"MetLife Stadium","New York/New Jersey • final-level stadium"},
@@ -445,7 +470,7 @@ void showPredictor(){
     }
 
     void showCityGuidePro() {
-        clear("City Guide", "Fan travel notes", "More");
+        clear(tr("City Guide Pro"), tr("Fan travel notes"), "More");
         String[][] cities = {
             {"Mexico City","Opening energy, football history, altitude factor."},
             {"Los Angeles","Entertainment, big stadium, global fan base."},
@@ -462,9 +487,9 @@ void showPredictor(){
     }
 
     void showAchievements() {
-        clear("Achievements", "Badges and milestones", "More");
+        clear(tr("Achievements"), tr("Badges and milestones"), "More");
         LinearLayout c = card();
-        c.addView(label("🏅 Fan Achievements", 25, text, true));
+        c.addView(label("🏅 " + tr("Achievements"), 25, text, true));
         int played = data.playedCount();
         c.addView(label((played>=1?"✅":"⬜") + " First Prediction", 17, played>=1?GREEN:subText, true));
         c.addView(label((played>=10?"✅":"⬜") + " Group Stage Analyst", 17, played>=10?GREEN:subText, true));
@@ -478,16 +503,16 @@ void showMore(){
         LinearLayout langCard=card();langCard.addView(label("🌍 "+tr("Language"),22,text,true));LinearLayout langs=hrow();for(String l:new String[]{"EN","HR","DE","ES","FR"}){TextView cc=chip(l);if(l.equals(lang)){cc.setTextColor(Color.WHITE);cc.setBackground(gradient(RED_DARK,RED,dp(18)));}cc.setOnClickListener(v->{lang=((TextView)v).getText().toString();prefs.edit().putString("lang",lang).apply();redraw();});langs.addView(cc,new LinearLayout.LayoutParams(0,dp(44),1));}langCard.addView(langs);
         LinearLayout c=card();
 
-        Button vb = btn("Visual Bracket"); vb.setOnClickListener(v -> showVisualBracket()); c.addView(vb);
-        Button scorers = btn("Golden Boot"); scorers.setOnClickListener(v -> showScorers()); c.addView(scorers);
-        Button mvp = btn("MVP Prediction"); mvp.setOnClickListener(v -> showMvp()); c.addView(mvp);
-        Button compare = btn("Compare Teams"); compare.setOnClickListener(v -> showCompareTeams()); c.addView(compare);
-        Button backup = btn("Export Backup"); backup.setOnClickListener(v -> showBackupExport()); c.addView(backup);
-        Button pdf = btn("PDF Poster Info"); pdf.setOnClickListener(v -> showPdfPosterInfo()); c.addView(pdf);
-        Button quiz = btn("World Cup Quiz"); quiz.setOnClickListener(v -> showQuiz()); c.addView(quiz);
-        Button stadium = btn("Stadium Guide"); stadium.setOnClickListener(v -> showStadiumGuide()); c.addView(stadium);
-        Button citypro = btn("City Guide Pro"); citypro.setOnClickListener(v -> showCityGuidePro()); c.addView(citypro);
-        Button badges = btn("Achievements"); badges.setOnClickListener(v -> showAchievements()); c.addView(badges);
+        Button vb = btn(tr("Visual Bracket")); vb.setOnClickListener(v -> showVisualBracket()); c.addView(vb);
+        Button scorers = btn(tr("Golden Boot")); scorers.setOnClickListener(v -> showScorers()); c.addView(scorers);
+        Button mvp = btn(tr("MVP Prediction")); mvp.setOnClickListener(v -> showMvp()); c.addView(mvp);
+        Button compare = btn(tr("Compare Teams")); compare.setOnClickListener(v -> showCompareTeams()); c.addView(compare);
+        Button backup = btn(tr("Export Backup")); backup.setOnClickListener(v -> showBackupExport()); c.addView(backup);
+        Button pdf = btn(tr("PDF Poster Info")); pdf.setOnClickListener(v -> showPdfPosterInfo()); c.addView(pdf);
+        Button quiz = btn(tr("World Cup Quiz")); quiz.setOnClickListener(v -> showQuiz()); c.addView(quiz);
+        Button stadium = btn(tr("Stadium Guide")); stadium.setOnClickListener(v -> showStadiumGuide()); c.addView(stadium);
+        Button citypro = btn(tr("City Guide Pro")); citypro.setOnClickListener(v -> showCityGuidePro()); c.addView(citypro);
+        Button badges = btn(tr("Achievements")); badges.setOnClickListener(v -> showAchievements()); c.addView(badges);
 String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket"),tr("Premium")};for(String n:names){Button b=btn(n);if(n.equals(tr("My Team")))b.setOnClickListener(v->showMyTeam());else if(n.equals(tr("Statistics")))b.setOnClickListener(v->showStats());else if(n.equals(tr("Host Cities")))b.setOnClickListener(v->showCities());else if(n.equals(tr("Pro Bracket")))b.setOnClickListener(v->showKnockout());else b.setOnClickListener(v->showPremium());c.addView(b);}
         Button cro = btn(myTeam + " Road to Final"); cro.setOnClickListener(v -> showCroatiaRoad()); c.addView(cro);
         Button facts = btn("World Cup Facts"); facts.setOnClickListener(v -> showWorldCupFacts()); c.addView(facts);
@@ -503,7 +528,7 @@ String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket
     void shareText(String msg){Intent send=new Intent(Intent.ACTION_SEND);send.setType("text/plain");send.putExtra(Intent.EXTRA_TEXT,msg);startActivity(Intent.createChooser(send,"Share"));hideSystemBars();}
     
     void showPlayStoreChecklist() {
-        clear("Play Store", "Launch readiness checklist", "More");
+        clear("Play Store", tr("Launch readiness checklist"), "More");
         LinearLayout c = card();
         c.addView(label("🚀 Play Store Launch Checklist", 24, text, true));
         c.addView(label("Status: almost ready for private/internal testing.", 15, subText, false));
@@ -549,9 +574,9 @@ String[] names={tr("My Team"),tr("Statistics"),tr("Host Cities"),tr("Pro Bracket
     }
 
     void showPrivacyInfo() {
-        clear("Privacy", "Simple privacy statement", "More");
+        clear(tr("Privacy"), tr("Legal safety"), "More");
         LinearLayout c = card();
-        c.addView(label("🔒 Privacy", 24, text, true));
+        c.addView(label("🔒 " + tr("Privacy"), 24, text, true));
         c.addView(label("World Cup Fan 2026 works offline. Scores, selected team, language and theme are stored only on this device. No login, no personal profile and no official football data ownership is claimed.", 15, subText, false));
         LinearLayout l = card();
         l.addView(label("Legal safety", 22, RED, true));
