@@ -1,0 +1,14 @@
+WORLD CUP FAN 2026 - LAUNCH DAY FINAL STEPS
+
+1. Upload this ZIP to GitHub.
+2. Run GitHub Actions build.
+3. Download AAB artifact.
+4. Upload AAB to Google Play Console Internal testing.
+5. Add Privacy Policy URL.
+6. Complete Data Safety.
+7. Complete Content Rating.
+8. Add screenshots and icon.
+9. Add release notes.
+10. Publish to Internal testing first.
+
+Do not go directly to Production before installing and testing through the Play internal testing link.

@@ -121,10 +121,10 @@ public class MainActivity extends Activity {
         
         else if(key.equals("Host Cities Pro")){hr="Gradovi domaćini Pro";de="Gastgeberstädte Pro";es="Ciudades sede Pro";fr="Villes hôtes Pro";}
         else if(key.equals("Team Hub Pro")){hr="Centar reprezentacije Pro";de="Team-Zentrale Pro";es="Centro equipo Pro";fr="Hub équipe Pro";}
-        else if(key.equals("Onboarding Preview")){hr="Uvodni ekran";de="Einführung";es="Introducción";fr="Introduction";}
-        else if(key.equals("Poster Export Plan")){hr="Plan izvoza postera";de="Poster-Export Plan";es="Plan exportar póster";fr="Plan export poster";}
+        else if(key.equals("")){hr="Uvodni ekran";de="Einführung";es="Introducción";fr="Introduction";}
+        else if(key.equals("")){hr="Plan izvoza postera";de="Poster-Export Plan";es="Plan exportar póster";fr="Plan export poster";}
         else if(key.equals("Tournament Rules")){hr="Pravila turnira";de="Turnierregeln";es="Reglas torneo";fr="Règles tournoi";}
-        else if(key.equals("Monetization Plan")){hr="Plan zarade";de="Monetarisierung";es="Monetización";fr="Monétisation";}
+        else if(key.equals("")){hr="Plan zarade";de="Monetarisierung";es="Monetización";fr="Monétisation";}
 
         
         else if(key.equals("Host Cities")){hr="Gradovi domaćini";de="Gastgeberstädte";es="Ciudades sede";fr="Villes hôtes";}
@@ -146,6 +146,12 @@ public class MainActivity extends Activity {
         else if(key.equals("Scores, language, theme and selected team are saved locally.")){hr="Rezultati, jezik, tema i odabrana reprezentacija spremaju se lokalno.";de="Ergebnisse, Sprache, Design und ausgewähltes Team werden lokal gespeichert.";es="Resultados, idioma, tema y equipo elegido se guardan localmente.";fr="Scores, langue, thème et équipe choisie sont enregistrés localement.";}
         else if(key.equals("This app is not affiliated with FIFA.")){hr="Aplikacija nije povezana s FIFA-om.";de="Diese App ist nicht mit FIFA verbunden.";es="Esta app no está afiliada a FIFA.";fr="Cette application n'est pas affiliée à la FIFA.";}
 
+        
+        else if(key.equals("Tournament starts today")){hr="Prvenstvo počinje danas";de="Das Turnier startet heute";es="El torneo empieza hoy";fr="Le tournoi commence aujourd'hui";}
+        else if(key.equals("Open the app, pick your team, enter predictions and share your bracket.")){hr="Otvori aplikaciju, odaberi reprezentaciju, upiši prognoze i podijeli svoj kostur.";de="Öffne die App, wähle dein Team, tippe Ergebnisse und teile deinen Turnierbaum.";es="Abre la app, elige tu equipo, introduce predicciones y comparte tu cuadro.";fr="Ouvre l'app, choisis ton équipe, entre tes pronostics et partage ton tableau.";}
+        else if(key.equals("Ready for matchday")){hr="Spremno za dan utakmice";de="Bereit für den Spieltag";es="Listo para el día de partido";fr="Prêt pour le jour de match";}
+        else if(key.equals("Final release candidate")){hr="Finalna kandidat verzija";de="Finaler Release-Kandidat";es="Versión candidata final";fr="Version finale candidate";}
+
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -162,7 +168,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v13.3 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v13.4 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -201,17 +207,19 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v13.3 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v13.4 • "+lang+" • Global fan app","Home");
         
         
-        LinearLayout plus=card();
+        
+        LinearLayout launchCard=card();
+        launchCard.setBackground(gradient(RED_DARK,RED,dp(24)));
+        launchCard.addView(label("🏁 "+tr("Tournament starts today"),24,Color.WHITE,true));
+        launchCard.addView(label(tr("Open the app, pick your team, enter predictions and share your bracket."),15,Color.WHITE,false));
+LinearLayout plus=card();
         plus.addView(label("🚀 v12 Play Store Ready+",22,text,true));
         plus.addView(label("Added host city details, Team Hub Pro, onboarding preview, poster export plan, tournament rules and monetization plan.",14,subText,false));
-LinearLayout upgrade = card();
-        upgrade.addView(label("🚀 v11 Pro Upgrades", 22, text, true));
-        upgrade.addView(label("New: visual bracket, Golden Boot, MVP, team compare, backup export, quiz, stadium guide, city guide and achievements.", 14, subText, false));
 LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v13.3",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v13.4",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -739,7 +747,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 13.3 Build Verified",22,RED,false));
+        l.addView(label("Version 13.4 Build Verified",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 
