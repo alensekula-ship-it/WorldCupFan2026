@@ -1,0 +1,11 @@
+WorldCupFan2026 v13.0 Play Store Release Pack
+
+Added:
+- Google Play Data Safety draft answers
+- Google Play Content Rating draft answers
+- AAB release build instructions
+- Store listing in EN/HR/DE/ES/FR
+- Internal testing script
+- README Play Store release notes
+
+No app logic changes were intentionally made.
