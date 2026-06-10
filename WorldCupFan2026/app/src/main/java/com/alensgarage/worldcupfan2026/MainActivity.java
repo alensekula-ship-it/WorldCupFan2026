@@ -136,6 +136,16 @@ public class MainActivity extends Activity {
         else if(key.equals("goals")){hr="golova";de="Tore";es="goles";fr="buts";}
         else if(key.equals("Privacy / Legal")){hr="Privatnost / Pravno";de="Datenschutz / Rechtliches";es="Privacidad / Legal";fr="Confidentialité / Légal";}
 
+        
+        else if(key.equals("About App")){hr="O aplikaciji";de="Über die App";es="Acerca de la app";fr="À propos";}
+        else if(key.equals("Privacy Policy")){hr="Pravila privatnosti";de="Datenschutzerklärung";es="Política de privacidad";fr="Politique de confidentialité";}
+        else if(key.equals("App version")){hr="Verzija aplikacije";de="App-Version";es="Versión de la app";fr="Version de l'app";}
+        else if(key.equals("Independent fan-made app")){hr="Nezavisna navijačka aplikacija";de="Unabhängige Fan-App";es="Aplicación independiente de fans";fr="Application indépendante de fans";}
+        else if(key.equals("No login. No account. No personal profile.")){hr="Bez prijave. Bez računa. Bez osobnog profila.";de="Kein Login. Kein Konto. Kein persönliches Profil.";es="Sin inicio de sesión. Sin cuenta. Sin perfil personal.";fr="Pas de connexion. Pas de compte. Pas de profil personnel.";}
+        else if(key.equals("Data is stored only on this device.")){hr="Podaci se spremaju samo na ovom uređaju.";de="Daten werden nur auf diesem Gerät gespeichert.";es="Los datos se guardan solo en este dispositivo.";fr="Les données sont stockées uniquement sur cet appareil.";}
+        else if(key.equals("Scores, language, theme and selected team are saved locally.")){hr="Rezultati, jezik, tema i odabrana reprezentacija spremaju se lokalno.";de="Ergebnisse, Sprache, Design und ausgewähltes Team werden lokal gespeichert.";es="Resultados, idioma, tema y equipo elegido se guardan localmente.";fr="Scores, langue, thème et équipe choisie sont enregistrés localement.";}
+        else if(key.equals("This app is not affiliated with FIFA.")){hr="Aplikacija nije povezana s FIFA-om.";de="Diese App ist nicht mit FIFA verbunden.";es="Esta app no está afiliada a FIFA.";fr="Cette application n'est pas affiliée à la FIFA.";}
+
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -152,7 +162,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v12.6 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v12.7 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -191,7 +201,7 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v12.6 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v12.7 • "+lang+" • Global fan app","Home");
         
         
         LinearLayout plus=card();
@@ -201,7 +211,7 @@ LinearLayout upgrade = card();
         upgrade.addView(label("🚀 v11 Pro Upgrades", 22, text, true));
         upgrade.addView(label("New: visual bracket, Golden Boot, MVP, team compare, backup export, quiz, stadium guide, city guide and achievements.", 14, subText, false));
 LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v12.6",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v12.7",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -658,6 +668,33 @@ void showPlayersHub(){
         stars.addView(label("⭐ "+tr("Star watch"),22,text,true));
         stars.addView(label("France • Mbappé\nArgentina • Messi\nEngland • Kane\nPortugal • Ronaldo\nBrazil • Vinícius Jr\nCroatia • Modrić\nNorway • Haaland\nEgypt • Salah",15,subText,false));
     }
+
+    void showAboutApp(){
+        clear(tr("About App"), tr("Independent fan-made app"), "More");
+        LinearLayout c=card();
+        c.addView(label("⚽ World Cup Fan 2026",26,text,true));
+        c.addView(label(tr("Independent fan-made app"),18,RED,true));
+        c.addView(label(tr("App version")+": 12.7",16,subText,false));
+        c.addView(label("Offline predictor • Groups • Bracket • My Team • Share Poster",15,subText,false));
+        LinearLayout l=card();
+        l.addView(label("Legal",22,text,true));
+        l.addView(label(tr("This app is not affiliated with FIFA."),15,subText,false));
+        l.addView(label("No official FIFA logo, no official crests, no player photos, no live streaming.",15,subText,false));
+    }
+
+    void showPrivacyPolicy(){
+        clear(tr("Privacy Policy"), tr("No login. No account. No personal profile."), "More");
+        LinearLayout c=card();
+        c.addView(label("🔒 "+tr("Privacy Policy"),26,text,true));
+        c.addView(label(tr("No login. No account. No personal profile."),16,subText,false));
+        c.addView(label(tr("Data is stored only on this device."),16,subText,false));
+        c.addView(label(tr("Scores, language, theme and selected team are saved locally."),16,subText,false));
+        LinearLayout legal=card();
+        legal.addView(label("Legal safety",22,RED,true));
+        legal.addView(label(tr("This app is not affiliated with FIFA."),15,subText,false));
+        legal.addView(label("The app does not provide betting, live streaming or official tournament media.",15,subText,false));
+    }
+
 void showMore(){
         clear(tr("More"),tr("Language")+" • Premium • Settings","More");
 
@@ -691,7 +728,9 @@ void showMore(){
         Button premiumBtn=btn(tr("Premium")); premiumBtn.setOnClickListener(v->showPremium()); c.addView(premiumBtn);
         Button privacyBtn=btn(tr("Privacy / Legal")); privacyBtn.setOnClickListener(v->showPrivacyInfo()); c.addView(privacyBtn);
 
-        Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
+                Button aboutBtn=btn(tr("About App")); aboutBtn.setOnClickListener(v->showAboutApp()); c.addView(aboutBtn);
+        Button privacyPolicyBtn=btn(tr("Privacy Policy")); privacyPolicyBtn.setOnClickListener(v->showPrivacyPolicy()); c.addView(privacyPolicyBtn);
+Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         mode.setOnClickListener(v->{
             darkMode=!darkMode;
             prefs.edit().putBoolean("darkMode",darkMode).apply();
@@ -700,7 +739,7 @@ void showMore(){
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 12.6 Build Verified",22,RED,false));
+        l.addView(label("Version 12.7 Build Verified",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 

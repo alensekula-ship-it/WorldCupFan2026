@@ -17,8 +17,8 @@ android {
         applicationId 'com.alensgarage.worldcupfan2026'
         minSdk 23
         targetSdk 35
-        versionCode 28
-        versionName '12.6'
+        versionCode 29
+        versionName '12.7'
     }
 
     buildTypes {
