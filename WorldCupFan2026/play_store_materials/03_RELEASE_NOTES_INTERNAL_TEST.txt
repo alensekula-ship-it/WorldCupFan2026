@@ -1,0 +1,21 @@
+RELEASE NOTES - INTERNAL TESTING
+
+World Cup Fan 2026 internal test candidate.
+
+Included:
+- 48 teams and 12 groups
+- Offline match predictor
+- Group standings
+- Best third-placed teams
+- My Team hub
+- Road to Final
+- Host Cities
+- Players hub
+- Golden Boot and MVP predictions
+- Visual bracket
+- Share prediction
+- Dark and light mode
+- Multiple languages
+- About App and Privacy Policy screens
+
+Independent fan-made app. Not affiliated with FIFA.

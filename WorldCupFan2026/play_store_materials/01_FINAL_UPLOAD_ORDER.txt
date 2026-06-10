@@ -1,0 +1,22 @@
+FINALNI REDOSLIJED ZA GOOGLE PLAY
+
+1. Uploadaj ovaj ZIP na GitHub.
+2. Pokreni GitHub Actions build.
+3. Preuzmi AAB artifact, ne samo APK.
+4. Otvori Google Play Console.
+5. Napravi aplikaciju: World Cup Fan 2026.
+6. Kategorija: Sports.
+7. Ispuni App content:
+   - Privacy Policy URL
+   - Data Safety
+   - Content Rating
+   - Ads declaration
+   - Target audience
+8. Uploadaj AAB u Internal testing.
+9. Dodaj release notes.
+10. Objavi internal testing.
+11. Instaliraj preko Google Play test linka.
+12. Ako sve radi, ide Closed testing / Production.
+
+VAŽNO:
+APK je za brzo testiranje. Google Play objava ide s AAB datotekom.

@@ -1,0 +1,29 @@
+PLAY CONSOLE - APP CONTENT ODGOVORI
+
+Privacy Policy:
+- Potreban URL. Ako nemaš web, napravi jednostavnu stranicu na GitHub Pages ili Google Sites.
+
+Ads:
+- Ako aplikacija nema oglase: No, my app does not contain ads.
+- Ako kasnije dodaš oglase, promijeniti odgovor.
+
+App access:
+- All functionality is available without special access.
+- No login required.
+
+Data Safety:
+- App does not collect personal data.
+- App does not share personal data.
+- Scores, language, theme and selected team are stored locally on device.
+
+Content rating:
+- Sports / reference / entertainment.
+- No violence except sports competition context.
+- No gambling.
+- No user-generated public content.
+- No live streaming.
+- No official media.
+
+Target audience:
+- General audience / football fans.
+- Ako Google pita za djecu, nemoj ciljano označiti aplikaciju kao children-directed osim ako stvarno radiš dječju aplikaciju.

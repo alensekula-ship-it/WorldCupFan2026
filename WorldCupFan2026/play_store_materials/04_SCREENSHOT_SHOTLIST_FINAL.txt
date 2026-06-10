@@ -1,0 +1,31 @@
+FINAL SCREENSHOT SHOTLIST
+
+Format:
+- Portrait screenshots
+- Recommended: 1080 x 1920
+- Use clean English or Croatian language
+
+Screenshots to take:
+1. Home dashboard
+   Text: Predict the World Cup 2026
+
+2. My Team / Road to Final
+   Text: Follow your team to the final
+
+3. Groups
+   Text: Calculate group standings
+
+4. Visual Bracket
+   Text: Build your knockout path
+
+5. Host Cities
+   Text: Explore host cities
+
+6. Players / Golden Boot
+   Text: Golden Boot and MVP predictions
+
+7. Share Poster
+   Text: Share your fan prediction
+
+Tip:
+Use same phone, same theme, same language for all screenshots.
