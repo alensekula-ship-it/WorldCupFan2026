@@ -1,0 +1,70 @@
+name: Update Project and Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "WorldCupFan2026.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  update-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Replace project from ZIP
+        run: |
+          rm -rf WorldCupFan2026
+          unzip -o WorldCupFan2026.zip -d .
+          rm -f WorldCupFan2026.zip
+
+      - name: Show project structure
+        run: |
+          echo "ROOT:"
+          ls -la
+          echo "PROJECT:"
+          ls -la WorldCupFan2026
+          echo "APP:"
+          ls -la WorldCupFan2026/app
+          echo "MAIN:"
+          ls -la WorldCupFan2026/app/src/main
+
+      - name: Commit extracted project
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Replace project from ZIP" || echo "No changes to commit"
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build APK
+        run: |
+          cd WorldCupFan2026
+          gradle clean assembleDebug
+
+      - name: Find APK
+        run: |
+          find WorldCupFan2026 -name "*.apk" -type f -print -exec ls -lh {} \;
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: WorldCupFan2026-APK
+          path: WorldCupFan2026/app/build/outputs/apk/debug/*.apk
+
+      - name: Push extracted project
+        run: |
+          git push
