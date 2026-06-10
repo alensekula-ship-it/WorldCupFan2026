@@ -1,0 +1,15 @@
+WorldCupFan2026 v9.2 UPDATE FIX
+
+Changes:
+- versionCode 14
+- versionName 9.2
+- stable signingConfig for debug and release builds
+- stable JKS key kept inside app folder
+
+Important:
+If the currently installed app was built with a different signing key, Android will require one final uninstall.
+After installing this v9.2, future versions must keep:
+- same applicationId: com.alensgarage.worldcupfan2026
+- same JKS file
+- higher versionCode
+Then updates should install over the existing app.
