@@ -109,7 +109,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v10.0 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v10.1 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -148,9 +148,9 @@ public class MainActivity extends Activity {
     void clear(String h,String s,String key){currentScreen=key;title.setText(h);subtitle.setText(s);content.removeAllViews();hideSystemBars();}
 
     void showHome(){
-        clear("World Cup Fan 2026","v10.0 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v10.1 • "+lang+" • Global fan app","Home");
         LinearLayout hero=card(); hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 GLOBAL EDITION v10.0",24,Color.WHITE,true));
+        hero.addView(label("🌍 GLOBAL EDITION v10.1",24,Color.WHITE,true));
         hero.addView(label("Immersive fullscreen, 5 languages, Croatia hub, clean predictor, group tables and share-ready poster.",15,Color.WHITE,false));
         hero.addView(kpiRow("Progress",data.progressPercent()+"%","Played",""+data.playedCount(),"Goals",""+data.totalGoals(),true));
 
@@ -212,7 +212,7 @@ public class MainActivity extends Activity {
         Button save=btn(tr("Save Result"));save.setOnClickListener(v->{data.save();toast("Saved");});c.addView(save);
     }
     int change(int v,int d){if(v<0)v=0;v+=d;if(v<0)v=0;return v;} String display(int v){return v>=0?""+v:"-";}
-    TextView scoreLabel(int v){TextView t=label(display(v),21,text,true);t.setGravity(Gravity.CENTER);t.setBackground(round(chipBg,dp(14),0));return t;} String shortName(String s){return s.length()>12?s.substring(0,12):s;}
+    TextView scoreLabel(int v){TextView t=label(display(v),21,text,true);t.setGravity(Gravity.CENTER);t.setBackground(round(chipBg,dp(14),0));return t;} String shortName(String s) { return s; }
 
     void showGroups(){
         clear(tr("Groups"),"P/W/D/L/GD/Pts","Groups");
@@ -221,7 +221,7 @@ public class MainActivity extends Activity {
         LinearLayout third=card();third.addView(label("🥉 Best third-placed teams",22,text,true));List<TeamRow> th=data.bestThirds();for(int i=0;i<th.size();i++){TeamRow r=th.get(i);third.addView(label((i+1)+". "+flag(r.team)+" "+r.team+" • Group "+r.group+" • "+r.pts+" pts",14,i<8?GREEN:subText,false));}
     }
     LinearLayout tableRow(String pos,String team,String p,String w,String d,String l,String gd,String pts,boolean bold,int color){LinearLayout r=hrow();r.setPadding(0,dp(4),0,dp(4));r.addView(cell(pos,.45f,bold,color));r.addView(cell(team,2.4f,bold,color));r.addView(cell(p,.55f,bold,color));r.addView(cell(w,.55f,bold,color));r.addView(cell(d,.55f,bold,color));r.addView(cell(l,.55f,bold,color));r.addView(cell(gd,.7f,bold,color));r.addView(cell(pts,.8f,true,color));return r;}
-    TextView cell(String s,float w,boolean bold,int color){TextView t=label(s,12,color,bold);t.setGravity(Gravity.CENTER_VERTICAL);t.setSingleLine(true);t.setTextSize(s.length()>14?10:12);t.setLayoutParams(new LinearLayout.LayoutParams(0,dp(34),w));return t;}
+    TextView cell(String s,float w,boolean bold,int color){TextView t=label(s,12,color,bold);t.setGravity(Gravity.CENTER_VERTICAL);t.setSingleLine(false);t.setTextSize(s.length()>14?10:12);t.setLayoutParams(new LinearLayout.LayoutParams(0,dp(34),w));return t;}
 
     void showPredictor(){
         clear(tr("Predict"),tr("Prediction Studio"),"Predict");
@@ -328,7 +328,7 @@ public class MainActivity extends Activity {
 
 void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
 
-    String flag(String t){if(t==null)return"🏳";String[][] f={{"Croatia","🇭🇷"},{"Brazil","🇧🇷"},{"Germany","🇩🇪"},{"Argentina","🇦🇷"},{"France","🇫🇷"},{"Spain","🇪🇸"},{"Portugal","🇵🇹"},{"England","🏴"},{"Netherlands","🇳🇱"},{"Belgium","🇧🇪"},{"Mexico","🇲🇽"},{"USA","🇺🇸"},{"Canada","🇨🇦"},{"Japan","🇯🇵"},{"Korea Republic","🇰🇷"},{"South Africa","🇿🇦"},{"Czechia","🇨🇿"},{"Bosnia and Herzegovina","🇧🇦"},{"Qatar","🇶🇦"},{"Switzerland","🇨🇭"},{"Morocco","🇲🇦"},{"Haiti","🇭🇹"},{"Scotland","🏴"},{"Paraguay","🇵🇾"},{"Australia","🇦🇺"},{"Turkey","🇹🇷"},{"Curacao","🇨🇼"},{"Ivory Coast","🇨🇮"},{"Ecuador","🇪🇨"},{"Sweden","🇸🇪"},{"Tunisia","🇹🇳"},{"Egypt","🇪🇬"},{"Iran","🇮🇷"},{"New Zealand","🇳🇿"},{"Cape Verde","🇨🇻"},{"Saudi Arabia","🇸🇦"},{"Uruguay","🇺🇾"},{"Senegal","🇸🇳"},{"Iraq","🇮🇶"},{"Norway","🇳🇴"},{"Algeria","🇩🇿"},{"Austria","🇦🇹"},{"Jordan","🇯🇴"},{"DR Congo","🇨🇩"},{"Uzbekistan","🇺🇿"},{"Colombia","🇨🇴"},{"Ghana","🇬🇭"},{"Panama","🇵🇦"}};for(String[] x:f)if(t.equals(x[0]))return x[1];return"🏳";}
+    String flag(String t){if(t==null)return"🏳";String[][] f={{"Croatia","🇭🇷"},{"Brazil","🇧🇷"},{"Germany","🇩🇪"},{"Argentina","🇦🇷"},{"France","🇫🇷"},{"Spain","🇪🇸"},{"Portugal","🇵🇹"},{"England","🏴"},{"Netherlands","🇳🇱"},{"Belgium","🇧🇪"},{"Mexico","🇲🇽"},{"USA","🇺🇸"},{"Canada","🇨🇦"},{"Japan","🇯🇵"},{"South Korea","🇰🇷"},{"South Africa","🇿🇦"},{"Czechia","🇨🇿"},{"Bosnia and Herzegovina","🇧🇦"},{"Qatar","🇶🇦"},{"Switzerland","🇨🇭"},{"Morocco","🇲🇦"},{"Haiti","🇭🇹"},{"Scotland","🏴"},{"Paraguay","🇵🇾"},{"Australia","🇦🇺"},{"Turkey","🇹🇷"},{"Curacao","🇨🇼"},{"Ivory Coast","🇨🇮"},{"Ecuador","🇪🇨"},{"Sweden","🇸🇪"},{"Tunisia","🇹🇳"},{"Egypt","🇪🇬"},{"Iran","🇮🇷"},{"New Zealand","🇳🇿"},{"Cape Verde","🇨🇻"},{"Saudi Arabia","🇸🇦"},{"Uruguay","🇺🇾"},{"Senegal","🇸🇳"},{"Iraq","🇮🇶"},{"Norway","🇳🇴"},{"Algeria","🇩🇿"},{"Austria","🇦🇹"},{"Jordan","🇯🇴"},{"DR Congo","🇨🇩"},{"Uzbekistan","🇺🇿"},{"Colombia","🇨🇴"},{"Ghana","🇬🇭"},{"Panama","🇵🇦"}};for(String[] x:f)if(t.equals(x[0]))return x[1];return"🏳";}
     Drawable gradient(int a,int b,int radius){GradientDrawable g=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[]{a,b});g.setCornerRadius(radius);return g;}
     Drawable round(int color,int radius,int sw){GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(radius);if(sw>0)g.setStroke(sw,stroke);return g;}
     int dp(int v){return(int)(v*getResources().getDisplayMetrics().density+0.5f);}
@@ -338,7 +338,7 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
     class Data{
         String[] groups={"A","B","C","D","E","F","G","H","I","J","K","L"};ArrayList<String> teams=new ArrayList<>();ArrayList<Match> matches=new ArrayList<>();SharedPreferences sp;
         Data(Context c){sp=c.getSharedPreferences("scores",0);seed();load();}
-        void seed(){String[][] g={{"Mexico","South Africa","Korea Republic","Czechia"},{"Canada","Bosnia and Herzegovina","Qatar","Switzerland"},{"Brazil","Morocco","Haiti","Scotland"},{"USA","Paraguay","Australia","Turkey"},{"Germany","Curacao","Ivory Coast","Ecuador"},{"Netherlands","Japan","Sweden","Tunisia"},{"Belgium","Egypt","Iran","New Zealand"},{"Spain","Cape Verde","Saudi Arabia","Uruguay"},{"France","Senegal","Iraq","Norway"},{"Argentina","Algeria","Austria","Jordan"},{"Portugal","DR Congo","Uzbekistan","Colombia"},{"England","Croatia","Ghana","Panama"}};String[] venues={"Mexico City","Toronto","Los Angeles","New York/New Jersey","Dallas","Miami","Vancouver","Atlanta","Houston","Kansas City","Boston","Seattle"};int day=11;for(int x=0;x<g.length;x++){String gr=groups[x];for(String t:g[x])teams.add(t);String[] t=g[x];matches.add(new Match(gr,t[0],t[1],"2026-06-"+(day+x%15),venues[x]));matches.add(new Match(gr,t[2],t[3],"2026-06-"+(day+1+x%15),venues[(x+3)%venues.length]));matches.add(new Match(gr,t[0],t[2],"2026-06-"+(day+6+x%12),venues[(x+6)%venues.length]));matches.add(new Match(gr,t[1],t[3],"2026-06-"+(day+7+x%12),venues[(x+8)%venues.length]));matches.add(new Match(gr,t[0],t[3],"2026-06-"+(day+12+x%7),venues[(x+9)%venues.length]));matches.add(new Match(gr,t[1],t[2],"2026-06-"+(day+12+x%7),venues[(x+10)%venues.length]));}Collections.sort(teams);}
+        void seed(){String[][] g={{"Mexico","South Africa","South Korea","Czechia"},{"Canada","Bosnia and Herzegovina","Qatar","Switzerland"},{"Brazil","Morocco","Haiti","Scotland"},{"USA","Paraguay","Australia","Turkey"},{"Germany","Curacao","Ivory Coast","Ecuador"},{"Netherlands","Japan","Sweden","Tunisia"},{"Belgium","Egypt","Iran","New Zealand"},{"Spain","Cape Verde","Saudi Arabia","Uruguay"},{"France","Senegal","Iraq","Norway"},{"Argentina","Algeria","Austria","Jordan"},{"Portugal","DR Congo","Uzbekistan","Colombia"},{"England","Croatia","Ghana","Panama"}};String[] venues={"Mexico City","Toronto","Los Angeles","New York/New Jersey","Dallas","Miami","Vancouver","Atlanta","Houston","Kansas City","Boston","Seattle"};int day=11;for(int x=0;x<g.length;x++){String gr=groups[x];for(String t:g[x])teams.add(t);String[] t=g[x];matches.add(new Match(gr,t[0],t[1],"2026-06-"+(day+x%15),venues[x]));matches.add(new Match(gr,t[2],t[3],"2026-06-"+(day+1+x%15),venues[(x+3)%venues.length]));matches.add(new Match(gr,t[0],t[2],"2026-06-"+(day+6+x%12),venues[(x+6)%venues.length]));matches.add(new Match(gr,t[1],t[3],"2026-06-"+(day+7+x%12),venues[(x+8)%venues.length]));matches.add(new Match(gr,t[0],t[3],"2026-06-"+(day+12+x%7),venues[(x+9)%venues.length]));matches.add(new Match(gr,t[1],t[2],"2026-06-"+(day+12+x%7),venues[(x+10)%venues.length]));}Collections.sort(teams);}
         void load(){for(int i=0;i<matches.size();i++){matches.get(i).homeGoals=sp.getInt("h"+i,-1);matches.get(i).awayGoals=sp.getInt("a"+i,-1);}}
         void save(){SharedPreferences.Editor e=sp.edit();for(int i=0;i<matches.size();i++){e.putInt("h"+i,matches.get(i).homeGoals);e.putInt("a"+i,matches.get(i).awayGoals);}e.apply();}
         void reset(){sp.edit().clear().apply();for(Match m:matches){m.homeGoals=-1;m.awayGoals=-1;}}
