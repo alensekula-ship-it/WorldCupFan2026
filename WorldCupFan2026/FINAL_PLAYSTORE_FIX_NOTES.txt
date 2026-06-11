@@ -1,1 +1,0 @@
-Final fix: Vizualni kostur više ne ruši aplikaciju, Pro kostur i Vizualni kostur više ne ispisuju automatske pobjednike, zastave su dopunjene, launcher ikona je nogometna lopta.

@@ -1,1 +1,0 @@
-v4.0 implemented: Pro UI, dark/light mode, flags, match search, dream final, premium screen, improved predictor, improved statistics, modern navigation.

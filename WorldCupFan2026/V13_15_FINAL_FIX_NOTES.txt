@@ -1,6 +1,0 @@
-Final fixes applied:
-- Home cleaned: removed v12/v11 launch cards and old countdown.
-- Pro Bracket keeps both teams visible and adds a winner placeholder line in the middle.
-- Visual Bracket keeps both teams visible and does not crash.
-- Quiz rebuilt as interactive: 4 answers, click result, score 0/5, try again.
-- Static checks passed: braces and quotes OK; old launch text removed.
