@@ -1,0 +1,8 @@
+WorldCupFan2026 v13.7 Definitive Build Fix
+
+Fixed:
+- groupLine(String team) now has hardcoded groups and does not use undefined GROUPS.
+- Removed GROUPS references.
+- Removed plus.addView remnants.
+- Removed broken text-concat pattern +tr.
+- Static compile-oriented checks passed.

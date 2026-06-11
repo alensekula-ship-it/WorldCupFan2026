@@ -1,8 +1,0 @@
-WorldCupFan2026 v13.4 Launch Today Final
-
-Changed:
-- Removed old development text/card such as v11 Pro Upgrades.
-- Added clean launch-day Home card.
-- Added final launch day steps.
-- Added public release notes.
-- No intentional changes to score logic, teams, groups, languages, My Team, dark mode or existing screens.

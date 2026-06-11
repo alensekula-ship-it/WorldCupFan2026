@@ -1,7 +1,0 @@
-APP ICON NOTE
-
-The app icon now uses a football/soccer ball as the main visual.
-Current icon resource:
-app/src/main/res/drawable/ic_worldcupfan_brand.xml
-
-For final Google Play publishing, also create a 512x512 PNG from this design or from a professionally rendered version.

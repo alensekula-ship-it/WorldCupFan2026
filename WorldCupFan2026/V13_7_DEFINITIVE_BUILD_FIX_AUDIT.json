@@ -1,0 +1,10 @@
+{
+  "source_zip": "WorldCupFan2026.zip",
+  "main_activity": "app/src/main/java/com/alensgarage/worldcupfan2026/MainActivity.java",
+  "no_GROUPS_reference": true,
+  "no_plus_addView": true,
+  "no_bad_tr_concat": true,
+  "brace_ok": true,
+  "version": "13.7",
+  "compile_result": "no_gradlew"
+}
