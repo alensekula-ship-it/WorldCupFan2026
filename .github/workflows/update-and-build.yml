@@ -23,37 +23,19 @@ jobs:
           unzip -o WorldCupFan2026.zip -d .
           rm -f WorldCupFan2026.zip
 
-      - name: Commit extracted project
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add .
-          git commit -m "Replace project from ZIP" || echo "No changes to commit"
-
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-
       - name: Build AAB
         run: |
           cd WorldCupFan2026
           gradle clean bundleRelease
-
-      - name: Find AAB
-        run: |
-          find WorldCupFan2026 -name "*.aab"
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
           name: WorldCupFan2026-AAB
           path: WorldCupFan2026/app/build/outputs/bundle/release/*.aab
-
-      - name: Push extracted project
-        run: |
-          git push
