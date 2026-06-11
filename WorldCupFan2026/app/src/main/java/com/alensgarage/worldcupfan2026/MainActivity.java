@@ -183,6 +183,10 @@ public class MainActivity extends Activity {
         else if(key.equals("Played")){hr="Odigrano";de="Gespielt";es="Jugados";fr="Joués";}
         else if(key.equals("Goals")){hr="Golovi";de="Tore";es="Goles";fr="Buts";}
 
+        
+        else if(key.equals("Round of 16")){hr="Osmina finala";de="Achtelfinale";es="Octavos de final";fr="Huitièmes de finale";}
+        else if(key.equals("Quarter-finals")){hr="Četvrtfinale";de="Viertelfinale";es="Cuartos de final";fr="Quarts de finale";}
+        else if(key.equals("Semi-finals")){hr="Polufinale";de="Halbfinale";es="Semifinales";fr="Demi-finales";}
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -199,7 +203,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v13.12 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v13.13 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -275,7 +279,7 @@ String displayFlag(String team){
         return flag(team);
     }
 void showHome(){
-        clear("World Cup Fan 2026","v13.12 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v13.13 • "+lang+" • Global fan app","Home");
 
         LinearLayout live=card();
         live.setBackground(gradient(RED_DARK,RED,dp(24)));
@@ -396,7 +400,7 @@ void showPredictor(){
         clear(tr("Pro Bracket"),"Round of 32 → Final","Predict");
         List<TeamRow> q=data.qualified();LinearLayout intro=card();intro.setBackground(gradient(RED_DARK,RED,dp(24)));intro.addView(label("🏆 Pro Bracket",26,Color.WHITE,true));intro.addView(label(tr("Projected path from your group results."),15,Color.WHITE,false));
         String[] rounds={"Round of 32","Round of 16","Quarter-finals","Semi-finals","Final"};int games=16;
-        for(String round:rounds){LinearLayout c=card();c.addView(label(round,23,RED,true));for(int i=0;i<games;i++){String a=q.size()>0?q.get((i*2)%q.size()).team:"TBD";String b=q.size()>1?q.get((i*2+1)%q.size()).team:"TBD";String w=winner(a,b);LinearLayout box=inner(c);box.addView(label(displayFlag(a)+" "+a,15,text,true));box.addView(label("        │",12,subText,false));box.addView(label(displayFlag(b)+" "+b,15,text,true));box.addView(label(" "+displayFlag(w)+" "+w,13,GREEN,true));}games=Math.max(1,games/2);}
+        for(String round:rounds){LinearLayout c=card();c.addView(label(tr(round),23,RED,true));for(int i=0;i<games;i++){String a=q.size()>0?q.get((i*2)%q.size()).team:"TBD";String b=q.size()>1?q.get((i*2+1)%q.size()).team:"TBD";LinearLayout box=inner(c);box.addView(label(displayFlag(a)+" "+a,15,text,true));box.addView(label("        │",12,subText,false));box.addView(label(displayFlag(b)+" "+b,15,text,true));}games=Math.max(1,games/2);}
         LinearLayout champ=card();champ.setBackground(gradient(RED_DARK,RED,dp(24)));String ch=q.size()>0?q.get(0).team:myTeam;champ.addView(label("🏆 Champion Pick",23,Color.WHITE,true));champ.addView(label(displayFlag(ch)+" "+ch,36,GOLD,true));
     }
     LinearLayout inner(LinearLayout p){LinearLayout l=new LinearLayout(this);l.setOrientation(LinearLayout.VERTICAL);l.setPadding(dp(12),dp(10),dp(12),dp(10));l.setBackground(round(chipBg,dp(18),0));LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(8),0,dp(8));p.addView(l,lp);return l;}
@@ -851,7 +855,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 13.12",22,RED,false));
+        l.addView(label("Version 13.13",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 
