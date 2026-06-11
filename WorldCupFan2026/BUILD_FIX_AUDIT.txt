@@ -1,1 +1,0 @@
-Dodani gradovi domaćini sa stadionima u compile-safe metodi showCities. Button dodan u More. Provjera zagrada i navodnika prošla.

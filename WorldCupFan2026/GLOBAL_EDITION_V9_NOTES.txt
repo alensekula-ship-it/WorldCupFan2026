@@ -1,0 +1,20 @@
+WorldCupFan2026 v9.0 Global Edition
+
+Implemented:
+- 5 language UI selector: EN, HR, DE, ES, FR
+- Immersive fullscreen mode to hide Android status/navigation bars where Android allows it
+- Updated all groups with known 48 teams from user-provided group list
+- Croatia in Group L with Croatia Road to Final hub
+- Modern home dashboard
+- Smart match center
+- Group filters A-L
+- Cleaner score picker
+- Clean tables
+- Pro bracket
+- Share poster
+- Premium Free vs Pro
+- Dark/light mode
+- versionCode 13 / versionName 9.0
+
+Important:
+Some Android devices show gesture/navigation hints even in immersive mode; Android controls can be hidden only within system limits.

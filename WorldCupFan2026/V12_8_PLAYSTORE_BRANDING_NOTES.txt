@@ -1,0 +1,19 @@
+WorldCupFan2026 v12.8 Play Store Branding
+
+Added:
+- Vector launcher/brand icon resource
+- Splash background resource
+- App name string
+- Brand colors
+- Manifest label/icon update
+- Play Store listing draft HR/EN
+- Screenshot plan
+- Privacy policy final draft
+
+Preserved:
+- Existing Java logic
+- Results saving
+- My Team
+- Languages
+- Dark mode
+- Host Cities / Players

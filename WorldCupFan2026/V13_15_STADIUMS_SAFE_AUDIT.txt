@@ -1,0 +1,4 @@
+Baza: WorldCupFan2026_PLAYSTORE_FINAL_v13_15.zip
+Dodano samo na Gradovi domaćini: stadion, država, kapacitet i broj utakmica za svih 16 gradova.
+Nije diran kviz, kostur, početna ni ostala logika.
+Statička Java provjera: zagrade OK, navodnici OK.

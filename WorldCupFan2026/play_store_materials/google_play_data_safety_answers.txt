@@ -1,0 +1,29 @@
+GOOGLE PLAY DATA SAFETY - DRAFT ANSWERS
+
+App: World Cup Fan 2026
+
+Does the app collect or share any of the required user data types?
+Recommended answer: No
+
+Data collection:
+- The app does not require login.
+- The app does not create user accounts.
+- The app does not collect name, email, phone number, location, contacts, photos, messages, financial info or health info.
+- The app saves selected team, language, theme and prediction scores locally on the device only.
+
+Data sharing:
+- The app does not share personal data with third parties.
+- Share Prediction uses the Android share sheet only when the user manually chooses to share content.
+
+Security:
+- No account system.
+- No server sync.
+- No cloud backup.
+- No personal data sent from the app.
+
+Delete data:
+- Users can reset scores in the app.
+- Users can clear app data through Android system settings.
+
+Important:
+If ads, analytics, crash reporting, cloud sync, push notifications or login are added later, these answers must be updated.

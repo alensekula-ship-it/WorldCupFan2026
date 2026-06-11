@@ -1,0 +1,4 @@
+WorldCupFan2026 v10.2 - Sitnica #1 Fix
+
+Fixed: Home refreshes immediately after saving My Team.
+No other intentional changes.

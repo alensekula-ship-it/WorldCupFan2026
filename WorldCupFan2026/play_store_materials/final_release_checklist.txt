@@ -1,0 +1,27 @@
+WORLD CUP FAN 2026 - FINAL RELEASE CHECKLIST
+
+Technical:
+[ ] Build APK from GitHub Actions
+[ ] Install over previous app version
+[ ] Test EN / HR / DE / ES / FR language switching
+[ ] Test result saving after app restart
+[ ] Test My Team saving after app restart
+[ ] Test Dark/Light mode saving
+[ ] Test Reset Scores
+[ ] Test Share Poster
+[ ] Test Host Cities
+[ ] Test Players / Golden Boot / MVP
+[ ] Test More menu for duplicate buttons
+
+Play Store:
+[ ] Create Google Play Console app
+[ ] Add app name: World Cup Fan 2026
+[ ] Add short description
+[ ] Add full description
+[ ] Upload 512x512 icon
+[ ] Upload screenshots
+[ ] Add privacy policy URL
+[ ] Set app category: Sports
+[ ] Set content rating
+[ ] Add disclaimer: independent fan-made app, not affiliated with FIFA
+[ ] Internal testing release

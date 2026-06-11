@@ -1,0 +1,35 @@
+GOOGLE PLAY CONTENT RATING - DRAFT
+
+Recommended category:
+- Sports / Entertainment app
+
+Violence:
+- No graphic violence
+- No realistic violence
+- Sports competition only
+
+Sexual content:
+- None
+
+Profanity:
+- None
+
+Controlled substances:
+- None
+
+Gambling:
+- None
+Important: App must not include betting, odds-based gambling, casino mechanics or real-money wagering.
+
+User-generated content:
+- None, unless future versions add public sharing/comments.
+
+Location:
+- No user location access
+
+Personal data:
+- No account, no login
+
+Target audience:
+- General football fans
+- Suggested age: Everyone / suitable for broad audience, depending on Google Play questionnaire result.
