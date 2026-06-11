@@ -1,9 +1,0 @@
-WorldCupFan2026 v13.10 Final Polish
-
-Applied to working ZIP:
-- England flag mapping fixed in flag(String team)
-- Added/extended visible translation keys
-- Removed empty rocket/dev remnants
-- Removed old countdown text
-- Removed suggested price remnants
-- Static Java checks passed: braces OK, quote scan OK, no GROUPS, no plus.addView

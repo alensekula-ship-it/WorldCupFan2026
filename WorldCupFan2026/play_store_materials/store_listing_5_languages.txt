@@ -1,0 +1,39 @@
+STORE LISTING - 5 LANGUAGES
+
+EN
+Short description:
+Offline World Cup 2026 predictor with groups, bracket, teams, host cities and fan poster.
+
+Full description:
+World Cup Fan 2026 is an independent fan-made tournament companion for football fans. Pick your national team, enter match scores, calculate group standings, follow the road to the final, explore host cities and share your prediction with friends.
+
+HR
+Kratki opis:
+Offline prediktor za SP 2026 s grupama, kosturom, ekipama, gradovima i posterom.
+
+Puni opis:
+World Cup Fan 2026 je nezavisna navijačka aplikacija za nogometne fanove. Odaberi reprezentaciju, upiši rezultate, izračunaj tablice skupina, prati put do finala, istraži gradove domaćine i podijeli svoju prognozu.
+
+DE
+Kurzbeschreibung:
+Offline WM 2026 Predictor mit Gruppen, Turnierbaum, Teams, Gastgeberstädten und Fan-Poster.
+
+Beschreibung:
+World Cup Fan 2026 ist eine unabhängige Fan-App für Fußballfans. Wähle dein Team, trage Ergebnisse ein, berechne Tabellen, folge dem Weg ins Finale und teile deine Prognose.
+
+ES
+Descripción corta:
+Predictor offline del Mundial 2026 con grupos, cuadro, equipos, sedes y póster fan.
+
+Descripción:
+World Cup Fan 2026 es una app independiente hecha para aficionados. Elige tu equipo, introduce resultados, calcula grupos, sigue el camino a la final y comparte tu predicción.
+
+FR
+Description courte:
+Pronostics hors ligne Coupe du Monde 2026 avec groupes, tableau, équipes, villes hôtes et poster fan.
+
+Description:
+World Cup Fan 2026 est une application indépendante créée pour les fans de football. Choisis ton équipe, saisis les scores, calcule les groupes, suis la route vers la finale et partage ton pronostic.
+
+Legal line for all languages:
+Independent fan-made app. Not affiliated with FIFA. No official logos, crests, player photos, live streaming, betting or gambling services.

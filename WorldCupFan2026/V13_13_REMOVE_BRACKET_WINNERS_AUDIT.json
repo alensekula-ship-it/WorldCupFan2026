@@ -1,9 +1,0 @@
-{
-  "source": "WorldCupFan2026.zip",
-  "changed": "only removed automatic green winner row from Pro Bracket/showKnockout",
-  "showKnockout_winner_row_removed": true,
-  "other_features_untouched_as_much_as_possible": true,
-  "brace_ok": true,
-  "quote_scan": "ok",
-  "gradlew_present": false
-}
