@@ -53,7 +53,7 @@ jobs:
       - name: Build APK
         run: |
           cd WorldCupFan2026
-          gradle clean assembleDebug
+          gradle clean bundleRelease
 
       - name: Find APK
         run: |
