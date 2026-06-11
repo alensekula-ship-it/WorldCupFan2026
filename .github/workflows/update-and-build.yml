@@ -42,8 +42,7 @@ jobs:
       - name: Build AAB
         run: |
           cd WorldCupFan2026
-          chmod +x gradlew
-          ./gradlew clean bundleRelease
+          gradle clean bundleRelease
 
       - name: Find AAB
         run: |
