@@ -176,7 +176,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v13.9 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v13.10 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -245,7 +245,7 @@ public class MainActivity extends Activity {
     }
 
 void showHome(){
-        clear("World Cup Fan 2026","v13.9 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v13.10 • "+lang+" • Global fan app","Home");
 
         LinearLayout launch=card();
         launch.setBackground(gradient(RED_DARK,RED,dp(24)));
@@ -254,7 +254,7 @@ void showHome(){
 
         LinearLayout hero=card();
         hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 Globalno izdanje v13.9",24,Color.WHITE,true));
+        hero.addView(label("🌍 Globalno izdanje v13.10",24,Color.WHITE,true));
         hero.addView(label(t2("Fullscreen, 5 languages, team hub, clean predictor, group tables and share-ready poster.","Prikaz preko cijelog zaslona, 5 jezika, centar reprezentacije, čista prognoza, tablice skupina i poster za dijeljenje.","Vollbild, 5 Sprachen, Team-Hub, Gruppentabellen und teilbarer Poster.","Pantalla completa, 5 idiomas, centro de equipo, tablas y póster para compartir.","Plein écran, 5 langues, hub équipe, tableaux et poster partageable."),15,Color.WHITE,false));
         hero.addView(kpiRow(tr("Progress"),data.progressPercent()+"%",tr("Played"),""+data.playedCount(),tr("Goals"),""+data.totalGoals(),true));
 
@@ -392,7 +392,7 @@ void showPredictor(){
     void showDreamFinal(){clear(tr("Dream Final"),"Build a fan final","Predict");LinearLayout c=card();c.addView(label("🏆 Dream Final",25,text,true));Spinner left=spinner(data.teams,myTeam), right=spinner(data.teams,"Brazil");c.addView(label("Finalist 1",13,subText,true));c.addView(left);c.addView(label("Finalist 2",13,subText,true));c.addView(right);Button share=btn(tr("Share Poster"));share.setOnClickListener(v->{String a=left.getSelectedItem().toString(),b=right.getSelectedItem().toString();shareText("🏆 Dream Final 2026\n\n"+flag(a)+" "+a+" vs "+flag(b)+" "+b+"\n\nWorld Cup Fan 2026");});c.addView(share);}
     Spinner spinner(ArrayList<String> items,String sel){Spinner sp=new Spinner(this);ArrayAdapter<String> ad=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,items);sp.setAdapter(ad);int pos=items.indexOf(sel);if(pos>=0)sp.setSelection(pos);return sp;}
 
-    void showMyTeam(){clear(tr("My Team"),"Team hub","More");LinearLayout c=card();c.addView(label(flag(myTeam)+" "+myTeam,28,RED,true));Spinner sp=spinner(data.teams,myTeam);c.addView(sp);Button save=btn("Save");save.setOnClickListener(v->{myTeam = sp.getSelectedItem().toString(); prefs.edit().putString("team", myTeam).apply(); toast("My Team saved"); showHome();});c.addView(save);LinearLayout path=card();path.addView(label("Road to Final",22,text,true));path.addView(pathPreview(myTeam));LinearLayout m=card();m.addView(label("⚽ Matches",22,text,true));for(Match ma:data.matches)if(ma.home.equals(myTeam)||ma.away.equals(myTeam))m.addView(label(ma.date+" • "+flag(ma.home)+" "+ma.home+" vs "+flag(ma.away)+" "+ma.away,14,subText,false));}
+    void showMyTeam(){clear(tr("My Team"),"Team hub","More");LinearLayout c=card();c.addView(label(flag(myTeam)+" "+myTeam,28,RED,true));Spinner sp=spinner(data.teams,myTeam);c.addView(sp);Button save=btn("Save");save.setOnClickListener(v->{myTeam = sp.getSelectedItem().toString(); prefs.edit().putString("team", myTeam).apply(); toast("My Team saved"); showHome();});c.addView(save);LinearLayout path=card();path.addView(label(tr("Road to Final"),22,text,true));path.addView(pathPreview(myTeam));LinearLayout m=card();m.addView(label("⚽ Matches",22,text,true));for(Match ma:data.matches)if(ma.home.equals(myTeam)||ma.away.equals(myTeam))m.addView(label(ma.date+" • "+flag(ma.home)+" "+ma.home+" vs "+flag(ma.away)+" "+ma.away,14,subText,false));}
     void showCities(){clear(tr("Host Cities"),"USA • Mexico • Canada","More");String[][] cities={{"🇲🇽 Mexico City","Opening match energy and historic football culture."},{"🇨🇦 Toronto","Canada showcase city."},{"🇺🇸 Los Angeles","Entertainment capital and massive fan base."},{"🇺🇸 New York/New Jersey","Final atmosphere and huge global audience."},{"🇺🇸 Dallas","Huge stadium, huge matches."},{"🇺🇸 Miami","Latin football culture."},{"🇨🇦 Vancouver","West coast Canadian host."},{"🇺🇸 Atlanta","Modern stadium and fan festival city."},{"🇺🇸 Houston","International city."},{"🇺🇸 Kansas City","American soccer heartland."},{"🇺🇸 Boston","Historic sports city."},{"🇺🇸 Seattle","Strong supporter culture."}};for(String[] ci:cities){LinearLayout c=card();c.addView(label(ci[0],22,text,true));c.addView(label(ci[1],15,subText,false));}}
 
     
@@ -818,7 +818,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 13.9 Build Verified",22,RED,false));
+        l.addView(label("Version 13.10 Build Verified",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 
@@ -894,7 +894,59 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
 
 void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
 
-    String flag(String t){if(t==null)return"🏳";String[][] f={{"Croatia","🇭🇷"},{"Brazil","🇧🇷"},{"Germany","🇩🇪"},{"Argentina","🇦🇷"},{"France","🇫🇷"},{"Spain","🇪🇸"},{"Portugal","🇵🇹"},{"England","🏴"},{"Netherlands","🇳🇱"},{"Belgium","🇧🇪"},{"Mexico","🇲🇽"},{"USA","🇺🇸"},{"Canada","🇨🇦"},{"Japan","🇯🇵"},{"Korea Republic","🇰🇷"},{"South Africa","🇿🇦"},{"Czechia","🇨🇿"},{"Bosnia and Herzegovina","🇧🇦"},{"Qatar","🇶🇦"},{"Switzerland","🇨🇭"},{"Morocco","🇲🇦"},{"Haiti","🇭🇹"},{"Scotland","🏴"},{"Paraguay","🇵🇾"},{"Australia","🇦🇺"},{"Turkey","🇹🇷"},{"Curacao","🇨🇼"},{"Ivory Coast","🇨🇮"},{"Ecuador","🇪🇨"},{"Sweden","🇸🇪"},{"Tunisia","🇹🇳"},{"Egypt","🇪🇬"},{"Iran","🇮🇷"},{"New Zealand","🇳🇿"},{"Cape Verde","🇨🇻"},{"Saudi Arabia","🇸🇦"},{"Uruguay","🇺🇾"},{"Senegal","🇸🇳"},{"Iraq","🇮🇶"},{"Norway","🇳🇴"},{"Algeria","🇩🇿"},{"Austria","🇦🇹"},{"Jordan","🇯🇴"},{"DR Congo","🇨🇩"},{"Uzbekistan","🇺🇿"},{"Colombia","🇨🇴"},{"Ghana","🇬🇭"},{"Panama","🇵🇦"}};for(String[] x:f)if(t.equals(x[0]))return x[1];return"🏳";}
+    String flag(String team){
+        if(team==null)return "🏳️";
+        if(team.equals("England"))return "🏴";
+        if(team.equals("Scotland"))return "🏴";
+        if(team.equals("Wales"))return "🏴";
+        if(team.equals("Croatia"))return "🇭🇷";
+        if(team.equals("Brazil"))return "🇧🇷";
+        if(team.equals("Argentina"))return "🇦🇷";
+        if(team.equals("France"))return "🇫🇷";
+        if(team.equals("Germany"))return "🇩🇪";
+        if(team.equals("Spain"))return "🇪🇸";
+        if(team.equals("Portugal"))return "🇵🇹";
+        if(team.equals("Netherlands"))return "🇳🇱";
+        if(team.equals("Belgium"))return "🇧🇪";
+        if(team.equals("Mexico"))return "🇲🇽";
+        if(team.equals("Canada"))return "🇨🇦";
+        if(team.equals("USA"))return "🇺🇸";
+        if(team.equals("South Africa"))return "🇿🇦";
+        if(team.equals("Korea Republic"))return "🇰🇷";
+        if(team.equals("Czechia"))return "🇨🇿";
+        if(team.equals("Bosnia and Herzegovina"))return "🇧🇦";
+        if(team.equals("Qatar"))return "🇶🇦";
+        if(team.equals("Switzerland"))return "🇨🇭";
+        if(team.equals("Morocco"))return "🇲🇦";
+        if(team.equals("Haiti"))return "🇭🇹";
+        if(team.equals("Paraguay"))return "🇵🇾";
+        if(team.equals("Australia"))return "🇦🇺";
+        if(team.equals("Turkey"))return "🇹🇷";
+        if(team.equals("Curaçao"))return "🇨🇼";
+        if(team.equals("Cote d'Ivoire"))return "🇨🇮";
+        if(team.equals("Ecuador"))return "🇪🇨";
+        if(team.equals("Japan"))return "🇯🇵";
+        if(team.equals("Sweden"))return "🇸🇪";
+        if(team.equals("Tunisia"))return "🇹🇳";
+        if(team.equals("Egypt"))return "🇪🇬";
+        if(team.equals("Iran"))return "🇮🇷";
+        if(team.equals("New Zealand"))return "🇳🇿";
+        if(team.equals("Cape Verde"))return "🇨🇻";
+        if(team.equals("Saudi Arabia"))return "🇸🇦";
+        if(team.equals("Uruguay"))return "🇺🇾";
+        if(team.equals("Senegal"))return "🇸🇳";
+        if(team.equals("Iraq"))return "🇮🇶";
+        if(team.equals("Norway"))return "🇳🇴";
+        if(team.equals("Algeria"))return "🇩🇿";
+        if(team.equals("Austria"))return "🇦🇹";
+        if(team.equals("Jordan"))return "🇯🇴";
+        if(team.equals("DR Congo"))return "🇨🇩";
+        if(team.equals("Uzbekistan"))return "🇺🇿";
+        if(team.equals("Colombia"))return "🇨🇴";
+        if(team.equals("Ghana"))return "🇬🇭";
+        if(team.equals("Panama"))return "🇵🇦";
+        return "🏳️";
+    }
     Drawable gradient(int a,int b,int radius){GradientDrawable g=new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[]{a,b});g.setCornerRadius(radius);return g;}
     Drawable round(int color,int radius,int sw){GradientDrawable g=new GradientDrawable();g.setColor(color);g.setCornerRadius(radius);if(sw>0)g.setStroke(sw,stroke);return g;}
     int dp(int v){return(int)(v*getResources().getDisplayMetrics().density+0.5f);}
