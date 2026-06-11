@@ -1,0 +1,9 @@
+WorldCupFan2026 v13.11 Final User Fixes
+
+Applied:
+- England flag fixed using visible GB fallback because St George emoji renders black on many Android devices.
+- Removed visible winners from bracket screens.
+- Host cities expanded to all 16.
+- Achievements clarified and translated.
+- Home screen simplified: removed extra unnecessary cards/text.
+- Static Java checks passed.

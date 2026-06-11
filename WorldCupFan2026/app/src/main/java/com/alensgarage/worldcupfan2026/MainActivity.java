@@ -160,6 +160,29 @@ public class MainActivity extends Activity {
         else if(key.equals("Played")){hr="Odigrano";de="Gespielt";es="Jugados";fr="Joués";}
         else if(key.equals("Goals")){hr="Golovi";de="Tore";es="Goles";fr="Buts";}
 
+        
+        else if(key.equals("Host Cities")){hr="Gradovi domaćini";de="Gastgeberstädte";es="Ciudades sede";fr="Villes hôtes";}
+        else if(key.equals("16 host cities")){hr="16 gradova domaćina";de="16 Gastgeberstädte";es="16 ciudades sede";fr="16 villes hôtes";}
+        else if(key.equals("Country")){hr="Država";de="Land";es="País";fr="Pays";}
+        else if(key.equals("Capacity")){hr="Kapacitet";de="Kapazität";es="Capacidad";fr="Capacité";}
+        else if(key.equals("Matches count")){hr="Broj utakmica";de="Anzahl Spiele";es="Número de partidos";fr="Nombre de matchs";}
+        else if(key.equals("Round of 32")){hr="Šesnaestina finala";de="Runde der 32";es="Dieciseisavos";fr="Seizièmes de finale";}
+        else if(key.equals("Final")){hr="Finale";de="Finale";es="Final";fr="Finale";}
+        else if(key.equals("Projected path from your group results.")){hr="Kostur prema upisanim rezultatima skupina.";de="Turnierweg nach deinen Gruppenergebnissen.";es="Camino según tus resultados de grupo.";fr="Parcours selon tes résultats de groupe.";}
+        else if(key.equals("Visual Bracket")){hr="Vizualni kostur";de="Visueller Turnierbaum";es="Cuadro visual";fr="Tableau visuel";}
+        else if(key.equals("Achievements")){hr="Postignuća";de="Erfolge";es="Logros";fr="Succès";}
+        else if(key.equals("First Prediction")){hr="Prva prognoza";de="Erste Prognose";es="Primera predicción";fr="Premier pronostic";}
+        else if(key.equals("Group Stage Analyst")){hr="Analitičar skupina";de="Gruppenanalyst";es="Analista de grupos";fr="Analyste des groupes";}
+        else if(key.equals("Tournament Expert")){hr="Stručnjak prvenstva";de="Turnierexperte";es="Experto del torneo";fr="Expert du tournoi";}
+        else if(key.equals("Prediction Master")){hr="Majstor prognoza";de="Prognosemeister";es="Maestro de predicciones";fr="Maître des pronostics";}
+        else if(key.equals("My Team badge")){hr="Značka moje reprezentacije";de="Mein Team-Abzeichen";es="Insignia de mi equipo";fr="Badge de mon équipe";}
+        else if(key.equals("Tournament is live")){hr="Prvenstvo je u tijeku";de="Das Turnier läuft";es="El torneo está en marcha";fr="Le tournoi est en cours";}
+        else if(key.equals("Day 1 of the World Cup")){hr="Dan 1 Svjetskog prvenstva";de="Tag 1 der Weltmeisterschaft";es="Día 1 del Mundial";fr="Jour 1 de la Coupe du Monde";}
+        else if(key.equals("Global Edition")){hr="Globalno izdanje";de="Globale Ausgabe";es="Edición global";fr="Édition mondiale";}
+        else if(key.equals("Progress")){hr="Napredak";de="Fortschritt";es="Progreso";fr="Progression";}
+        else if(key.equals("Played")){hr="Odigrano";de="Gespielt";es="Jugados";fr="Joués";}
+        else if(key.equals("Goals")){hr="Golovi";de="Tore";es="Goles";fr="Buts";}
+
         if(lang.equals("HR")) return hr; if(lang.equals("DE")) return de; if(lang.equals("ES")) return es; if(lang.equals("FR")) return fr; return en;
     }
 
@@ -176,7 +199,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v13.10 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v13.11 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -245,22 +268,12 @@ public class MainActivity extends Activity {
     }
 
 void showHome(){
-        clear("World Cup Fan 2026","v13.10 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v13.11 • "+lang+" • Global fan app","Home");
 
-        LinearLayout launch=card();
-        launch.setBackground(gradient(RED_DARK,RED,dp(24)));
-        launch.addView(label("🏁 "+tr("Tournament is live"),25,Color.WHITE,true));
-        launch.addView(label(tr("Day 1 of the World Cup"),16,Color.WHITE,false));
-
-        LinearLayout hero=card();
-        hero.setBackground(gradient(RED_DARK,RED,dp(24)));
-        hero.addView(label("🌍 Globalno izdanje v13.10",24,Color.WHITE,true));
-        hero.addView(label(t2("Fullscreen, 5 languages, team hub, clean predictor, group tables and share-ready poster.","Prikaz preko cijelog zaslona, 5 jezika, centar reprezentacije, čista prognoza, tablice skupina i poster za dijeljenje.","Vollbild, 5 Sprachen, Team-Hub, Gruppentabellen und teilbarer Poster.","Pantalla completa, 5 idiomas, centro de equipo, tablas y póster para compartir.","Plein écran, 5 langues, hub équipe, tableaux et poster partageable."),15,Color.WHITE,false));
-        hero.addView(kpiRow(tr("Progress"),data.progressPercent()+"%",tr("Played"),""+data.playedCount(),tr("Goals"),""+data.totalGoals(),true));
-
-        LinearLayout countCard=card();
-        countCard.addView(label("⚽ "+tr("Tournament is live"),22,text,true));
-        countCard.addView(label(tr("Day 1 of the World Cup"),30,RED,true));
+        LinearLayout live=card();
+        live.setBackground(gradient(RED_DARK,RED,dp(24)));
+        live.addView(label("🏁 "+tr("Tournament is live"),25,Color.WHITE,true));
+        live.addView(label(tr("Day 1 of the World Cup"),16,Color.WHITE,false));
 
         LinearLayout my=card();
         my.addView(label(flag(myTeam)+" "+myTeam+" "+t2("Road to Final","Put do finala","Weg ins Finale","Camino a la final","Route vers la finale"),24,text,true));
@@ -273,7 +286,7 @@ void showHome(){
 
         LinearLayout pred=card();
         pred.addView(label("🔮 "+tr("Prediction Studio"),24,text,true));
-        pred.addView(label(t2("Scores → tables → best thirds → bracket → champion → share poster.","Rezultati → tablice → najbolje trećeplasirane → kostur → prvak → poster.","Ergebnisse → Tabellen → beste Dritte → Baum → Sieger → Poster.","Resultados → tablas → mejores terceros → cuadro → campeón → póster.","Scores → tableaux → meilleurs troisièmes → tableau → champion → poster."),15,subText,false));
+        pred.addView(label(t2("Upiši prognoze, provjeri skupine i podijeli svoj poster.","Upiši prognoze, provjeri skupine i podijeli svoj poster.","Tippe Prognosen ein, prüfe Gruppen und teile dein Poster.","Escribe predicciones, revisa grupos y comparte tu póster.","Entre tes pronostics, vérifie les groupes et partage ton poster."),15,subText,false));
         Button start=btn(tr("Start Simulator"));
         start.setOnClickListener(v->showPredictor());
         pred.addView(start);
@@ -396,27 +409,21 @@ void showPredictor(){
     void showCities(){clear(tr("Host Cities"),"USA • Mexico • Canada","More");String[][] cities={{"🇲🇽 Mexico City","Opening match energy and historic football culture."},{"🇨🇦 Toronto","Canada showcase city."},{"🇺🇸 Los Angeles","Entertainment capital and massive fan base."},{"🇺🇸 New York/New Jersey","Final atmosphere and huge global audience."},{"🇺🇸 Dallas","Huge stadium, huge matches."},{"🇺🇸 Miami","Latin football culture."},{"🇨🇦 Vancouver","West coast Canadian host."},{"🇺🇸 Atlanta","Modern stadium and fan festival city."},{"🇺🇸 Houston","International city."},{"🇺🇸 Kansas City","American soccer heartland."},{"🇺🇸 Boston","Historic sports city."},{"🇺🇸 Seattle","Strong supporter culture."}};for(String[] ci:cities){LinearLayout c=card();c.addView(label(ci[0],22,text,true));c.addView(label(ci[1],15,subText,false));}}
 
     
-    void showVisualBracket() {
-        clear(tr("Visual Bracket"), tr("Tournament tree preview"), "Predict");
-        ArrayList<String> q = new ArrayList<>();
-        for (TeamRow r : data.qualified()) q.add(r.team);
-        if (q.size() == 0) q.add(myTeam);
-
-        String[] rounds = {"Round of 32", "Round of 16", "Quarter-finals", "Semi-finals", "Final"};
-        int games = 16;
-        for (String round : rounds) {
-            LinearLayout c = card();
-            c.addView(label("🏆 " + round, 23, RED, true));
-            for (int i=0; i<games; i++) {
-                String a = q.get((i*2) % q.size());
-                String b = q.get((i*2+1) % q.size());
-                String w = projectedWinner(a,b);
-                TextView box = label("┌ " + flag(a) + " " + a + "\n├─ vs\n└ " + flag(b) + " " + b + "\n→ " + flag(w) + " " + w, 14, text, false);
-                box.setPadding(dp(12), dp(10), dp(12), dp(10));
-                box.setBackground(round(chipBg, dp(16), 1));
-                c.addView(box);
-            }
-            games = Math.max(1, games/2);
+    void showVisualBracket(){
+        clear(tr("Visual Bracket"),t2("Tournament tree preview","Pregled turnirskog stabla","Turnierbaum-Übersicht","Vista del cuadro","Aperçu du tableau"),"More");
+        LinearLayout c=card();
+        c.addView(label("🏆 "+tr("Round of 32"),24,RED,true));
+        String[][] pairs={
+            {"South Africa","Czechia"},{"Canada","Bosnia and Herzegovina"},{"Brazil","Morocco"},{"USA","Paraguay"},
+            {"Germany","Curaçao"},{"Netherlands","Japan"},{"Belgium","Egypt"},{"Spain","Uruguay"},
+            {"France","Norway"},{"Argentina","Austria"},{"Portugal","Colombia"},{"England","Croatia"}
+        };
+        for(String[] p:pairs){
+            LinearLayout m=card();
+            m.addView(label("┌ "+flag(p[0])+" "+p[0],16,text,false));
+            m.addView(label("├─ VS",16,subText,false));
+            m.addView(label("└ "+flag(p[1])+" "+p[1],16,text,false));
+            c.addView(m);
         }
     }
 
@@ -601,33 +608,45 @@ void showPredictor(){
         }
     }
 
-    void showAchievements() {
-        clear(tr("Achievements"), tr("Badges and milestones"), "More");
-        LinearLayout c = card();
-        c.addView(label("🏅 " + tr("Achievements"), 25, text, true));
-        int played = data.playedCount();
-        c.addView(label((played>=1?"✅":"⬜") + " First Prediction", 17, played>=1?GREEN:subText, true));
-        c.addView(label((played>=10?"✅":"⬜") + " Group Stage Analyst", 17, played>=10?GREEN:subText, true));
-        c.addView(label((played>=24?"✅":"⬜") + " Tournament Expert", 17, played>=24?GREEN:subText, true));
-        c.addView(label((data.progressPercent()>=100?"✅":"⬜") + " Prediction Master", 17, data.progressPercent()>=100?GOLD:subText, true));
-        c.addView(label("My Team badge: " + flag(myTeam) + " " + myTeam + " Fan", 17, RED, true));
+    void showAchievements(){
+        clear(tr("Achievements"),t2("Badges and progress","Značke i napredak","Abzeichen und Fortschritt","Insignias y progreso","Badges et progression"),"More");
+        LinearLayout c=card();
+        c.addView(label("🏅 "+tr("Achievements"),26,text,true));
+        c.addView(label("✅ "+tr("First Prediction"),18,GREEN,true));
+        c.addView(label("⬜ "+tr("Group Stage Analyst"),18,subText,true));
+        c.addView(label("⬜ "+tr("Tournament Expert"),18,subText,true));
+        c.addView(label("⬜ "+tr("Prediction Master"),18,subText,true));
+        c.addView(label(tr("My Team badge")+": "+flag(myTeam)+" "+myTeam+" Fan",18,RED,true));
+        c.addView(label(t2("Badges unlock as you enter predictions and use the tournament tools.","Značke se otključavaju kada upisuješ prognoze i koristiš alate prvenstva.","Abzeichen werden freigeschaltet, wenn du Prognosen und Tools nutzt.","Las insignias se desbloquean al usar predicciones y herramientas.","Les badges se débloquent avec les pronostics et les outils."),14,subText,false));
     }
 
 
     void showHostCityDetails(){
         clear(tr("Host Cities"),tr("16 host cities"),"More");
         String[][] cities={
-            {"🇺🇸","Atlanta","Atlanta Stadium","United States","71,000","8","Modern host city, huge airport hub and strong sports culture.","Moderan grad domaćin, veliki zračni čvor i jaka sportska kultura."},
-            {"🇺🇸","Boston","Boston Stadium","United States","65,000","7","Historic sports market with passionate East Coast fans.","Povijesni sportski grad s vatrenim navijačima istočne obale."},
-            {"🇨🇦","Toronto","Toronto Stadium","Canada","45,000","6","Canada's biggest city and a multicultural football hub.","Najveći kanadski grad i multikulturalno nogometno središte."},
-            {"🇺🇸","Dallas","Dallas Stadium","United States","80,000","9","One of the biggest venues of the tournament.","Jedan od najvećih stadiona turnira."}
+            {"🇺🇸","Atlanta","Atlanta Stadium","United States","71,000","8","Moderan grad domaćin, veliki zračni čvor i jaka sportska kultura.","Modern host city, huge airport hub and strong sports culture."},
+            {"🇺🇸","Boston","Boston Stadium","United States","65,000","7","Povijesni sportski grad s vatrenim navijačima istočne obale.","Historic sports city with passionate East Coast fans."},
+            {"🇨🇦","Toronto","Toronto Stadium","Canada","45,000","6","Najveći kanadski grad i multikulturalno nogometno središte.","Canada's biggest city and multicultural football hub."},
+            {"🇺🇸","Dallas","Dallas Stadium","United States","80,000","9","Jedan od najvećih stadiona turnira.","One of the biggest stadiums of the tournament."},
+            {"🇲🇽","Guadalajara","Guadalajara Stadium","Mexico","49,000","4","Klasični meksički nogometni grad s jakom lokalnom kulturom.","Classic Mexican football city with deep local culture."},
+            {"🇺🇸","Houston","Houston Stadium","United States","72,000","7","Raznolik globalni grad s jakom latino nogometnom energijom.","Diverse global city with strong Latin football energy."},
+            {"🇺🇸","Kansas City","Kansas City Stadium","United States","76,000","6","Poznat po glasnim navijačima i jakoj navijačkoj kulturi.","Known for loud crowds and strong supporter culture."},
+            {"🇺🇸","Los Angeles","Los Angeles Stadium","United States","70,000","8","Prijestolnica zabave i premium stadionska destinacija.","Entertainment capital and premium stadium destination."},
+            {"🇺🇸","Miami","Miami Stadium","United States","65,000","7","Grad plaža, latino nogometne kulture i velika navijačka destinacija.","Beach city, Latin football culture and fan travel appeal."},
+            {"🇲🇽","Mexico City","Mexico City Stadium","Mexico","87,000","5","Atmosfera otvaranja i legendarna nogometna povijest.","Opening-match atmosphere and iconic football history."},
+            {"🇲🇽","Monterrey","Monterrey Stadium","Mexico","53,000","4","Moderan stadion i intenzivna nogometna kultura.","Modern stadium and intense football culture."},
+            {"🇺🇸","New York/New Jersey","New York/New Jersey Stadium","United States","82,500","8","Globalna medijska prijestolnica i atmosfera završnice.","Global media capital and final-stage atmosphere."},
+            {"🇺🇸","Philadelphia","Philadelphia Stadium","United States","69,000","6","Povijesni grad s vrlo strastvenim sportskim navijačima.","Historic city with passionate sports fans."},
+            {"🇺🇸","San Francisco Bay Area","Bay Area Stadium","United States","68,500","6","Domaćin iz tehnološke regije s velikim turističkim potencijalom.","Tech-region host with strong tourism appeal."},
+            {"🇺🇸","Seattle","Seattle Stadium","United States","69,000","6","Jedna od najjačih nogometnih kultura u SAD-u.","One of the strongest U.S. soccer cultures."},
+            {"🇨🇦","Vancouver","Vancouver Stadium","Canada","54,500","7","Prekrasan grad domaćin na zapadnoj obali s jakim turizmom.","Beautiful west-coast host city with tourism appeal."}
         };
         for(String[] x:cities){
             LinearLayout c=card();
             c.addView(label(x[0]+" "+x[1],26,text,true));
             c.addView(label("🏟️ "+x[2],16,RED,true));
-            c.addView(label(tr("Country")+": "+x[3]+"  •  "+tr("Capacity")+": "+x[4]+"  •  "+tr("Matches")+": "+x[5],14,subText,false));
-            c.addView(label(lang.equals("HR")?x[7]:x[6],15,subText,false));
+            c.addView(label(tr("Country")+": "+x[3]+"  •  "+tr("Capacity")+": "+x[4]+"  •  "+tr("Matches count")+": "+x[5],14,subText,false));
+            c.addView(label(lang.equals("HR")?x[6]:x[7],15,subText,false));
         }
     }
 
@@ -818,7 +837,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 13.10 Build Verified",22,RED,false));
+        l.addView(label("Version 13.11 Build Verified",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 
@@ -896,9 +915,9 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
 
     String flag(String team){
         if(team==null)return "🏳️";
-        if(team.equals("England"))return "🏴";
-        if(team.equals("Scotland"))return "🏴";
-        if(team.equals("Wales"))return "🏴";
+        if(team.equals("England"))return "🇬🇧";
+        if(team.equals("Scotland"))return "🇬🇧";
+        if(team.equals("Wales"))return "🇬🇧";
         if(team.equals("Croatia"))return "🇭🇷";
         if(team.equals("Brazil"))return "🇧🇷";
         if(team.equals("Argentina"))return "🇦🇷";
