@@ -1,12 +1,14 @@
-plugins { id 'com.android.application' }
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    namespace 'com.alensgarage.worldcupfan2026'
+    namespace 'com.asappfactory.worldcupfan2026'
     compileSdk 35
 
     signingConfigs {
         stableUpdate {
-            storeFile file('worldcupfan2026-test-update.jks')
+            storeFile file('worldcupfan2026-test-key.jks')
             storePassword 'WorldCupFan2026!'
             keyAlias 'worldcupfan2026'
             keyPassword 'WorldCupFan2026!'
@@ -14,11 +16,11 @@ android {
     }
 
     defaultConfig {
-        applicationId 'com.alensgarage.worldcupfan2026'
+        applicationId 'com.asappfactory.worldcupfan2026'
         minSdk 23
         targetSdk 35
-        versionCode 46
-        versionName '13.15'
+        versionCode 47
+        versionName '13.16'
     }
 
     buildTypes {
