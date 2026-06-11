@@ -199,7 +199,7 @@ public class MainActivity extends Activity {
         header.setBackground(gradient(RED_DARK,RED,0));
         root.addView(header,new LinearLayout.LayoutParams(-1,dp(124)));
         title=label("World Cup Fan 2026",27,Color.WHITE,true);
-        subtitle=label("v13.11 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
+        subtitle=label("v13.12 Play Store Polish Edition • 5 languages • Immersive fullscreen",14,Color.WHITE,false);
         header.addView(title); header.addView(subtitle);
 
         ScrollView sv=new ScrollView(this);
@@ -267,8 +267,15 @@ public class MainActivity extends Activity {
         return en;
     }
 
+String displayFlag(String team){
+        if(team==null)return "🏳️";
+        if(team.equals("England"))return "🇬🇧";
+        if(team.equals("Scotland"))return "🏴";
+        if(team.equals("Wales"))return "🏴";
+        return flag(team);
+    }
 void showHome(){
-        clear("World Cup Fan 2026","v13.11 • "+lang+" • Global fan app","Home");
+        clear("World Cup Fan 2026","v13.12 • "+lang+" • Global fan app","Home");
 
         LinearLayout live=card();
         live.setBackground(gradient(RED_DARK,RED,dp(24)));
@@ -276,10 +283,10 @@ void showHome(){
         live.addView(label(tr("Day 1 of the World Cup"),16,Color.WHITE,false));
 
         LinearLayout my=card();
-        my.addView(label(flag(myTeam)+" "+myTeam+" "+t2("Road to Final","Put do finala","Weg ins Finale","Camino a la final","Route vers la finale"),24,text,true));
+        my.addView(label(displayFlag(myTeam)+" "+myTeam+" "+t2("Road to Final","Put do finala","Weg ins Finale","Camino a la final","Route vers la finale"),24,text,true));
         my.addView(label(groupLine(myTeam),15,subText,false));
         String[] stages={tr("Group"),tr("Round of 32"),tr("Round of 16"),tr("Quarter-final"),tr("Semi-final"),tr("Final")};
-        for(String st:stages)my.addView(label(flag(myTeam)+" "+myTeam+" → "+st,15,subText,false));
+        for(String st:stages)my.addView(label(displayFlag(myTeam)+" "+myTeam+" → "+st,15,subText,false));
         Button hub=btn(tr("Team Hub"));
         hub.setOnClickListener(v->showMyTeam());
         my.addView(hub);
@@ -295,7 +302,7 @@ void showHome(){
     LinearLayout pathPreview(String team){
         LinearLayout p=new LinearLayout(this);p.setOrientation(LinearLayout.VERTICAL);p.setPadding(0,dp(6),0,dp(8));
         String[] steps={"Group "+groupOfTeam(myTeam),"Round of 32","Round of 16","Quarter-final","Semi-final","Final"};
-        for(String s:steps)p.addView(label("   "+flag(team)+" "+team+"  →  "+s,14,subText,false));
+        for(String s:steps)p.addView(label("   "+displayFlag(team)+" "+team+"  →  "+s,14,subText,false));
         return p;
     }
 
@@ -341,8 +348,8 @@ void showHome(){
     void showGroups(){
         clear(tr("Groups"),"P/W/D/L/GD/Pts","Groups");
         Map<String,List<TeamRow>> map=data.standings();
-        for(String g:data.groups){LinearLayout c=card();c.addView(label("Group "+g,23,RED,true));c.addView(tableRow("#","Team","P","W","D","L","GD","Pts",true,subText));List<TeamRow> rows=map.get(g);for(int i=0;i<rows.size();i++){TeamRow r=rows.get(i);int col=i<2?GREEN:(i==2?GOLD:subText);c.addView(tableRow((i+1)+"",flag(r.team)+" "+r.team,r.p+"",r.w+"",r.d+"",r.l+"",(r.gf-r.ga)+"",r.pts+"",false,col));}}
-        LinearLayout third=card();third.addView(label("🥉 Best third-placed teams",22,text,true));List<TeamRow> th=data.bestThirds();for(int i=0;i<th.size();i++){TeamRow r=th.get(i);third.addView(label((i+1)+". "+flag(r.team)+" "+r.team+" • Group "+r.group+" • "+r.pts+" pts",14,i<8?GREEN:subText,false));}
+        for(String g:data.groups){LinearLayout c=card();c.addView(label("Group "+g,23,RED,true));c.addView(tableRow("#","Team","P","W","D","L","GD","Pts",true,subText));List<TeamRow> rows=map.get(g);for(int i=0;i<rows.size();i++){TeamRow r=rows.get(i);int col=i<2?GREEN:(i==2?GOLD:subText);c.addView(tableRow((i+1)+"",displayFlag(r.team)+" "+r.team,r.p+"",r.w+"",r.d+"",r.l+"",(r.gf-r.ga)+"",r.pts+"",false,col));}}
+        LinearLayout third=card();third.addView(label("🥉 Best third-placed teams",22,text,true));List<TeamRow> th=data.bestThirds();for(int i=0;i<th.size();i++){TeamRow r=th.get(i);third.addView(label((i+1)+". "+displayFlag(r.team)+" "+r.team+" • Group "+r.group+" • "+r.pts+" pts",14,i<8?GREEN:subText,false));}
     }
     LinearLayout tableRow(String pos,String team,String p,String w,String d,String l,String gd,String pts,boolean bold,int color){LinearLayout r=hrow();r.setPadding(0,dp(4),0,dp(4));r.addView(cell(pos,.45f,bold,color));r.addView(cell(team,2.4f,bold,color));r.addView(cell(p,.55f,bold,color));r.addView(cell(w,.55f,bold,color));r.addView(cell(d,.55f,bold,color));r.addView(cell(l,.55f,bold,color));r.addView(cell(gd,.7f,bold,color));r.addView(cell(pts,.8f,true,color));return r;}
     TextView cell(String s,float w,boolean bold,int color){TextView t=label(s,12,color,bold);t.setGravity(Gravity.CENTER_VERTICAL);t.setSingleLine(true);t.setTextSize(s.length()>14?10:12);t.setLayoutParams(new LinearLayout.LayoutParams(0,dp(34),w));return t;}
@@ -382,35 +389,36 @@ void showPredictor(){
         clear(tr("Predict"),tr("Prediction Studio"),"Predict");
         LinearLayout c=card();c.addView(label("🔮 Prediction Studio",25,text,true));c.addView(label("Scores → tables → best thirds → bracket → champion → share poster.",15,subText,false));
         Button s=btn(tr("Enter Scores"));s.setOnClickListener(v->showMatches());c.addView(s);Button br=btn(tr("Pro Bracket"));br.setOnClickListener(v->showKnockout());c.addView(br);Button poster=btn(tr("Share Poster"));poster.setOnClickListener(v->showPoster());c.addView(poster);Button df=btn(tr("Dream Final"));df.setOnClickListener(v->showDreamFinal());c.addView(df);Button reset=outline(tr("Reset Scores"));reset.setOnClickListener(v->{data.reset();showPredictor();});c.addView(reset);
-        LinearLayout q=card();q.addView(label("✅ Qualified teams preview",22,text,true));List<TeamRow> qual=data.qualified();for(int i=0;i<Math.min(qual.size(),16);i++){TeamRow r=qual.get(i);q.addView(label((i+1)+". "+flag(r.team)+" "+r.team+" • Group "+r.group+" • "+r.pts+" pts",14,subText,false));}
+        LinearLayout q=card();q.addView(label("✅ Qualified teams preview",22,text,true));List<TeamRow> qual=data.qualified();for(int i=0;i<Math.min(qual.size(),16);i++){TeamRow r=qual.get(i);q.addView(label((i+1)+". "+displayFlag(r.team)+" "+r.team+" • Group "+r.group+" • "+r.pts+" pts",14,subText,false));}
     }
 
     void showKnockout(){
         clear(tr("Pro Bracket"),"Round of 32 → Final","Predict");
-        List<TeamRow> q=data.qualified();LinearLayout intro=card();intro.setBackground(gradient(RED_DARK,RED,dp(24)));intro.addView(label("🏆 Pro Bracket",26,Color.WHITE,true));intro.addView(label("Projected path from your group results.",15,Color.WHITE,false));
+        List<TeamRow> q=data.qualified();LinearLayout intro=card();intro.setBackground(gradient(RED_DARK,RED,dp(24)));intro.addView(label("🏆 Pro Bracket",26,Color.WHITE,true));intro.addView(label(tr("Projected path from your group results."),15,Color.WHITE,false));
         String[] rounds={"Round of 32","Round of 16","Quarter-finals","Semi-finals","Final"};int games=16;
-        for(String round:rounds){LinearLayout c=card();c.addView(label(round,23,RED,true));for(int i=0;i<games;i++){String a=q.size()>0?q.get((i*2)%q.size()).team:"TBD";String b=q.size()>1?q.get((i*2+1)%q.size()).team:"TBD";String w=winner(a,b);LinearLayout box=inner(c);box.addView(label(flag(a)+" "+a,15,text,true));box.addView(label("        │",12,subText,false));box.addView(label(flag(b)+" "+b,15,text,true));box.addView(label("Winner: "+flag(w)+" "+w,13,GREEN,true));}games=Math.max(1,games/2);}
-        LinearLayout champ=card();champ.setBackground(gradient(RED_DARK,RED,dp(24)));String ch=q.size()>0?q.get(0).team:myTeam;champ.addView(label("🏆 Champion Pick",23,Color.WHITE,true));champ.addView(label(flag(ch)+" "+ch,36,GOLD,true));
+        for(String round:rounds){LinearLayout c=card();c.addView(label(round,23,RED,true));for(int i=0;i<games;i++){String a=q.size()>0?q.get((i*2)%q.size()).team:"TBD";String b=q.size()>1?q.get((i*2+1)%q.size()).team:"TBD";String w=winner(a,b);LinearLayout box=inner(c);box.addView(label(displayFlag(a)+" "+a,15,text,true));box.addView(label("        │",12,subText,false));box.addView(label(displayFlag(b)+" "+b,15,text,true));box.addView(label(" "+displayFlag(w)+" "+w,13,GREEN,true));}games=Math.max(1,games/2);}
+        LinearLayout champ=card();champ.setBackground(gradient(RED_DARK,RED,dp(24)));String ch=q.size()>0?q.get(0).team:myTeam;champ.addView(label("🏆 Champion Pick",23,Color.WHITE,true));champ.addView(label(displayFlag(ch)+" "+ch,36,GOLD,true));
     }
     LinearLayout inner(LinearLayout p){LinearLayout l=new LinearLayout(this);l.setOrientation(LinearLayout.VERTICAL);l.setPadding(dp(12),dp(10),dp(12),dp(10));l.setBackground(round(chipBg,dp(18),0));LinearLayout.LayoutParams lp=new LinearLayout.LayoutParams(-1,-2);lp.setMargins(0,dp(8),0,dp(8));p.addView(l,lp);return l;}
     String winner(String a,String b){if(a.equals(myTeam))return a;if(b.equals(myTeam))return b;return a.compareTo(b)<=0?a:b;}
 
     void showPoster(){
         clear(tr("Share Poster"),"Social prediction card","Predict");
-        LinearLayout p=card();p.setBackground(gradient(RED_DARK,RED,dp(24)));p.addView(label("WORLD CUP FAN 2026",25,Color.WHITE,true));p.addView(label("MY TOURNAMENT PREDICTION",17,Color.WHITE,false));p.addView(label(flag(myTeam)+" My Team: "+myTeam,22,Color.WHITE,true));List<TeamRow> q=data.qualified();String champ=q.size()>0?q.get(0).team:myTeam;p.addView(label("🏆 Champion: "+flag(champ)+" "+champ,25,GOLD,true));p.addView(label("Top 4\n"+topLines(4),16,Color.WHITE,false));p.addView(label("Made with World Cup Fan 2026",13,Color.WHITE,false));Button share=btn(tr("Share Poster"));share.setOnClickListener(v->sharePrediction());p.addView(share);
+        LinearLayout p=card();p.setBackground(gradient(RED_DARK,RED,dp(24)));p.addView(label("WORLD CUP FAN 2026",25,Color.WHITE,true));p.addView(label("MY TOURNAMENT PREDICTION",17,Color.WHITE,false));p.addView(label(flag(myTeam)+" My Team: "+myTeam,22,Color.WHITE,true));List<TeamRow> q=data.qualified();String champ=q.size()>0?q.get(0).team:myTeam;p.addView(label("🏆 Champion: "+displayFlag(champ)+" "+champ,25,GOLD,true));p.addView(label("Top 4\n"+topLines(4),16,Color.WHITE,false));p.addView(label("Made with World Cup Fan 2026",13,Color.WHITE,false));Button share=btn(tr("Share Poster"));share.setOnClickListener(v->sharePrediction());p.addView(share);
     }
     String topLines(int n){List<TeamRow> q=data.qualified();String s="";for(int i=0;i<Math.min(n,q.size());i++)s+=(i+1)+". "+flag(q.get(i).team)+" "+q.get(i).team+"\n";return s.length()==0?"TBD":s;}
     String topInline(int n){List<TeamRow> q=data.qualified();String s="";for(int i=0;i<Math.min(n,q.size());i++){if(i>0)s+=" • ";s+=flag(q.get(i).team)+" "+q.get(i).team;}return s.length()==0?"TBD":s;}
 
-    void showDreamFinal(){clear(tr("Dream Final"),"Build a fan final","Predict");LinearLayout c=card();c.addView(label("🏆 Dream Final",25,text,true));Spinner left=spinner(data.teams,myTeam), right=spinner(data.teams,"Brazil");c.addView(label("Finalist 1",13,subText,true));c.addView(left);c.addView(label("Finalist 2",13,subText,true));c.addView(right);Button share=btn(tr("Share Poster"));share.setOnClickListener(v->{String a=left.getSelectedItem().toString(),b=right.getSelectedItem().toString();shareText("🏆 Dream Final 2026\n\n"+flag(a)+" "+a+" vs "+flag(b)+" "+b+"\n\nWorld Cup Fan 2026");});c.addView(share);}
+    void showDreamFinal(){clear(tr("Dream Final"),"Build a fan final","Predict");LinearLayout c=card();c.addView(label("🏆 Dream Final",25,text,true));Spinner left=spinner(data.teams,myTeam), right=spinner(data.teams,"Brazil");c.addView(label("Finalist 1",13,subText,true));c.addView(left);c.addView(label("Finalist 2",13,subText,true));c.addView(right);Button share=btn(tr("Share Poster"));share.setOnClickListener(v->{String a=left.getSelectedItem().toString(),b=right.getSelectedItem().toString();shareText("🏆 Dream Final 2026\n\n"+displayFlag(a)+" "+a+" vs "+displayFlag(b)+" "+b+"\n\nWorld Cup Fan 2026");});c.addView(share);}
     Spinner spinner(ArrayList<String> items,String sel){Spinner sp=new Spinner(this);ArrayAdapter<String> ad=new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,items);sp.setAdapter(ad);int pos=items.indexOf(sel);if(pos>=0)sp.setSelection(pos);return sp;}
 
-    void showMyTeam(){clear(tr("My Team"),"Team hub","More");LinearLayout c=card();c.addView(label(flag(myTeam)+" "+myTeam,28,RED,true));Spinner sp=spinner(data.teams,myTeam);c.addView(sp);Button save=btn("Save");save.setOnClickListener(v->{myTeam = sp.getSelectedItem().toString(); prefs.edit().putString("team", myTeam).apply(); toast("My Team saved"); showHome();});c.addView(save);LinearLayout path=card();path.addView(label(tr("Road to Final"),22,text,true));path.addView(pathPreview(myTeam));LinearLayout m=card();m.addView(label("⚽ Matches",22,text,true));for(Match ma:data.matches)if(ma.home.equals(myTeam)||ma.away.equals(myTeam))m.addView(label(ma.date+" • "+flag(ma.home)+" "+ma.home+" vs "+flag(ma.away)+" "+ma.away,14,subText,false));}
+    void showMyTeam(){clear(tr("My Team"),"Team hub","More");LinearLayout c=card();c.addView(label(displayFlag(myTeam)+" "+myTeam,28,RED,true));Spinner sp=spinner(data.teams,myTeam);c.addView(sp);Button save=btn("Save");save.setOnClickListener(v->{myTeam = sp.getSelectedItem().toString(); prefs.edit().putString("team", myTeam).apply(); toast("My Team saved"); showHome();});c.addView(save);LinearLayout path=card();path.addView(label(tr("Road to Final"),22,text,true));path.addView(pathPreview(myTeam));LinearLayout m=card();m.addView(label("⚽ Matches",22,text,true));for(Match ma:data.matches)if(ma.home.equals(myTeam)||ma.away.equals(myTeam))m.addView(label(ma.date+" • "+displayFlag(ma.home)+" "+ma.home+" vs "+displayFlag(ma.away)+" "+ma.away,14,subText,false));}
     void showCities(){clear(tr("Host Cities"),"USA • Mexico • Canada","More");String[][] cities={{"🇲🇽 Mexico City","Opening match energy and historic football culture."},{"🇨🇦 Toronto","Canada showcase city."},{"🇺🇸 Los Angeles","Entertainment capital and massive fan base."},{"🇺🇸 New York/New Jersey","Final atmosphere and huge global audience."},{"🇺🇸 Dallas","Huge stadium, huge matches."},{"🇺🇸 Miami","Latin football culture."},{"🇨🇦 Vancouver","West coast Canadian host."},{"🇺🇸 Atlanta","Modern stadium and fan festival city."},{"🇺🇸 Houston","International city."},{"🇺🇸 Kansas City","American soccer heartland."},{"🇺🇸 Boston","Historic sports city."},{"🇺🇸 Seattle","Strong supporter culture."}};for(String[] ci:cities){LinearLayout c=card();c.addView(label(ci[0],22,text,true));c.addView(label(ci[1],15,subText,false));}}
 
     
     void showVisualBracket(){
         clear(tr("Visual Bracket"),t2("Tournament tree preview","Pregled turnirskog stabla","Turnierbaum-Übersicht","Vista del cuadro","Aperçu du tableau"),"More");
+
         LinearLayout c=card();
         c.addView(label("🏆 "+tr("Round of 32"),24,RED,true));
         String[][] pairs={
@@ -420,14 +428,14 @@ void showPredictor(){
         };
         for(String[] p:pairs){
             LinearLayout m=card();
-            m.addView(label("┌ "+flag(p[0])+" "+p[0],16,text,false));
+            m.addView(label("┌ "+displayFlag(p[0])+" "+p[0],16,text,false));
             m.addView(label("├─ VS",16,subText,false));
-            m.addView(label("└ "+flag(p[1])+" "+p[1],16,text,false));
+            m.addView(label("└ "+displayFlag(p[1])+" "+p[1],16,text,false));
             c.addView(m);
         }
     }
 
-    String projectedWinner(String a, String b) {
+    String projected(String a, String b) {
         if (a.equals(myTeam)) return a;
         if (b.equals(myTeam)) return b;
         int aa = teamPower(a), bb = teamPower(b);
@@ -460,20 +468,27 @@ void showPredictor(){
         };
         for(int i=0;i<scorers.length;i++){
             String[] s=scorers[i];
-            c.addView(label((i+1)+". "+s[0]+" • "+flag(s[1])+" "+s[1]+" • "+s[2]+" goals",15,i<3?RED:subText,i<3));
+            c.addView(label((i+1)+". "+s[0]+" • "+displayFlag(s[1])+" "+s[1]+" • "+s[2]+" goals",15,i<3?RED:subText,i<3));
         }
     }
 
     void showMvp(){
         clear(tr("MVP Prediction"),tr("Player of the tournament"),"More");
+
+        LinearLayout top=card();
+        top.setBackground(gradient(RED_DARK,RED,dp(24)));
+        top.addView(label("⭐ "+tr("MVP Prediction"),27,Color.WHITE,true));
+        top.addView(label(displayFlag(myTeam)+" "+myTeam+" "+tr("star player"),21,GOLD,true));
+        top.addView(label(t2("MVP prediction follows your selected team and current fan bracket.","MVP prognoza prati tvoju odabranu reprezentaciju i trenutni navijački kostur.","Die MVP-Prognose folgt deinem ausgewählten Team und Turnierbaum.","La predicción MVP sigue tu equipo seleccionado y el cuadro actual.","Le pronostic MVP suit ton équipe et ton tableau."),15,Color.WHITE,false));
+
         LinearLayout c=card();
-        c.setBackground(gradient(RED_DARK,RED,dp(24)));
-        c.addView(label("⭐ MVP Prediction",26,Color.WHITE,true));
-        c.addView(label(flag(myTeam)+" "+myTeam+" star player",23,GOLD,true));
-        c.addView(label(mvpIntro(),15,Color.WHITE,false));
-        LinearLayout list=card();
-        list.addView(label(tr("Shortlist"),22,text,true));
-        list.addView(label("1. "+flag(myTeam)+" "+myTeam+" leader\n2. 🇫🇷 France star\n3. 🇧🇷 Brazil star\n4. 🏴 England star\n5. 🇦🇷 Argentina star",15,subText,false));
+        c.addView(label(tr("Shortlist"),24,text,true));
+        String[][] list={{myTeam,"leader"},{"France","star"},{"Brazil","star"},{"England","star"},{"Argentina","star"}};
+        int i=1;
+        for(String[] p:list){
+            c.addView(label(i+". "+displayFlag(p[0])+" "+p[0]+" "+p[1],16,subText,false));
+            i++;
+        }
     }
 
     void showCompareTeams() {
@@ -500,7 +515,7 @@ void showPredictor(){
         int pa = teamPower(a), pb = teamPower(b);
         c.addView(label(a + " power: " + pa, 17, pa>=pb?GREEN:subText, true));
         c.addView(label(b + " power: " + pb, 17, pb>=pa?GREEN:subText, true));
-        String pick = projectedWinner(a,b);
+        String pick = projected(a,b);
         c.addView(label("Projected winner: " + flag(pick) + " " + pick, 20, RED, true));
     }
 
@@ -616,8 +631,7 @@ void showPredictor(){
         c.addView(label("⬜ "+tr("Group Stage Analyst"),18,subText,true));
         c.addView(label("⬜ "+tr("Tournament Expert"),18,subText,true));
         c.addView(label("⬜ "+tr("Prediction Master"),18,subText,true));
-        c.addView(label(tr("My Team badge")+": "+flag(myTeam)+" "+myTeam+" Fan",18,RED,true));
-        c.addView(label(t2("Badges unlock as you enter predictions and use the tournament tools.","Značke se otključavaju kada upisuješ prognoze i koristiš alate prvenstva.","Abzeichen werden freigeschaltet, wenn du Prognosen und Tools nutzt.","Las insignias se desbloquean al usar predicciones y herramientas.","Les badges se débloquent avec les pronostics et les outils."),14,subText,false));
+        c.addView(label(tr("My Team badge")+": "+displayFlag(myTeam)+" "+myTeam+" Fan",18,RED,true));
     }
 
 
@@ -653,14 +667,14 @@ void showPredictor(){
     void showTeamHubPro() {
         clear("Team Hub Pro", "Detailed national team view", "More");
         LinearLayout top=card();
-        top.addView(label(flag(myTeam)+" "+myTeam,30,RED,true));
+        top.addView(label(displayFlag(myTeam)+" "+myTeam,30,RED,true));
         top.addView(label("Group "+groupOfTeam(myTeam)+" • saved My Team • Road to Final ready",16,subText,false));
         top.addView(label("Power rating: "+teamPower(myTeam)+"/100",18,GREEN,true));
         LinearLayout games=card();
         games.addView(label("⚽ Matches",23,text,true));
         for(Match m:data.matches){
             if(m.home.equals(myTeam)||m.away.equals(myTeam)){
-                games.addView(label(m.date+" • "+flag(m.home)+" "+m.home+" vs "+flag(m.away)+" "+m.away+" • "+m.venue,14,subText,false));
+                games.addView(label(m.date+" • "+displayFlag(m.home)+" "+m.home+" vs "+displayFlag(m.away)+" "+m.away+" • "+m.venue,14,subText,false));
             }
         }
         LinearLayout notes=card();
@@ -762,7 +776,7 @@ void showPlayersHub(){
             {"Mohamed Salah","Egypt","Forward","34","Liverpool"}
         };
         for(String[] p:players){
-            stars.addView(label(flag(p[1])+" "+p[0]+" • "+p[1],17,text,true));
+            stars.addView(label(displayFlag(p[1])+" "+p[0]+" • "+p[1],17,text,true));
             stars.addView(label(tr("Position")+": "+p[2]+"  •  "+tr("Age")+": "+p[3]+"  •  "+tr("Club")+": "+p[4],14,subText,false));
         }
     }
@@ -837,7 +851,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(mode);
 
         LinearLayout l=card();
-        l.addView(label("Version 13.11 Build Verified",22,RED,false));
+        l.addView(label("Version 13.12",22,RED,false));
         l.addView(label(tr("No official FIFA logo, no official crests, no player photos, no live streaming."),15,subText,false));
     }
 
@@ -852,7 +866,7 @@ Button mode=btn(darkMode?tr("Switch to Light Mode"):tr("Switch to Dark Mode"));
         c.addView(label("• "+tr("Multiple saved predictions")+"\n• "+tr("Share poster")+"\n• "+tr("Advanced statistics")+"\n• "+tr("Dream finals")+"\n• "+tr("Premium themes")+"\n• "+tr("Export PDF/PNG")+"\n• "+tr("Match reminders")+"\n• "+tr("Custom tournaments"),16,Color.WHITE,false));
     }
     void showStats(){clear(tr("Statistics"),"Advanced insights","More");LinearLayout c=card();c.addView(label("📊 Statistics",25,text,true));c.addView(kpiRow("Played",""+data.playedCount(),"Goals",""+data.totalGoals(),"Progress",data.progressPercent()+"%",false));c.addView(label("Average goals: "+data.avgGoals(),18,subText,false));c.addView(label("Best attack: "+data.bestAttack(),18,RED,true));c.addView(label("Highest scoring group: "+data.bestGroup(),18,GREEN,true));}
-    void sharePrediction(){shareText("⚽ World Cup Fan 2026\n\nMy Team: "+flag(myTeam)+" "+myTeam+"\nChampion pick: "+topInline(1)+"\nTop 4: "+topInline(4)+"\nProgress: "+data.progressPercent()+"%\n\nWorld Cup Fan 2026");}
+    void sharePrediction(){shareText("⚽ World Cup Fan 2026\n\nMy Team: "+displayFlag(myTeam)+" "+myTeam+"\nChampion pick: "+topInline(1)+"\nTop 4: "+topInline(4)+"\nProgress: "+data.progressPercent()+"%\n\nWorld Cup Fan 2026");}
     void shareText(String msg){Intent send=new Intent(Intent.ACTION_SEND);send.setType("text/plain");send.putExtra(Intent.EXTRA_TEXT,msg);startActivity(Intent.createChooser(send,"Share"));hideSystemBars();}
     
     void showPlayStoreChecklist() {
@@ -916,8 +930,8 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
     String flag(String team){
         if(team==null)return "🏳️";
         if(team.equals("England"))return "🇬🇧";
-        if(team.equals("Scotland"))return "🇬🇧";
-        if(team.equals("Wales"))return "🇬🇧";
+        if(team.equals("Scotland"))return "🏴󠁧󠁢󠁳󠁣󠁴󠁿";
+        if(team.equals("Wales"))return "🏴󠁧󠁢󠁷󠁬󠁳󠁿";
         if(team.equals("Croatia"))return "🇭🇷";
         if(team.equals("Brazil"))return "🇧🇷";
         if(team.equals("Argentina"))return "🇦🇷";
@@ -930,8 +944,10 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
         if(team.equals("Mexico"))return "🇲🇽";
         if(team.equals("Canada"))return "🇨🇦";
         if(team.equals("USA"))return "🇺🇸";
+        if(team.equals("United States"))return "🇺🇸";
         if(team.equals("South Africa"))return "🇿🇦";
         if(team.equals("Korea Republic"))return "🇰🇷";
+        if(team.equals("South Korea"))return "🇰🇷";
         if(team.equals("Czechia"))return "🇨🇿";
         if(team.equals("Bosnia and Herzegovina"))return "🇧🇦";
         if(team.equals("Qatar"))return "🇶🇦";
@@ -942,6 +958,8 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
         if(team.equals("Australia"))return "🇦🇺";
         if(team.equals("Turkey"))return "🇹🇷";
         if(team.equals("Curaçao"))return "🇨🇼";
+        if(team.equals("Curaçao"))return "🇨🇼";
+        if(team.equals("Cote d'Ivoire"))return "🇨🇮";
         if(team.equals("Cote d'Ivoire"))return "🇨🇮";
         if(team.equals("Ecuador"))return "🇪🇨";
         if(team.equals("Japan"))return "🇯🇵";
@@ -975,7 +993,7 @@ void toast(String s){Toast.makeText(this,s,Toast.LENGTH_SHORT).show();}
     class Data{
         String[] groups={"A","B","C","D","E","F","G","H","I","J","K","L"};ArrayList<String> teams=new ArrayList<>();ArrayList<Match> matches=new ArrayList<>();SharedPreferences sp;
         Data(Context c){sp=c.getSharedPreferences("scores",0);seed();load();}
-        void seed(){String[][] g={{"Mexico","South Africa","Korea Republic","Czechia"},{"Canada","Bosnia and Herzegovina","Qatar","Switzerland"},{"Brazil","Morocco","Haiti","Scotland"},{"USA","Paraguay","Australia","Turkey"},{"Germany","Curacao","Ivory Coast","Ecuador"},{"Netherlands","Japan","Sweden","Tunisia"},{"Belgium","Egypt","Iran","New Zealand"},{"Spain","Cape Verde","Saudi Arabia","Uruguay"},{"France","Senegal","Iraq","Norway"},{"Argentina","Algeria","Austria","Jordan"},{"Portugal","DR Congo","Uzbekistan","Colombia"},{"England","Croatia","Ghana","Panama"}};String[] venues={"Mexico City","Toronto","Los Angeles","New York/New Jersey","Dallas","Miami","Vancouver","Atlanta","Houston","Kansas City","Boston","Seattle"};int day=11;for(int x=0;x<g.length;x++){String gr=groups[x];for(String t:g[x])teams.add(t);String[] t=g[x];matches.add(new Match(gr,t[0],t[1],"2026-06-"+(day+x%15),venues[x]));matches.add(new Match(gr,t[2],t[3],"2026-06-"+(day+1+x%15),venues[(x+3)%venues.length]));matches.add(new Match(gr,t[0],t[2],"2026-06-"+(day+6+x%12),venues[(x+6)%venues.length]));matches.add(new Match(gr,t[1],t[3],"2026-06-"+(day+7+x%12),venues[(x+8)%venues.length]));matches.add(new Match(gr,t[0],t[3],"2026-06-"+(day+12+x%7),venues[(x+9)%venues.length]));matches.add(new Match(gr,t[1],t[2],"2026-06-"+(day+12+x%7),venues[(x+10)%venues.length]));}Collections.sort(teams);}
+        void seed(){String[][] g={{"Mexico","South Africa","Korea Republic","Czechia"},{"Canada","Bosnia and Herzegovina","Qatar","Switzerland"},{"Brazil","Morocco","Haiti","Scotland"},{"USA","Paraguay","Australia","Turkey"},{"Germany","Curaçao","Cote d'Ivoire","Ecuador"},{"Netherlands","Japan","Sweden","Tunisia"},{"Belgium","Egypt","Iran","New Zealand"},{"Spain","Cape Verde","Saudi Arabia","Uruguay"},{"France","Senegal","Iraq","Norway"},{"Argentina","Algeria","Austria","Jordan"},{"Portugal","DR Congo","Uzbekistan","Colombia"},{"England","Croatia","Ghana","Panama"}};String[] venues={"Mexico City","Toronto","Los Angeles","New York/New Jersey","Dallas","Miami","Vancouver","Atlanta","Houston","Kansas City","Boston","Seattle"};int day=11;for(int x=0;x<g.length;x++){String gr=groups[x];for(String t:g[x])teams.add(t);String[] t=g[x];matches.add(new Match(gr,t[0],t[1],"2026-06-"+(day+x%15),venues[x]));matches.add(new Match(gr,t[2],t[3],"2026-06-"+(day+1+x%15),venues[(x+3)%venues.length]));matches.add(new Match(gr,t[0],t[2],"2026-06-"+(day+6+x%12),venues[(x+6)%venues.length]));matches.add(new Match(gr,t[1],t[3],"2026-06-"+(day+7+x%12),venues[(x+8)%venues.length]));matches.add(new Match(gr,t[0],t[3],"2026-06-"+(day+12+x%7),venues[(x+9)%venues.length]));matches.add(new Match(gr,t[1],t[2],"2026-06-"+(day+12+x%7),venues[(x+10)%venues.length]));}Collections.sort(teams);}
         void load(){for(int i=0;i<matches.size();i++){matches.get(i).homeGoals=sp.getInt("h"+i,-1);matches.get(i).awayGoals=sp.getInt("a"+i,-1);}}
         void save(){SharedPreferences.Editor e=sp.edit();for(int i=0;i<matches.size();i++){e.putInt("h"+i,matches.get(i).homeGoals);e.putInt("a"+i,matches.get(i).awayGoals);}e.apply();}
         void reset(){sp.edit().clear().apply();for(Match m:matches){m.homeGoals=-1;m.awayGoals=-1;}}
