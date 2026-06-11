@@ -1,0 +1,16 @@
+{
+  "source_zip": "WorldCupFan2026(38).zip",
+  "main_activity": "app/src/main/java/com/alensgarage/worldcupfan2026/MainActivity.java",
+  "removed_empty_rocket": true,
+  "countdown_live": true,
+  "quiz_interactive": true,
+  "host_city_enriched": true,
+  "players_enriched": true,
+  "premium_no_suggested_price": true,
+  "no_GROUPS": true,
+  "no_plus": true,
+  "brace_ok": true,
+  "quote_scan": "ok",
+  "version": "13.9",
+  "compile_result": "no_gradlew"
+}

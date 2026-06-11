@@ -1,0 +1,3 @@
+WorldCupFan2026 v13.9 Play Store Ready
+
+Applied requested Play Store changes and static Java checks passed.
