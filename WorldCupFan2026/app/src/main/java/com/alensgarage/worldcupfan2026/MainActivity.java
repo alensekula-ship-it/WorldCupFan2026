@@ -1,4 +1,4 @@
-package com.alensgarage.worldcupfan2026;
+package com.asappfactory.worldcupfan2026;
 
 import android.app.*;
 import android.os.*;
