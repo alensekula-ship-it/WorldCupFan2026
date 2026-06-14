@@ -1,6 +1,23 @@
 {
-  "updated": "2026-06-14 14:55",
-  "matches": [],
-  "goldenBoot": [],
-  "mvp": []
+  "updated": "2026-06-14 16:45",
+  "matches": [
+    {
+      "home": "Mexico",
+      "away": "South Africa",
+      "homeGoals": 2,
+      "awayGoals": 1
+    }
+  ],
+  "goldenBoot": [
+    {
+      "player": "Kylian Mbappe",
+      "goals": 5
+    }
+  ],
+  "mvp": [
+    {
+      "player": "Jude Bellingham",
+      "points": 8
+    }
+  ]
 }
