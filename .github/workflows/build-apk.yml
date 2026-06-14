@@ -1,0 +1,45 @@
+name: Build APK for Testing
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "WorldCupFan2026.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Replace project from ZIP
+        run: |
+          rm -rf WorldCupFan2026
+          unzip -o WorldCupFan2026.zip -d .
+          chmod +x WorldCupFan2026/gradlew || true
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Build APK
+        run: |
+          cd WorldCupFan2026
+          if [ -f "./gradlew" ]; then
+            ./gradlew clean assembleDebug
+          else
+            gradle clean assembleDebug
+          fi
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: WorldCupFan2026-APK
+          path: WorldCupFan2026/app/build/outputs/apk/debug/*.apk
