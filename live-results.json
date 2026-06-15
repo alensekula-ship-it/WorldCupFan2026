@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-06-14 22:00",
+  "lastUpdate": "2026-06-15 08:00",
 
   "matches": [
     {
@@ -53,26 +53,26 @@
     }
   ],
 
-  "mvpRanking": [
+  "mvp": [
     {
-      "player": "Jude Bellingham",
+      "player": "Croatia leader",
       "points": 8
     },
     {
-      "player": "Kylian Mbappe",
+      "player": "France star",
       "points": 7
     },
     {
-      "player": "Vinicius Jr",
+      "player": "Brazil star",
       "points": 6
     },
     {
-      "player": "Lamine Yamal",
-      "points": 6
-    },
-    {
-      "player": "Pedri",
+      "player": "England star",
       "points": 5
+    },
+    {
+      "player": "Argentina star",
+      "points": 4
     }
   ]
 }
