@@ -1,23 +1,78 @@
 {
-  "updated": "2026-06-14 16:45",
+  "lastUpdate": "2026-06-14 22:00",
+
   "matches": [
     {
+      "status": "LIVE",
+      "minute": "67",
+      "home": "Brazil",
+      "away": "Morocco",
+      "homeGoals": 2,
+      "awayGoals": 1,
+      "group": "C"
+    },
+    {
+      "status": "LIVE",
+      "minute": "54",
+      "home": "USA",
+      "away": "Paraguay",
+      "homeGoals": 1,
+      "awayGoals": 1,
+      "group": "D"
+    },
+    {
+      "status": "FINISHED",
       "home": "Mexico",
       "away": "South Africa",
       "homeGoals": 2,
-      "awayGoals": 1
+      "awayGoals": 1,
+      "group": "A"
     }
   ],
+
   "goldenBoot": [
     {
       "player": "Kylian Mbappe",
       "goals": 5
+    },
+    {
+      "player": "Harry Kane",
+      "goals": 4
+    },
+    {
+      "player": "Vinicius Jr",
+      "goals": 4
+    },
+    {
+      "player": "Lautaro Martinez",
+      "goals": 3
+    },
+    {
+      "player": "Erling Haaland",
+      "goals": 3
     }
   ],
-  "mvp": [
+
+  "mvpRanking": [
     {
       "player": "Jude Bellingham",
       "points": 8
+    },
+    {
+      "player": "Kylian Mbappe",
+      "points": 7
+    },
+    {
+      "player": "Vinicius Jr",
+      "points": 6
+    },
+    {
+      "player": "Lamine Yamal",
+      "points": 6
+    },
+    {
+      "player": "Pedri",
+      "points": 5
     }
   ]
 }
